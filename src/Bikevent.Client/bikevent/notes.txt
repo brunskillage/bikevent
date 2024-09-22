@@ -1,0 +1,28 @@
+Motorcycle App Color Palette
+Primary: Deep Navy Blue
+
+#1C3F60
+
+Secondary: Muted Orange
+
+#E67E22
+
+Accent: Silver Gray
+
+#BDC3C7
+
+Background: Off-White
+
+#F5F5F5
+
+Text: Dark Charcoal
+
+#333333
+
+Success: Forest Green
+
+#27AE60
+
+Warning: Bright Red
+
+#E74C3C
