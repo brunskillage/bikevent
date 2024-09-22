@@ -12,7 +12,6 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
-		"@fontsource/lobster": "^5.1.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-node": "^5.2.3",
 		"@sveltejs/adapter-static": "^3.0.5",
@@ -38,7 +37,6 @@
 		"dotenv": "^16.4.5",
 		"express": "^4.21.0",
 		"mariadb": "^3.3.2",
-		"mysql2": "^3.11.3",
 		"sequelize": "^6.37.3"
 	}
 }

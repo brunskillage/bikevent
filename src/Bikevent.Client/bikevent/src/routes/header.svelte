@@ -3,6 +3,10 @@
 	<div class="title">BIKEVENT</div>
 	<div class="menu">MENU</div>
 </div>
+<div class="header">
+	<a href="/clubs">Clubs</a>
+	<a href="/events">Events</a>
+</div>
 
 <style>
 	.header {
