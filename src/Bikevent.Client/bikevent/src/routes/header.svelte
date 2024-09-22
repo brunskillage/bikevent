@@ -1,36 +1,22 @@
-<div class="header">
-	<div class="logo">LOGO</div>
-	<div class="title">BIKEVENT</div>
-	<div class="menu">MENU</div>
-</div>
-<div class="header">
-	<a href="/clubs">Clubs</a>
-	<a href="/events">Events</a>
-</div>
+<script>
+	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
+	import { page } from '$app/stores';
+	$: activeUrl = $page.url.pathname;
+</script>
+
+<Navbar>
+	<NavBrand href="/">
+		<!-- <img src="/images/flowbite-svelte-icon-logo.svg" class="me-3 h-6 sm:h-9" alt="Flowbite Logo" /> -->
+		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Bikevent</span
+		>
+	</NavBrand>
+	<NavHamburger />
+	<NavUl {activeUrl}>
+		<NavLi href="/">Home</NavLi>
+		<NavLi href="/clubs">Clubs</NavLi>
+		<NavLi href="/events">Events</NavLi>
+	</NavUl>
+</Navbar>
 
 <style>
-	.header {
-		display: flex;
-		background-color: black;
-		color: white;
-		height: 50px;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.title {
-		display: flex;
-		width: 40vw;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo,
-	.menu {
-		display: flex;
-		width: 25vw;
-		background-color: gray;
-		align-items: center;
-		justify-content: center;
-	}
 </style>

@@ -1,14 +1,7 @@
 <script>
 	import Body from './body.svelte';
 	import Box from './box.svelte';
-
-	function handleClick() {
-		alert('clicked');
-	}
+	import { Alert } from 'flowbite-svelte';
 </script>
 
-<Body>
-	<Box>
-		<button on:click|preventDefault={handleClick}>Click</button>
-	</Box>
-</Body>
+<Body></Body>
