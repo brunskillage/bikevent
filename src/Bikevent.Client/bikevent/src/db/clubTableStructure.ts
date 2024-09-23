@@ -1,4 +1,4 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Sequelize } from "sequelize";
 
 export const ClubTableStructure =
 {
@@ -8,7 +8,7 @@ export const ClubTableStructure =
     },
     description: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     president: {
         type: DataTypes.STRING,
@@ -23,7 +23,7 @@ export const ClubTableStructure =
     },
     websiteUrl: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
             isUrl: true
         },
@@ -38,6 +38,14 @@ export const ClubTableStructure =
         validate: {
             isUrl: true
         },
+    },
+    createdOn: {
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    },
+    updatedOn: {
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
 };
 

@@ -4,20 +4,15 @@
 </script>
 
 <Header></Header>
-<div class="content">
+<div class="mainContent">
 	<slot><!-- optional fallback --></slot>
 </div>
+
 <Footer></Footer>
 
-<style global>
-	:global(body) {
-		font-family: 'Roboto';
-	}
-
-	.content {
-		flex: auto;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
+<style lang="scss">
+	.mainContent {
+		background-color: #333333;
+		letter-spacing: 2px;
 	}
 </style>

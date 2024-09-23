@@ -1,9 +1,5 @@
-body {
-  background-color: cadetblue;
-  margin: 0px;
-  padding: 0px;
-}
-.content {
-  display: flex;
-  flex-direction: row;
+.mainContent,
+.footer {
+  margin: 0.5em;
+  padding: 0.5em;
 }
