@@ -1,12 +1,9 @@
-<div class="footer">BikeEvents Copyright 2024</div>
+<div class="footer">BikeEvents Copyright 2024 <a href="/test">TEST</a></div>
 
 <style>
 	.footer {
-		display: flex;
 		background-color: black;
 		color: white;
-		height: 50px;
-		align-items: center;
-		justify-content: center;
+		letter-spacing: 2px;
 	}
 </style>

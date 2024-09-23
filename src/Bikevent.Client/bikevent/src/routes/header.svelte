@@ -1,36 +1,18 @@
 <div class="header">
-	<div class="logo">LOGO</div>
-	<div class="title">BIKEVENT</div>
-	<div class="menu">MENU</div>
-</div>
-<div class="header">
-	<a href="/clubs">Clubs</a>
-	<a href="/events">Events</a>
+	<a class="" href="/">Bikeevent</a>
+	<a href="/" class="">Home</a>
+	<a href="/clubs" class="">Clubs</a>
+	<a href="/events" class="">Events</a>
 </div>
 
-<style>
+<style lang="scss">
 	.header {
-		display: flex;
-		background-color: black;
+		background-color: #cc0000;
 		color: white;
-		height: 50px;
-		align-items: center;
-		justify-content: center;
+		font-weight: 100;
 	}
 
-	.title {
-		display: flex;
-		width: 40vw;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo,
-	.menu {
-		display: flex;
-		width: 25vw;
-		background-color: gray;
-		align-items: center;
-		justify-content: center;
+	a {
+		color: white;
 	}
 </style>
