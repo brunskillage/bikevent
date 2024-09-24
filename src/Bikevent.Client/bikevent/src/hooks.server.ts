@@ -32,13 +32,13 @@ const Timestamps = {
 }
 
 export const Ride = sequelize.define(
-  "ride", { ...RideTableStructure, ...Timestamps })
+  "ride", { ...RideTableStructure, ...Timestamps }, { timestamps: false })
 export const Event = sequelize.define(
-  "event", { ...EventTableStructure, ...Timestamps })
+  "event", { ...EventTableStructure, ...Timestamps }, { timestamps: false })
 export const Club = sequelize.define(
-  "club", { ...ClubTableStructure, ...Timestamps })
+  "club", { ...ClubTableStructure, ...Timestamps }, { timestamps: false })
 export const Branch = sequelize.define(
-  "branch", { ...BranchTableStructure, ...Timestamps })
+  "branch", { ...BranchTableStructure, ...Timestamps }, { timestamps: false })
 
 
 if (shouldMigrate) {

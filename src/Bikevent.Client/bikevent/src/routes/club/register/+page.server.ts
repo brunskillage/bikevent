@@ -2,8 +2,19 @@
 import type { Actions } from "@sveltejs/kit"
 import * as yup from 'yup';
 import { extractErrors2 } from "$lib/common";
-import { sequelize } from "../../../hooks.server";
-import { QueryTypes } from "sequelize";
+import { FindClubByName, InsertClub } from "../../../db/dbclient";
+import { BvDbResult } from "$lib/server/models";
+
+
+function yupValidate() {
+
+}
+
+function dbValidata() {
+
+}
+
+
 
 export const actions = {
     default: async (event) => {
@@ -11,40 +22,46 @@ export const actions = {
         const formObject = Object.fromEntries(formData.entries())
         console.log('validating')
 
+        // validate and return errors if any
         try {
             await registerSchema.validate(formObject, { abortEarly: false });
-            const dbParams = {
-                nameOf: formObject.clubName,
-                description: formObject.clubDescription,
-                president: formObject.clubPresident,
-                email: formObject.clubEmail
-            }
-
-            console.log('dbParams')
-
-            console.log(dbParams)
-
-            const sql =
-                "insert into clubs (nameOf, description, president, email) values (:nameOf, :description, :president, :email)";
-
-            await sequelize
-                .query(sql, {
-                    raw: false,
-                    replacements: dbParams,
-                    type: QueryTypes.INSERT,
-                })
-
-            console.log('created')
-
         } catch (err: any) {
             console.log(err)
-            const errors = extractErrors2(err)
+            let errors = extractErrors2(err)
+
+            // check if exists already
+            const res2: BvDbResult = await FindClubByName({ nameOf: formObject.clubName.trim() })
+            if (res2.data) {
+                errors = {
+                    ...errors, clubName: { error: 'Club Name already Exists', val: '' }
+                }
+            }
+
             return { errors, data: formObject }
         }
 
-        return { errors: [] }
+        // insert into db if it doesnt exist
+        try {
+            const dbParams = {
+                nameOf: formObject.clubName.trim(),
+                description: formObject.clubDescription.trim(),
+                president: formObject.clubPresident.trim(),
+                email: formObject.clubEmail.trim(),
+                websiteUrl: formObject.clubWebsite.trim()
+            }
+
+            const res1: BvDbResult = await InsertClub(dbParams)
 
 
+            if (res1.error) {
+                return { errors: { clubName: { error: res1.error } }, data: formObject }
+            }
+
+            return { errors: [], data: formObject }
+
+        } catch (err: any) {
+            return { errors: { clubName: { error: 'Unknown error inserting Club Sorry!' } }, data: formObject }
+        }
     }
 } satisfies Actions
 
@@ -52,6 +69,7 @@ const registerSchema = yup.object({
     clubName: yup.string().required().min(3).max(255),
     clubPresident: yup.string().required().min(3).max(255),
     clubEmail: yup.string().required().email(),
-    clubDescription: yup.string().notRequired().max(255)
+    clubDescription: yup.string().notRequired().max(255),
+    clubWebsite: yup.string().notRequired().url()
 });
 

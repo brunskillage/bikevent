@@ -11,7 +11,7 @@ export const extractErrors = ({ inner }) => {
 };
 
 export const extractErrors2 = ({ inner }) => {
-    return inner.reduce((acc: any, err: { path: any; message: any; }) => {
+    return inner.reduce((acc: any, err: { path: any; message: any; value: any }) => {
         return {
             ...acc, [err.path]: { error: pascalToFriendly(err.message), val: err.value }
         };

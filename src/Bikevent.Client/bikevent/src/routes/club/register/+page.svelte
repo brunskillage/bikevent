@@ -1,10 +1,12 @@
 <script>
+	import BvCheckbox from '$lib/BvComponents/BvCheckbox.svelte';
+	import BvInput from '$lib/BvComponents/BvInput.svelte';
 	import Body from '../../body.svelte';
 	export let form;
 
 	let errors = form?.errors;
 	let formData = form?.data;
-	console.log(form);
+	//console.log(form);
 </script>
 
 <Body>
@@ -29,77 +31,62 @@
 			</li>
 			<li>Submit for checking</li>
 		</ol>
+		Note you can add more info later
 
 		<form class="pure-form pure-form-stacked" method="POST">
 			<fieldset>
 				<legend>Club Registration</legend>
-				<label for="clubName">Club Name *</label>
-				<input
-					type="text"
-					name="clubName"
-					placeholder="Club Name"
-					value={form?.data?.clubName ?? ''}
-				/>
-				{#if !errors?.clubName?.error}
-					<span class="pure-form-message">This is a required field.</span>
-				{:else}
-					<span class="error">{errors?.clubName?.error} XX</span>
-				{/if}
 
-				<div class="spacer"></div>
-				<label for="clubPresident">President *</label>
-				<input
-					type="text"
-					name="clubPresident"
-					placeholder="Leader / President Name"
-					value={form?.data?.clubPresident ?? ''}
-				/>
-				{#if !errors?.clubPresident?.error}
-					<span class="pure-form-message">This is a required field.</span>
-				{:else}
-					<span class="error">{errors?.clubPresident?.error}</span>
-				{/if}
+				<BvInput
+					nameOf="clubName"
+					label="Club Name *"
+					val={formData?.clubName}
+					error={errors?.clubName?.error}
+					prompt="eg Social Riders"
+					placeHolder="eg Social Riders"
+				></BvInput>
 
-				<div class="spacer"></div>
-				<label for="clubEmail">Email *</label>
-				<input
-					type="text"
-					name="clubEmail"
-					placeholder="Email"
-					value={form?.data?.clubEmail ?? ''}
-				/>
-				{#if !errors?.clubEmail?.error}
-					<span class="pure-form-message">This is a required field.</span>
-				{:else}
-					<span class="error">{errors?.clubEmail?.error}</span>
-				{/if}
+				<BvInput
+					nameOf="clubPresident"
+					label="Club President *"
+					val={formData?.clubPresident}
+					error={errors?.clubPresident?.error}
+					prompt=""
+					placeHolder="eg Main contact name"
+				></BvInput>
 
-				<div class="spacer"></div>
-				<label for="clubDescription">Club Description</label>
-				<input
-					type="text"
-					name="clubDescription"
-					placeholder="Club Description"
-					value={form?.data?.clubDescription ?? ''}
-				/>
-				{#if !errors?.clubDescription?.error}
-					<span class="pure-form-message">optionl, Max Length 255.</span>
-				{:else}
-					<span class="error">{errors?.clubDescription?.error}</span>
-				{/if}
+				<BvInput
+					nameOf="clubEmail"
+					label="Club Email *"
+					val={formData?.clubEmail}
+					error={errors?.clubEmail?.error}
+					prompt=""
+					placeHolder="eg contact@myclub.com"
+				></BvInput>
 
-				<div class="spacer"></div>
-				<div class="checkField">
-					<span class="box">
-						<input
-							id="hasBranches"
-							type="checkbox"
-							name="hasBranches"
-							checked={form?.data?.hasBranches === 'on'}
-						/>
-					</span>
-					<span class="checkBoxLabel">Tick if your club has Branches </span>
-				</div>
+				<BvInput
+					nameOf="clubDescription"
+					label="Club Description *"
+					val={formData?.clubDescription}
+					error={errors?.clubDescription?.error}
+					prompt=""
+					placeHolder="eg Casual group events"
+				></BvInput>
+
+				<BvCheckbox
+					nameOf="hsBranches"
+					isChecked={form?.data?.hasBranches === 'on'}
+					label="Tick if your club has Branches"
+				></BvCheckbox>
+
+				<BvInput
+					nameOf="clubWebsite"
+					label="Website Address"
+					val={formData?.clubWebsite}
+					error={errors?.clubWebsite?.error}
+					prompt="Wesite address"
+					placeHolder="eg http://www.myclubsite.com"
+				></BvInput>
 
 				<div class="info">
 					Before submitting you form will be checked, if it's all good then your registration will
@@ -117,22 +104,5 @@
 		padding: 2em;
 		padding-left: 5em;
 		width: 30em;
-	}
-
-	.spacer {
-		margin-top: 1em;
-	}
-
-	/* #hasBranches {
-		width: 10em;
-		text-align: left;
-		border: 1px solid red;
-	} */
-
-	.checkField .box {
-		width: 2em;
-	}
-	.checkBoxLabel {
-		width: 5em;
 	}
 </style>
