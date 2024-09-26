@@ -1,5 +1,6 @@
 using Bikevent.Config;
 using Bikevent.Database;
+using Microsoft.OpenApi.Models;
 
 namespace Bikevent.Website;
 
@@ -18,6 +19,9 @@ public class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
         var app = builder.Build();
 
         var db = app.Services.GetService<ClubDbService>();
@@ -31,7 +35,11 @@ public class Program
             app.UseExceptionHandler("/Home/Error");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
+
         }
+
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
@@ -43,6 +51,11 @@ public class Program
         app.MapControllerRoute(
             "default",
             "{controller=Home}/{action=Index}/{id?}");
+
+        app.UseSwagger(options =>
+        {
+            options.SerializeAsV2 = true;
+        });
 
         app.Run();
     }

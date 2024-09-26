@@ -16,9 +16,14 @@ namespace Bikevent.Config
                 throw new ArgumentNullException("BikeventMySqlConnection");
             }
 
+            HostedEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT ").ToUpperInvariant();
+            IsDevEnvironment = HostedEnvironment == "DEVELOPMENT";
+
         }
 
 
         public string? BikeventConstring { get; private set; }
+        public string? HostedEnvironment { get; private set; }
+        public bool IsDevEnvironment { get; private set; }
     }
 }

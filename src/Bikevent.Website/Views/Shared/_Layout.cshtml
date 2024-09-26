@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Bikevent.Config
+@inject BvConfigurationService Configuration
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -11,11 +13,7 @@
 
 </head>
 <body>
-
-
-<body>
-
-<div class="header">
+    <div class="header">
     <a class="" href="/">Bikeevent</a>
     <a href="/" class="">Home</a>
     <a asp-controller="ClubPages" asp-action="ViewClubs" class="">Clubs</a>
@@ -28,11 +26,19 @@
 <div class="mainContent">
     <div class="mainPage">
 
-    @RenderBody()
-            </div>
+        @RenderBody()
+    </div>
 
 </div>
-<div class="footer">BikeEvents Copyright 2024</div>
+<div class="footer">
+    BikeEvents Copyright 2024
+
+    @if (!Configuration.IsDevEnvironment)
+    {
+        <a href="/swagger/index.html">API Browser</a>
+    }
+
+</div>
 
 </body>
 
