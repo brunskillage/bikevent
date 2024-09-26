@@ -6,16 +6,6 @@ import { FindClubByName, InsertClub } from "../../../db/dbclient";
 import { BvDbResult } from "$lib/server/models";
 
 
-function yupValidate() {
-
-}
-
-function dbValidata() {
-
-}
-
-
-
 export const actions = {
     default: async (event) => {
         const formData = await event.request.formData()
@@ -29,7 +19,7 @@ export const actions = {
             console.log(err)
             let errors = extractErrors2(err)
 
-            // check if exists already
+            // // check if exists already
             const res2: BvDbResult = await FindClubByName({ nameOf: formObject.clubName.trim() })
             if (res2.data) {
                 errors = {
@@ -47,7 +37,8 @@ export const actions = {
                 description: formObject.clubDescription.trim(),
                 president: formObject.clubPresident.trim(),
                 email: formObject.clubEmail.trim(),
-                websiteUrl: formObject.clubWebsite.trim()
+                websiteUrl: formObject.clubWebsite.trim(),
+
             }
 
             const res1: BvDbResult = await InsertClub(dbParams)
@@ -66,10 +57,15 @@ export const actions = {
 } satisfies Actions
 
 const registerSchema = yup.object({
-    clubName: yup.string().required().min(3).max(255),
+    clubName: yup.string().required().min(3).max(255).test('checkNameExistsInDb', 'The Club Name already Exists',
+        (value: string) => {
+            const res2: BvDbResult = await FindClubByName({ nameOf: formObject.clubName.trim() })
+            return res2.data;
+        }),
     clubPresident: yup.string().required().min(3).max(255),
     clubEmail: yup.string().required().email(),
     clubDescription: yup.string().notRequired().max(255),
     clubWebsite: yup.string().notRequired().url()
+
 });
 
