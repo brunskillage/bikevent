@@ -44,6 +44,21 @@ namespace Bikevent.Database
                 Console.WriteLine(e);
                 throw;
             }
+        }        
+        
+        public IEnumerable<T> BvQuerySync<T>(string sql)
+        {
+            try
+            {
+                using var conn = GetOpenConnection();
+                var res = conn.Query<T>(sql);
+                return res;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public async Task BvExecute<T>(string sql)

@@ -7,7 +7,6 @@ public class ClubDbService : BaseDbClientService
 {
     public ClubDbService(BvConfigurationService config) : base(config)
     {
-
     }
 
     public async Task<IEnumerable<ClubRow>> GetClubs()

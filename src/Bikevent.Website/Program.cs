@@ -15,6 +15,7 @@ public class Program
         builder.Services.AddSingleton<IConfiguration>(configuration);
         builder.Services.AddSingleton<BvConfigurationService>();
         builder.Services.AddSingleton<ClubDbService>();
+        builder.Services.AddSingleton<MiscDbService>();
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
@@ -26,6 +27,9 @@ public class Program
 
         var db = app.Services.GetService<ClubDbService>();
         db.Test();
+
+        var genDb = app.Services.GetService<MiscDbService>();
+        var csharp = genDb.GetCSharpObjects("clubs");
 
         var clubs = db.GetClubs();
 
