@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -27,6 +27,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Bikevent.Config\Bikevent.Config.csproj" />
     <ProjectReference Include="..\Bikevent.Database\Bikevent.Database.csproj" />
+    <ProjectReference Include="..\Bikevent.DataObjects\Bikevent.DataObjects.csproj" />
+    <ProjectReference Include="..\Bikevent.Migrations\Bikevent.Migrations.csproj" />
+    <ProjectReference Include="..\Bikevent.Services\Bikevent.Services.csproj" />
+    <ProjectReference Include="..\Bikevent.Validation\Bikevent.Validation.csproj" />
   </ItemGroup>
 
 </Project>

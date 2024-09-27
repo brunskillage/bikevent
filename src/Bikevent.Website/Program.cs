@@ -1,21 +1,24 @@
+using System.Reflection;
 using Bikevent.Config;
 using Bikevent.Database;
-using Microsoft.OpenApi.Models;
+using FluentMigrator.Runner;
 
 namespace Bikevent.Website;
 
 public class Program
 {
-    public static void Main(string[] args) {
+    public static void Main(string[] args)
+    {
         var builder = WebApplication.CreateBuilder(args);
 
-        ConfigurationManager configuration = builder.Configuration; // allows both to access and to set up the config
-        IWebHostEnvironment environment = builder.Environment;
+        var configuration = builder.Configuration; // allows both to access and to set up the config
+        var environment = builder.Environment;
 
         builder.Services.AddSingleton<IConfiguration>(configuration);
         builder.Services.AddSingleton<BvConfigurationService>();
         builder.Services.AddSingleton<ClubDbService>();
         builder.Services.AddSingleton<MiscDbService>();
+        
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
@@ -23,15 +26,31 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        var app = builder.Build();
 
+        // add migrations
+        var ma = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bikevent.Migrations.dll");
+        Assembly.LoadFile(ma);
+        var migrations = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name.Contains("Bike")).ToArray();
+        builder.Services.AddSingleton<FluentMigrator.Runner.Processors.ProcessorOptions>(); // bug not found if line missing
+
+        builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
+            .AddFluentMigratorCore()
+            .ConfigureRunner(config =>
+            {
+                config.AddMySql8()
+                    .ConfigureGlobalProcessorOptions(c=>c.Timeout = TimeSpan.FromMinutes(1))
+                    .WithGlobalConnectionString(configuration.GetConnectionString("BikeventMySqlConnection"))
+                    .ScanIn(migrations).For.Migrations();
+            });
+
+        // end add migrations
+
+
+        var app = builder.Build();
+        
         var db = app.Services.GetService<ClubDbService>();
         db.Test();
 
-        var genDb = app.Services.GetService<MiscDbService>();
-        var csharp = genDb.GetCSharpObjects("clubs");
-
-        var clubs = db.GetClubs();
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
@@ -55,10 +74,16 @@ public class Program
             "default",
             "{controller=Home}/{action=Index}/{id?}");
 
-        app.UseSwagger(options =>
+        app.UseSwagger(options => { options.SerializeAsV2 = true; });
+
+        // run migrations
+        using (var scope = app.Services.CreateScope())
         {
-            options.SerializeAsV2 = true;
-        });
+            var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
+            migrator.ListMigrations();
+            migrator.MigrateUp();
+        };
+
 
         app.Run();
     }
