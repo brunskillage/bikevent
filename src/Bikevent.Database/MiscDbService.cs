@@ -4,8 +4,23 @@ namespace Bikevent.Database;
 
 public class MiscDbService : BaseDbClientService
 {
+    private readonly BvConfigurationService _config;
+
     public MiscDbService(BvConfigurationService config) : base(config)
     {
+        _config = config;
+    }
+
+    public async Task<IEnumerable<DbTableMeta>> GetTableMeta(string tableName)
+    {
+        var fields = await BvQuery<DbTableMeta>($"SHOW FIELDS FROM {tableName}");
+        return fields;
+    }
+
+    public async Task<List<string>> GetTableNames()
+    {
+        var tables = await BvQuery<string>("SHOW TABLES;");
+        return tables.ToList();
     }
 
     public string GetCSharpObjects(string tableName)
@@ -47,7 +62,6 @@ select '}';";
 
     public string GetTSInterface(string tableName)
     {
-
         var sql = @"
 select '" + tableName + @"' INTO @table; #table name
 select 'bikeventdb' into @schema; #database name
@@ -82,7 +96,6 @@ select '}';";
 
         return str;
     }
-
 
     public string GetTSClass(string tableName)
     {
@@ -126,5 +139,4 @@ select '}'
 
         return str;
     }
-
 }

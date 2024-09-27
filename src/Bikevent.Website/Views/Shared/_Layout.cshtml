@@ -25,7 +25,6 @@
 
 <div class="mainContent">
     <div class="mainPage">
-
         @RenderBody()
     </div>
 
@@ -33,9 +32,11 @@
 <div class="footer">
     BikeEvents Copyright 2024
 
-    @if (!Configuration.IsDevEnvironment)
+    @if (Configuration.IsDevEnvironment)
     {
-        <a href="/swagger/index.html">API Browser</a>
+        <a href="/swagger/index.html" target="_blank">API Browser</a> 
+        <a href="http://192.168.1.140/phpMyAdmin/db_structure.php?server=1&db=bikeventdb" target="_blank">DB Browser</a>
+        <a asp-controller="UtilPages" asp-action="Index" >Util Page</a>
     }
 
 </div>

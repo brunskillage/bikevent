@@ -1,0 +1,95 @@
+﻿@using Bikevent.Database
+@inject MiscDbService db;
+
+@functions {
+
+    string GetTsType(string inType)
+    {
+        if (inType.StartsWith("int"))
+            return "number";
+        if (inType.StartsWith("varchar"))
+            return "string";
+        if (inType.IndexOf("date", StringComparison.OrdinalIgnoreCase) > -1)
+            return "Date";
+        if (inType.IndexOf("time", StringComparison.OrdinalIgnoreCase) > -1)
+            return "Date";
+
+        return "unknown";
+    }
+
+    string GetCsType(string inType)
+    {
+        if (inType.StartsWith("int"))
+            return "int";
+        if (inType.StartsWith("varchar"))
+            return "string";
+        if (inType.IndexOf("date", StringComparison.OrdinalIgnoreCase) > -1)
+            return "DateTime";
+        if (inType.IndexOf("time", StringComparison.OrdinalIgnoreCase) > -1)
+            return "DateTime";
+
+        return "unknown";
+    }
+
+}
+
+<h1>Util Page</h1>
+<div id="auto">
+    @foreach (var t in await db.GetTableNames())
+    {
+        <hr/>
+
+        <h2>@t</h2>
+        <hr/>
+        <h2>Typescript</h2>
+
+
+        var linesTs = new List<string>();
+        linesTs.Add($"class {t} {{");
+        linesTs.Add("   constructor(");
+
+        var meta = (await db.GetTableMeta(t)).ToList();
+        @foreach (var m in meta.OrderBy(x => x.Null))
+        {
+            var nullSign = m.Null == "YES" ? "?" : "";
+            var theType = GetTsType(m.Type);
+            var lineTs = $"public {m.Field}{nullSign}: {theType},";
+            linesTs.Add(lineTs);
+        }
+        linesTs.Add(") { }");
+        linesTs.Add(" }");
+        var allts = string.Join(Environment.NewLine, linesTs);
+
+        <textarea>@allts</textarea>
+
+
+        <h2>Csharp</h2>
+
+
+        var linesCs = new List<string>();
+        linesCs.Add($"public class {t}");
+        linesCs.Add("{");
+
+        @foreach (var m in meta.OrderBy(x => x.Field))
+        {
+            var nullSign = m.Null == "YES" ? "?" : "";
+            var theType = GetCsType(m.Type);
+            var line = $"   public {theType} {m.Field}{nullSign} {{get;set;}}";
+            linesCs.Add(line);
+        }
+        linesCs.Add("}}");
+        var allcs = string.Join(Environment.NewLine, linesCs);
+
+        <textarea>@allcs</textarea>
+
+        <h3>Inputs</h3>
+        <div class="form" id="inputs">
+            @foreach (var m in meta.OrderBy(x => x.Field))
+            {
+                @Html.Partial("BvPartials/_InputBox", new BvInputModel { Label = m.Field, NameOf = m.Field, PlaceHolder = m.Field, Prompt = m.Field, Error = "" })
+                <br/>
+            }
+        </div>
+        
+    }
+</div>

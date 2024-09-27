@@ -5,7 +5,7 @@ namespace Bikevent.Website.Controllers
     public class AuthPagesController : Controller
     {
         [Route("login")]
-        [HttpPost]
+        [HttpGet]
         public IActionResult Login()
         {
             return View("Login");
@@ -19,7 +19,7 @@ namespace Bikevent.Website.Controllers
         }
 
         [Route("signup")]
-        [HttpPost]
+        [HttpGet]
         public IActionResult SignUp()
         {
             return View("Signup");

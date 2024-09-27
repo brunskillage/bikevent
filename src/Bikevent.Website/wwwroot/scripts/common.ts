@@ -19,8 +19,13 @@ toastr.options = {
     "hideMethod": "fadeOut"
 }
 
-interface XPage {
-    start()
+interface Page {
+    init()
+    addEvents()
+}
+
+interface FormPage {
+    init()
     addEvents()
     submit(e: FormDataEvent)
     validate()

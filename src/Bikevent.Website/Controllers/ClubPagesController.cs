@@ -5,7 +5,7 @@ namespace Bikevent.Website.Controllers
     public class ClubPagesController : Controller
     {
         [Route("/club/register")]
-        [HttpPost]
+        [HttpGet]
         public IActionResult Register()
         {
             return View("RegisterClub");
