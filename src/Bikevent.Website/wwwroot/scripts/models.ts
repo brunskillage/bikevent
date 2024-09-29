@@ -1,14 +1,49 @@
-class Clubs {
+
+class club {
     constructor(
-        public nameOf?: string,
-        public description?: string,
+        public id: number,
+        public nameOf: string,
+        public email: string,
+        public createdOn: Date,
+        public modifiedOn: Date,
         public president?: string,
-        public email?: string,
         public websiteUrl?: string,
-        public mainImageRef?: string,
+        public mainImageUrl?: string,
         public googleMapUrl?: string,
-        public id?: number,
-        public createdOn?: string,
-        public updatedOn?: string,
+    ) { }
+}
+
+class bvEvent {
+    constructor(
+        public id: string,
+        public club_id: number,
+        public title: string,
+        public description: string,
+        public standsUp: Date,
+        public createdOn: Date,
+        public modifiedOn: Date,
+        public endsOnOn?: Date,
+        public linklUrl?: string,
+        public lat?: unknown,
+        public lng?: unknown,
+    ) { }
+}
+
+class ride {
+    constructor(
+        public id: string,
+        public club_id: number,
+        public title: string,
+        public startsOn: Date,
+        public startLocation: string,
+        public createdOn: Date,
+        public modifiedOn: Date,
+        public description?: string,
+        public endsOnOn?: Date,
+        public linklUrl?: string,
+        public endLocation?: string,
+        public mapLink?: string,
+        public lat?: unknown,
+        public lng?: unknown,
     ) { }
 }

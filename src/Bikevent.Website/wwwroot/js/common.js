@@ -1,10 +1,11 @@
 "use strict";
+// https://codeseven.github.io/toastr/demo.html
 toastr.options = {
     "closeButton": false,
     "debug": false,
     "newestOnTop": true,
     "progressBar": true,
-    "positionClass": "toast-top-right",
+    "positionClass": "toast-top-center",
     "preventDuplicates": false,
     "onclick": null,
     "showDuration": "300",

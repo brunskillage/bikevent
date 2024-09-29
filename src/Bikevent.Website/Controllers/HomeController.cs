@@ -16,7 +16,7 @@ namespace Bikevent.Website.Controllers
             _dbClientService = dbClientService;
         }
 
-        public IActionResult Index()
+        public IActionResult Home()
         {
             return View("Home");
         }

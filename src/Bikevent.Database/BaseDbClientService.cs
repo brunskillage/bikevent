@@ -2,78 +2,90 @@
 using Dapper;
 using MySqlConnector;
 
-namespace Bikevent.Database
+namespace Bikevent.Database;
+
+/// <summary>
+///     Uses
+///     https://mysqlconnector.net/overview/installing/
+/// </summary>
+public abstract class BaseDbClientService
 {
+    private readonly BvConfigurationService _config;
 
-    /// <summary>
-    /// Uses
-    /// https://mysqlconnector.net/overview/installing/
-    /// </summary>
-    public abstract class BaseDbClientService
+    public BaseDbClientService(BvConfigurationService config)
     {
-        private readonly BvConfigurationService _config;
+        _config = config;
+    }
 
-        public BaseDbClientService(BvConfigurationService config)
-        {
-            _config = config;
-        }
+    public async Task<MySqlConnection> GetOpenConnectionAsync()
+    {
+        var connection = new MySqlConnection(_config.BikeventConstring);
+        await connection.OpenAsync();
+        return connection;
+    }
 
-        public MySqlConnection GetOpenConnection()
-        {
-            var connection = new MySqlConnection(_config.BikeventConstring);
-            connection.Open();
-            return connection;
-        }
-        
-        public async void Test()
-        {
-            await using var conn = GetOpenConnection();
-            var res = await conn.ExecuteAsync("select 1+ 1");
-        }
+    public MySqlConnection GetOpenConnectionSync()
+    {
+        var connection = new MySqlConnection(_config.BikeventConstring);
+        connection.Open();
+        return connection;
+    }
 
-        public async Task<IEnumerable<T>> BvQuery<T>(string sql)
-        {
-            try
-            {
-                await using var conn = GetOpenConnection();
-                var res = await conn.QueryAsync<T>(sql);
-                return res;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }        
-        
-        public IEnumerable<T> BvQuerySync<T>(string sql)
-        {
-            try
-            {
-                using var conn = GetOpenConnection();
-                var res = conn.Query<T>(sql);
-                return res;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
 
-        public async Task BvExecute<T>(string sql)
-        {
-            try
-            {
-                await using var conn = GetOpenConnection();
-                await conn.ExecuteAsync(sql);
+    public async void TestAsync()
+    {
+        using var conn = await GetOpenConnectionAsync();
+        var res = await conn.ExecuteAsync("select 1+ 1");
+    }
 
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+
+    public async Task<IEnumerable<T>> BvQueryAsync<T>(string sql)
+    {
+        try
+        {
+            using var conn = await GetOpenConnectionAsync();
+            var res = await conn.QueryAsync<T>(sql);
+            return res;
         }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public IEnumerable<T> BvQuerySync<T>(string sql)
+    {
+        try
+        {
+            using var conn = GetOpenConnectionSync();
+            var res = conn.Query<T>(sql);
+            return res;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task BvExecuteAsync(string sql)
+    {
+        try
+        {
+            await using var conn = await GetOpenConnectionAsync();
+            await conn.ExecuteAsync(sql);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public void BvExecuteSync(string sql)
+    {
+        using var conn = GetOpenConnectionSync();
+        conn.ExecuteAsync(sql);
     }
 }

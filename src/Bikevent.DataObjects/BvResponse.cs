@@ -1,9 +1,9 @@
 ﻿namespace Bikevent.DataObjects
 {
-    public class BvResponse<T>
+    public class BvResponse
     {
-        public string Error { get; set; }
-        public bool Success => !string.IsNullOrWhiteSpace(Error);
-        public T? Data { get; set; }
+        public string Error => string.Empty;
+        public bool Success => string.IsNullOrWhiteSpace(Error);
+        public object Data { get; set; }
     }
 }

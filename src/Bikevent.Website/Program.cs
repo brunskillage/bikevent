@@ -1,6 +1,7 @@
 using System.Reflection;
 using Bikevent.Config;
 using Bikevent.Database;
+using Bikevent.Migrations;
 using FluentMigrator.Runner;
 
 namespace Bikevent.Website;
@@ -13,6 +14,9 @@ public class Program
 
         var configuration = builder.Configuration; // allows both to access and to set up the config
         var environment = builder.Environment;
+
+        builder.Services.Configure<AppSettingsValues>(
+            builder.Configuration.GetSection("AppSettings"));
 
         builder.Services.AddSingleton<IConfiguration>(configuration);
         builder.Services.AddSingleton<BvConfigurationService>();
@@ -48,8 +52,9 @@ public class Program
 
         var app = builder.Build();
         
-        var db = app.Services.GetService<ClubDbService>();
-        db.Test();
+        var clubsDb = app.Services.GetService<ClubDbService>();
+        var miscDb = app.Services.GetService<MiscDbService>();
+        clubsDb.TestAsync();
 
 
         // Configure the HTTP request pipeline.
@@ -77,11 +82,12 @@ public class Program
         app.UseSwagger(options => { options.SerializeAsV2 = true; });
 
         // run migrations
+        // miscDb.ClearDbVersionInfo();
         using (var scope = app.Services.CreateScope())
         {
             var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
             migrator.ListMigrations();
-            migrator.MigrateUp();
+            migrator.MigrateUp(001);
         };
 
 

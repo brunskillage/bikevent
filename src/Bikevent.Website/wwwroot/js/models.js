@@ -1,17 +1,51 @@
 "use strict";
-var Clubs = /** @class */ (function () {
-    function Clubs(nameOf, description, president, email, websiteUrl, mainImageRef, googleMapUrl, id, createdOn, updatedOn) {
-        this.nameOf = nameOf;
-        this.description = description;
-        this.president = president;
-        this.email = email;
-        this.websiteUrl = websiteUrl;
-        this.mainImageRef = mainImageRef;
-        this.googleMapUrl = googleMapUrl;
+var club = /** @class */ (function () {
+    function club(id, nameOf, email, createdOn, modifiedOn, president, websiteUrl, mainImageUrl, googleMapUrl) {
         this.id = id;
+        this.nameOf = nameOf;
+        this.email = email;
         this.createdOn = createdOn;
-        this.updatedOn = updatedOn;
+        this.modifiedOn = modifiedOn;
+        this.president = president;
+        this.websiteUrl = websiteUrl;
+        this.mainImageUrl = mainImageUrl;
+        this.googleMapUrl = googleMapUrl;
     }
-    return Clubs;
+    return club;
+}());
+var bvEvent = /** @class */ (function () {
+    function bvEvent(id, club_id, title, description, standsUp, createdOn, modifiedOn, endsOnOn, linklUrl, lat, lng) {
+        this.id = id;
+        this.club_id = club_id;
+        this.title = title;
+        this.description = description;
+        this.standsUp = standsUp;
+        this.createdOn = createdOn;
+        this.modifiedOn = modifiedOn;
+        this.endsOnOn = endsOnOn;
+        this.linklUrl = linklUrl;
+        this.lat = lat;
+        this.lng = lng;
+    }
+    return bvEvent;
+}());
+var ride = /** @class */ (function () {
+    function ride(id, club_id, title, startsOn, startLocation, createdOn, modifiedOn, description, endsOnOn, linklUrl, endLocation, mapLink, lat, lng) {
+        this.id = id;
+        this.club_id = club_id;
+        this.title = title;
+        this.startsOn = startsOn;
+        this.startLocation = startLocation;
+        this.createdOn = createdOn;
+        this.modifiedOn = modifiedOn;
+        this.description = description;
+        this.endsOnOn = endsOnOn;
+        this.linklUrl = linklUrl;
+        this.endLocation = endLocation;
+        this.mapLink = mapLink;
+        this.lat = lat;
+        this.lng = lng;
+    }
+    return ride;
 }());
 //# sourceMappingURL=models.js.map

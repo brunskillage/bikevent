@@ -13,13 +13,13 @@ public class MiscDbService : BaseDbClientService
 
     public async Task<IEnumerable<DbTableMeta>> GetTableMeta(string tableName)
     {
-        var fields = await BvQuery<DbTableMeta>($"SHOW FIELDS FROM {tableName}");
+        var fields = await BvQueryAsync<DbTableMeta>($"SHOW FIELDS FROM {tableName}");
         return fields;
     }
 
     public async Task<List<string>> GetTableNames()
     {
-        var tables = await BvQuery<string>("SHOW TABLES;");
+        var tables = await BvQueryAsync<string>("SHOW TABLES;");
         return tables.ToList();
     }
 
@@ -138,5 +138,16 @@ select '}'
         var str = string.Join(Environment.NewLine, res);
 
         return str;
+    }
+
+
+    public void ClearDbVersionInfo()
+    {
+        BvExecuteSync("delete from VersionInfo;");
+    }    
+    
+    public void AddDummyData()
+    {
+        BvExecuteSync("delete from VersionInfo;");
     }
 }

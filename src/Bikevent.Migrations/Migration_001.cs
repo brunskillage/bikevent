@@ -13,17 +13,19 @@ namespace Bikevent.Migrations
             Delete.Table("events");
 
             Create.Table("clubs")
-                .WithColumn("id").AsInt32().NotNullable().PrimaryKey()
+                .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn("nameOf").AsString(255).NotNullable()
                 .WithColumn("president").AsString(255).Nullable()
                 .WithColumn("email").AsString(255).NotNullable()
                 .WithColumn("websiteUrl").AsString(255).Nullable()
                 .WithColumn("mainImageUrl").AsString(255).Nullable()
                 .WithColumn("googleMapUrl").AsString(255).Nullable()
-                .WithColumn("createdOn").AsDateTime().NotNullable()
-                .WithColumn("modifiedOn").AsDateTime().NotNullable();
+                .WithColumn("createdOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
+                .WithColumn("modifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
 
             Create.Table("rides")
+                .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
+                .WithColumn("club_id").AsInt32().NotNullable()
                 .WithColumn("title").AsString(255).NotNullable()
                 .WithColumn("description").AsString(255).Nullable()
                 .WithColumn("startsOn").AsDateTime().NotNullable()
@@ -34,10 +36,12 @@ namespace Bikevent.Migrations
                 .WithColumn("mapLink").AsString(255).Nullable()
                 .WithColumn("lat").AsDecimal().Nullable()
                 .WithColumn("lng").AsDecimal().Nullable()
-                .WithColumn("createdOn").AsDateTime().NotNullable()
-                .WithColumn("modifiedOn").AsDateTime().NotNullable();
+                .WithColumn("createdOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
+                .WithColumn("modifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
 
             Create.Table("events")
+                .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
+                .WithColumn("club_id").AsInt32().NotNullable()
                 .WithColumn("title").AsString(255).NotNullable()
                 .WithColumn("description").AsString(255).NotNullable()
                 .WithColumn("standsUp").AsDateTime().NotNullable()
@@ -45,13 +49,16 @@ namespace Bikevent.Migrations
                 .WithColumn("linklUrl").AsString(255).Nullable()
                 .WithColumn("lat").AsDecimal().Nullable()
                 .WithColumn("lng").AsDecimal().Nullable()
-                .WithColumn("createdOn").AsDateTime().NotNullable()
-                .WithColumn("modifiedOn").AsDateTime().NotNullable();
+                .WithColumn("createdOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
+                .WithColumn("modifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+
         }
 
         public override void Down()
         {
             Delete.Table("clubs");
+            Delete.Table("rides");
+            Delete.Table("events");
         }
     }
 }

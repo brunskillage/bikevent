@@ -1,14 +1,19 @@
 ﻿@using Bikevent.Database
+@using FluentMigrator.Expressions
+@using Humanizer
+@using System.Security.Cryptography.X509Certificates
 @inject MiscDbService db;
 
 @functions {
 
     string GetTsType(string inType)
     {
-        if (inType.StartsWith("int"))
+        if (inType.Contains("int"))
             return "number";
         if (inType.StartsWith("varchar"))
-            return "string";
+            return "string";        
+        if (inType.StartsWith("decimal"))
+            return "number";
         if (inType.IndexOf("date", StringComparison.OrdinalIgnoreCase) > -1)
             return "Date";
         if (inType.IndexOf("time", StringComparison.OrdinalIgnoreCase) > -1)
@@ -19,7 +24,7 @@
 
     string GetCsType(string inType)
     {
-        if (inType.StartsWith("int"))
+        if (inType.Contains("int"))
             return "int";
         if (inType.StartsWith("varchar"))
             return "string";
@@ -27,9 +32,28 @@
             return "DateTime";
         if (inType.IndexOf("time", StringComparison.OrdinalIgnoreCase) > -1)
             return "DateTime";
+        if (inType.StartsWith("decimal"))
+            return "decimal";
 
         return "unknown";
     }
+
+    string GetApostrophies(string inType, string field)
+    {
+        if (inType.StartsWith("int"))
+            return inType;
+    
+        return $"@{field}'";
+    }
+
+    string FirstCapital(string input)
+    {
+        return input.Substring(0, 1).ToUpperInvariant() + input.Substring(1);
+    }
+
+    string allCsFileContent = "";
+    string allTsFileContent = "";
+    string allFormHtmlContent = "";
 
 }
 
@@ -37,59 +61,91 @@
 <div id="auto">
     @foreach (var t in await db.GetTableNames())
     {
-        <hr/>
 
-        <h2>@t</h2>
-        <hr/>
-        <h2>Typescript</h2>
-
+        // Ts Classes
 
         var linesTs = new List<string>();
-        linesTs.Add($"class {t} {{");
-        linesTs.Add("   constructor(");
+        linesTs.Add($"class {t.Singularize()} {{");
+        linesTs.Add("&nbsp;&nbsp;&nbsp;constructor(");
 
         var meta = (await db.GetTableMeta(t)).ToList();
         @foreach (var m in meta.OrderBy(x => x.Null))
         {
             var nullSign = m.Null == "YES" ? "?" : "";
             var theType = GetTsType(m.Type);
-            var lineTs = $"public {m.Field}{nullSign}: {theType},";
+            var lineTs = $"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public {m.Field}{nullSign}: {theType},";
             linesTs.Add(lineTs);
         }
-        linesTs.Add(") { }");
+        linesTs.Add("&nbsp;&nbsp;&nbsp;) { }");
         linesTs.Add(" }");
-        var allts = string.Join(Environment.NewLine, linesTs);
+        var allts = string.Join("<br>", linesTs);
+        allTsFileContent += "<br><br>" + allts;
 
-        <textarea>@allts</textarea>
-
-
-        <h2>Csharp</h2>
-
+        // CS Classes
 
         var linesCs = new List<string>();
-        linesCs.Add($"public class {t}");
+        linesCs.Add($"[Table(\"{t}\")]");
+        linesCs.Add($"public class Bv{t.Humanize().Singularize()}Row");
         linesCs.Add("{");
+        linesCs.Add("&nbsp;&nbsp;&nbsp;[Key]");
+        linesCs.Add("&nbsp;&nbsp;&nbsp;public int Id {get;set;}");
 
         @foreach (var m in meta.OrderBy(x => x.Field))
         {
+            if (m.Field == "id") continue;
             var nullSign = m.Null == "YES" ? "?" : "";
             var theType = GetCsType(m.Type);
-            var line = $"   public {theType} {m.Field}{nullSign} {{get;set;}}";
+            var line = $"&nbsp;&nbsp;&nbsp;public {theType}{nullSign} {FirstCapital(m.Field)} {{get; set;}}";
             linesCs.Add(line);
         }
-        linesCs.Add("}}");
-        var allcs = string.Join(Environment.NewLine, linesCs);
+        linesCs.Add("}");
+        var allcs = string.Join("<br>", linesCs);
+        allCsFileContent += "<br><br>" + allcs;
 
-        <textarea>@allcs</textarea>
+@*
+        var insertSql = "";
+        var iFields = string.Join(", ", meta.Where(m=>m.Field != "id").Select(m=> $"{m.Field}"));
+        var iVals = string.Join(", ", meta.Where(m=>m.Field != "id").Select(m=> $"@{FirstCapital(m.Field)}"));
+        insertSql += $"Insert into {t} ({iFields}) values ({iVals});";
 
-        <h3>Inputs</h3>
-        <div class="form" id="inputs">
-            @foreach (var m in meta.OrderBy(x => x.Field))
-            {
-                @Html.Partial("BvPartials/_InputBox", new BvInputModel { Label = m.Field, NameOf = m.Field, PlaceHolder = m.Field, Prompt = m.Field, Error = "" })
-                <br/>
-            }
-        </div>
+
+      
+
+        var uFields = string.Join(", ", meta.Where(m=>m.Field != "id").Select(m=> $"{m.Field} = @{FirstCapital(m.Field)}"));
         
+        var updateSql = $"update {t} set ({uFields}) where id = @id;"; 
+        <br/><br/> @updateSql
+        
+        var deleteSql = $"delete from {t} where id = @id;"; 
+        <br/><br/> @deleteSql
+        
+        var selectSql = $"select from {t} where id = @id;"; 
+        
+        <br/><span>public class @FirstCapital(t)</span>
+        <br/><br/> @selectSql
+ *@  
+
+
+
+
     }
+    <h1>Typscript</h1>
+    @Html.Raw(allTsFileContent)
+    <hr/>
+    <h1>Csharp</h1>
+    @Html.Raw(allCsFileContent)
+    
+    
+@foreach (var t in await db.GetTableNames())
+{
+        var meta = (await db.GetTableMeta(t)).ToList();
+    <h3>Inputs</h3>
+    <div class="form" id="inputs">
+        @foreach (var m in meta.OrderBy(x => x.Field))
+        {
+            @Html.Partial("BvPartials/_InputBox", new BvInputModel { Label = m.Field, NameOf = m.Field, PlaceHolder = m.Field, Prompt = m.Field, Error = "" })
+            <br/>
+        }
+    </div>
+}
 </div>

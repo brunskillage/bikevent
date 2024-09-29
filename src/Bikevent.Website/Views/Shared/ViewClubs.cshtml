@@ -1,6 +1,23 @@
-﻿@{
+﻿@model ClubsPageModel
+@{
 }
 <h2>View Clubs</h2>
 
+<div id="clubCards">@{
+                        foreach (var c in @Model.ClubRows)
+                        {
+                            <div class="clubCard">
+                                <div class="id"><a asp-controller="ClubPages" asp-action="GetClub" asp-route-id="@c.Id">@c.NameOf</a></div>
+                                </div>
+                            <hr>
+                        }
+                    }
 
+</div>
 
+@section Scripts {
+    <script src="~/js/clubsPage.js"></script>
+    <script language="javascript">
+        app.clubsPage.init();
+    </script>
+}

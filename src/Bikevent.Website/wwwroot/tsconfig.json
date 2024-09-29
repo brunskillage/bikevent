@@ -6,9 +6,11 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",
+    "module": "commonjs",
     "outDir": "./js",
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "strict": true,
+    "lib": ["es2015","DOM","dom.iterable"],
   },
   "include": [
     "./scripts/**/*"

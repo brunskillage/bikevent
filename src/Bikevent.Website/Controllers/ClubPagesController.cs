@@ -1,10 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Bikevent.Database;
+using Bikevent.Website.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bikevent.Website.Controllers
 {
     public class ClubPagesController : Controller
     {
-        [Route("/club/register")]
+        private readonly ClubDbService _clubDb;
+
+
+        public ClubPagesController(ClubDbService clubDb)
+        {
+            _clubDb = clubDb;
+        }
+
+        [Route("/register")]
         [HttpGet]
         public IActionResult Register()
         {
@@ -13,9 +23,36 @@ namespace Bikevent.Website.Controllers
         
         [Route("/clubs")]
         [HttpGet]
-        public IActionResult ViewClubs()
+        public async Task<IActionResult> ViewClubs()
         {
-            return View("ViewClubs");
+            var clubs = await _clubDb.GetClubs();
+
+            var model = new ClubsPageModel
+            {
+                ClubRows = clubs.ToList()
+            };
+
+            return View("ViewClubs", model);
+        }        
+        
+        [Route("/club")]
+        [HttpPost]
+        public async Task<ActionResult> AddClub([FromBody]BvClubRow bvClub)
+        {
+
+            return View("RegisterClub");
+        }        
+        
+        [Route("/club/{id}")]
+        [HttpGet]
+        public async Task<ActionResult> GetClub([FromRoute]int id)
+        {
+            var club = await _clubDb.GetClub(new BvClubRow {Id = id});
+            var model = new ClubPageModel
+            {
+               Club  = club
+            };
+            return View("ViewClub", model);
         }
     }
 }
