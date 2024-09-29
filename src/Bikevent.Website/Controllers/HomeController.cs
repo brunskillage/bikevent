@@ -16,6 +16,8 @@ namespace Bikevent.Website.Controllers
             _dbClientService = dbClientService;
         }
 
+        [Route("")]
+        [HttpGet]
         public IActionResult Home()
         {
             return View("Home");

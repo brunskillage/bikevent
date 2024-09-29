@@ -36,7 +36,7 @@ namespace Bikevent.Website.Controllers
         }        
         
         [Route("/club")]
-        [HttpPost]
+        [HttpGet]
         public async Task<ActionResult> AddClub([FromBody]BvClubRow bvClub)
         {
 
