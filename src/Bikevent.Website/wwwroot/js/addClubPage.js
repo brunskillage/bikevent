@@ -54,7 +54,13 @@ var app;
                             return [4 /*yield*/, app.bvApiClient.AddClub(dataObj)];
                         case 1:
                             res = _a.sent();
-                            $.publish(app.BvEventNames.ShowSuccess, "Are you ok?");
+                            this.hideErrors();
+                            if (!res.success) {
+                                $.publish(app.BvEventNames.ShowError, "Please sort out the inputs thanks!");
+                                this.showErrors(res.data.errors);
+                                return [2 /*return*/, false];
+                            }
+                            $.publish(app.BvEventNames.ShowSuccess, "Club Added");
                             return [2 /*return*/];
                     }
                 });
@@ -70,6 +76,15 @@ var app;
         AddClub.prototype.addEvents = function () {
             this.formButton.off("click").on("click", this.submit);
         };
+        AddClub.prototype.hideErrors = function () {
+            $("[id$='-error']").hide();
+        };
+        AddClub.prototype.showErrors = function (errors) {
+            errors.forEach(function (err) {
+                $("#" + err.propName + "-error").show();
+                $("#" + err.propName + "-error").html(err.message);
+            });
+        };
         AddClub.prototype.validate = function () {
             throw new Error("Method not implemented.");
         };
@@ -77,7 +92,6 @@ var app;
             this.addEvents();
             console.log("Init form page");
             // toastr.success("test")
-            $.publish(app.BvEventNames.ShowSuccess, "Add a club");
         };
         return AddClub;
     }());

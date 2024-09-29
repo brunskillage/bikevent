@@ -8,6 +8,18 @@ module app {
         addEvents() {
             this.formButton.off("click").on("click", this.submit)
         }
+
+        hideErrors() {
+            $("[id$='-error']").hide()
+        }
+
+        showErrors(errors) {
+            errors.forEach(err => {
+
+                $("#" + err.propName + "-error").show()
+                $("#" + err.propName + "-error").html(err.message)
+            })
+        }
         submit = async (e: FormDataEvent) => {
             e.preventDefault()
             var data = $("#mainForm").serializeArray()
@@ -21,7 +33,15 @@ module app {
             // console.log(new FormData(form))
 
             var res = await bvApiClient.AddClub(dataObj as club)
-            $.publish(app.BvEventNames.ShowSuccess, "Are you ok?")
+            this.hideErrors()
+            if (!res.success) {
+                $.publish(app.BvEventNames.ShowError, "Please sort out the inputs thanks!")
+                this.showErrors(res.data.errors)
+                return false;
+            }
+
+
+            $.publish(app.BvEventNames.ShowSuccess, "Club Added")
 
 
 
@@ -33,7 +53,7 @@ module app {
             this.addEvents();
             console.log("Init form page")
             // toastr.success("test")
-            $.publish(app.BvEventNames.ShowSuccess, "Add a club")
+
 
         }
     }

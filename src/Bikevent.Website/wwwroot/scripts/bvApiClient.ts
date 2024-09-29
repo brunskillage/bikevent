@@ -30,7 +30,7 @@ module app {
 
         AddClub = async (club: club) => {
             var res = await this.Makerequest(HttpMethod.POST, "api/v1/club", club)
-            return res();
+            return res;
         }
 
     }

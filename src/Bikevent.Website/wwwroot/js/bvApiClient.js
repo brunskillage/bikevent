@@ -66,7 +66,7 @@ var app;
                         case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.POST, "api/v1/club", club)];
                         case 1:
                             res = _a.sent();
-                            return [2 /*return*/, res()];
+                            return [2 /*return*/, res];
                     }
                 });
             }); };

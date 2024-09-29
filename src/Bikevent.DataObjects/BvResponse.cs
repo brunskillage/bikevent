@@ -2,7 +2,7 @@
 {
     public class BvResponse
     {
-        public string Error => string.Empty;
+        public string Error { get; set; } = String.Empty;
         public bool Success => string.IsNullOrWhiteSpace(Error);
         public object Data { get; set; }
     }

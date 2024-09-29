@@ -1,4 +1,5 @@
 ﻿using Bikevent.Database;
+using Bikevent.Validation;
 using Bikevent.Website.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,6 +40,7 @@ namespace Bikevent.Website.Controllers
         [HttpGet]
         public async Task<ActionResult> AddClub([FromBody]BvClubRow bvClub)
         {
+
 
             return View("RegisterClub");
         }        
