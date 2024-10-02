@@ -8,7 +8,7 @@ module app {
         PATCH = "PATCH",
     }
 
-    class BvApiClient {
+    class ApiClient {
 
         async Makerequest(method: HttpMethod, url: string, data?: any,) {
             var res = await fetch(url, {
@@ -36,5 +36,5 @@ module app {
     }
 
 
-    export let bvApiClient = new BvApiClient()
+    export let bvApiClient = new ApiClient()
 }

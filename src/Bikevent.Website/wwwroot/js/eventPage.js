@@ -37,62 +37,64 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var app;
 (function (app) {
-    var HttpMethod;
-    (function (HttpMethod) {
-        HttpMethod["GET"] = "GET";
-        HttpMethod["POST"] = "POST";
-        HttpMethod["DELETE"] = "DELETE";
-        HttpMethod["PUT"] = "PUT";
-        HttpMethod["PATCH"] = "PATCH";
-    })(HttpMethod || (HttpMethod = {}));
-    var BvApiClient = /** @class */ (function () {
-        function BvApiClient() {
+    var EventPage = /** @class */ (function () {
+        function EventPage() {
             var _this = this;
-            this.GetClubs = function () { return __awaiter(_this, void 0, void 0, function () {
-                var res;
+            this.submit = function (e) { return __awaiter(_this, void 0, void 0, function () {
+                var data, dataObj, res;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.GET, "api/v1/clubs")];
+                        case 0:
+                            e.preventDefault();
+                            data = $("#mainForm").serializeArray();
+                            dataObj = {};
+                            data.forEach(function (item) {
+                                dataObj[item.name] = item.value;
+                            });
+                            return [4 /*yield*/, app.bvApiClient.AddClub(dataObj)];
                         case 1:
                             res = _a.sent();
-                            return [2 /*return*/, res];
-                    }
-                });
-            }); };
-            this.AddClub = function (club) { return __awaiter(_this, void 0, void 0, function () {
-                var res;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.POST, "api/v1/club", club)];
-                        case 1:
-                            res = _a.sent();
-                            return [2 /*return*/, res];
+                            this.hideErrors();
+                            if (!res.success) {
+                                $.publish(app.BvEventNames.ShowError, "Please sort out the inputs thanks!");
+                                this.showErrors(res.data.errors);
+                                return [2 /*return*/, false];
+                            }
+                            $.publish(app.BvEventNames.ShowSuccess, "Club Added");
+                            return [2 /*return*/];
                     }
                 });
             }); };
         }
-        BvApiClient.prototype.Makerequest = function (method, url, data) {
-            return __awaiter(this, void 0, void 0, function () {
-                var res;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0: return [4 /*yield*/, fetch(url, {
-                                method: method.toString(),
-                                body: JSON.stringify(data),
-                                headers: {
-                                    "Content-Type": "application/json; charset=utf-8",
-                                    "Authorization": "TBC"
-                                }
-                            })];
-                        case 1:
-                            res = _a.sent();
-                            return [2 /*return*/, res.json()];
-                    }
-                });
+        Object.defineProperty(EventPage.prototype, "formButton", {
+            get: function () {
+                return $("#submitButton").first();
+            },
+            enumerable: false,
+            configurable: true
+        });
+        EventPage.prototype.addEvents = function () {
+            this.formButton.off("click").on("click", this.submit);
+        };
+        EventPage.prototype.hideErrors = function () {
+            $("[id$='-error']").hide();
+        };
+        EventPage.prototype.showErrors = function (errors) {
+            errors.forEach(function (err) {
+                $("#" + err.propName + "-error").show();
+                $("#" + err.propName + "-error").html(err.message);
             });
         };
-        return BvApiClient;
+        EventPage.prototype.validate = function () {
+            throw new Error("Method not implemented.");
+        };
+        EventPage.prototype.init = function () {
+            this.addEvents();
+            console.log("Init event page");
+            // toastr.success("test")
+        };
+        return EventPage;
     }());
-    app.bvApiClient = new BvApiClient();
+    app.eventPage = new EventPage();
 })(app || (app = {}));
-//# sourceMappingURL=bvApiClient.js.map
+//# sourceMappingURL=eventPage.js.map

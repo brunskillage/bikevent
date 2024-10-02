@@ -37,64 +37,62 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var app;
 (function (app) {
-    var AddClub = /** @class */ (function () {
-        function AddClub() {
+    var HttpMethod;
+    (function (HttpMethod) {
+        HttpMethod["GET"] = "GET";
+        HttpMethod["POST"] = "POST";
+        HttpMethod["DELETE"] = "DELETE";
+        HttpMethod["PUT"] = "PUT";
+        HttpMethod["PATCH"] = "PATCH";
+    })(HttpMethod || (HttpMethod = {}));
+    var ApiClient = /** @class */ (function () {
+        function ApiClient() {
             var _this = this;
-            this.submit = function (e) { return __awaiter(_this, void 0, void 0, function () {
-                var data, dataObj, res;
+            this.GetClubs = function () { return __awaiter(_this, void 0, void 0, function () {
+                var res;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0:
-                            e.preventDefault();
-                            data = $("#mainForm").serializeArray();
-                            dataObj = {};
-                            data.forEach(function (item) {
-                                dataObj[item.name] = item.value;
-                            });
-                            return [4 /*yield*/, app.bvApiClient.AddClub(dataObj)];
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.GET, "api/v1/clubs")];
                         case 1:
                             res = _a.sent();
-                            this.hideErrors();
-                            if (!res.success) {
-                                $.publish(app.BvEventNames.ShowError, "Please sort out the inputs thanks!");
-                                this.showErrors(res.data.errors);
-                                return [2 /*return*/, false];
-                            }
-                            $.publish(app.BvEventNames.ShowSuccess, "Club Added");
-                            return [2 /*return*/];
+                            return [2 /*return*/, res];
+                    }
+                });
+            }); };
+            this.AddClub = function (club) { return __awaiter(_this, void 0, void 0, function () {
+                var res;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.POST, "api/v1/club", club)];
+                        case 1:
+                            res = _a.sent();
+                            return [2 /*return*/, res];
                     }
                 });
             }); };
         }
-        Object.defineProperty(AddClub.prototype, "formButton", {
-            get: function () {
-                return $("#submitButton").first();
-            },
-            enumerable: false,
-            configurable: true
-        });
-        AddClub.prototype.addEvents = function () {
-            this.formButton.off("click").on("click", this.submit);
-        };
-        AddClub.prototype.hideErrors = function () {
-            $("[id$='-error']").hide();
-        };
-        AddClub.prototype.showErrors = function (errors) {
-            errors.forEach(function (err) {
-                $("#" + err.propName + "-error").show();
-                $("#" + err.propName + "-error").html(err.message);
+        ApiClient.prototype.Makerequest = function (method, url, data) {
+            return __awaiter(this, void 0, void 0, function () {
+                var res;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, fetch(url, {
+                                method: method.toString(),
+                                body: JSON.stringify(data),
+                                headers: {
+                                    "Content-Type": "application/json; charset=utf-8",
+                                    "Authorization": "TBC"
+                                }
+                            })];
+                        case 1:
+                            res = _a.sent();
+                            return [2 /*return*/, res.json()];
+                    }
+                });
             });
         };
-        AddClub.prototype.validate = function () {
-            throw new Error("Method not implemented.");
-        };
-        AddClub.prototype.init = function () {
-            this.addEvents();
-            console.log("Init form page");
-            // toastr.success("test")
-        };
-        return AddClub;
+        return ApiClient;
     }());
-    app.addClub = new AddClub();
+    app.bvApiClient = new ApiClient();
 })(app || (app = {}));
-//# sourceMappingURL=addClubPage.js.map
+//# sourceMappingURL=apiClient.js.map

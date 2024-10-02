@@ -1,5 +1,5 @@
 module app {
-    class ClubsPage implements Page {
+    class ClubsPage implements BvPage {
 
         get clubCards() {
             return $("#clubCards")

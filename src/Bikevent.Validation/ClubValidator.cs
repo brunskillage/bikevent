@@ -1,18 +1,15 @@
-﻿using FluentValidation;
+﻿using Bikevent.Database;
+using FluentValidation;
 
 namespace Bikevent.Validation
 {
     public class ClubValidator: AbstractValidator<BvClubRow>
     {
-        public ClubValidator()
+        public ClubValidator(ClubDbService clubDbService)
         {
-            RuleFor(c => c.NameOf).Length(3, 255).WithMessage("Club Name must be at least 3 Letters and no more than 255");
-            RuleFor(c => c.President).Length(3, 255);
-
-            When(c => !string.IsNullOrWhiteSpace(c.Email) && c.Email.Length > 0, () =>
-            {
-                RuleFor(c => c.Email).EmailAddress();
-            });
+            RuleFor(c => c.NameOf).NotEmpty().Length(3, 255).WithMessage("Club Name must be at least 3 Letters and no more than 255");
+            RuleFor(c => c.President).NotEmpty().Length(3, 255);
+            RuleFor(c => c.Email).NotEmpty().EmailAddress();
 
             When(c => c.WebsiteUrl != null, () =>
             {
@@ -20,6 +17,11 @@ namespace Bikevent.Validation
                     .WithMessage("Please enter a valid website address");
             });
 
+            RuleFor(x => x.NameOf).MustAsync( async (nameOf, s) =>
+            {
+                var res = await clubDbService.ClubExists(nameOf);
+                return !res;
+            }).WithMessage("The Club already exists");
         }
     }
 }

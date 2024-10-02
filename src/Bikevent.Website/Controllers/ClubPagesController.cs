@@ -24,7 +24,7 @@ namespace Bikevent.Website.Controllers
         
         [Route("/clubs")]
         [HttpGet]
-        public async Task<IActionResult> ViewClubs()
+        public async Task<IActionResult> GetClubs()
         {
             var clubs = await _clubDb.GetClubs();
 
@@ -33,15 +33,13 @@ namespace Bikevent.Website.Controllers
                 ClubRows = clubs.ToList()
             };
 
-            return View("ViewClubs", model);
+            return View("Clubs", model);
         }        
         
         [Route("/club")]
         [HttpGet]
         public async Task<ActionResult> AddClub([FromBody]BvClubRow bvClub)
         {
-
-
             return View("RegisterClub");
         }        
         
@@ -54,6 +52,19 @@ namespace Bikevent.Website.Controllers
             {
                Club  = club
             };
+            return View("ViewClub", model);
+        }       
+        
+        [Route("/club/{id}/edit")]
+        [HttpGet]
+        public async Task<ActionResult> EditClub([FromRoute]int id)
+        {
+            var club = await _clubDb.GetClub(new BvClubRow {Id = id});
+            var model = new ClubPageModel
+            {
+               Club  = club
+            };
+
             return View("ViewClub", model);
         }
     }

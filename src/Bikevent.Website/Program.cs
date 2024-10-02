@@ -2,6 +2,7 @@ using System.Reflection;
 using Bikevent.Config;
 using Bikevent.Database;
 using Bikevent.Migrations;
+using Bikevent.Validation;
 using FluentMigrator.Runner;
 
 namespace Bikevent.Website;
@@ -22,7 +23,13 @@ public class Program
         builder.Services.AddSingleton<BvConfigurationService>();
         builder.Services.AddSingleton<ClubDbService>();
         builder.Services.AddSingleton<MiscDbService>();
-        
+        builder.Services.AddSingleton<EventsDbService>();
+        builder.Services.AddSingleton<RidesDbService>();
+
+        builder.Services.AddSingleton<RideValidator>();
+        builder.Services.AddSingleton<EventValidator>();
+        builder.Services.AddSingleton<ClubValidator>();
+
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();

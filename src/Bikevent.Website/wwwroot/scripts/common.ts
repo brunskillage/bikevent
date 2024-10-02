@@ -22,12 +22,12 @@ toastr.options = {
     "hideMethod": "fadeOut"
 }
 
-interface Page {
+interface BvPage {
     init()
     addEvents()
 }
 
-interface FormPage {
+interface BvFormPage {
     init()
     addEvents()
     submit(e: FormDataEvent)

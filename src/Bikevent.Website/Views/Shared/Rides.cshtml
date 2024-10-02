@@ -1,0 +1,31 @@
+﻿@model RidesPageModel
+@{
+}
+<h1>Rides</h1>
+<p><a class="pure-button" asp-controller="ClubPagesController" asp-action="AddClub">Add a Ride</a></p>
+<h2>View Rides</h2>
+
+<div id="clubCards">@{
+                        if (@Model.Rides.Count() > 0)
+                        {
+                            <p>No Rides Found <a asp-controller="ClubPagesController" asp-action="AddClub">Add a Ride</a></p>
+                        }
+                        else
+                        {
+                            foreach (var c in @Model.Rides)
+                            {
+                                <div class="clubCard">
+                                    <div class="id"><a asp-controller="ClubPages" asp-action="GetClub" asp-route-id="@c.Id">@c.Title</a></div>
+                                </div>
+                                <hr>
+                            }
+                        }
+                    }
+</div>
+
+@section Scripts {
+    <script src="~/js/ridesPage.js"></script>
+    <script language="javascript">
+        app.ridesPage.init();
+    </script>
+}

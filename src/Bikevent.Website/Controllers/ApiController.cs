@@ -53,8 +53,8 @@ public class ApiController : Controller
     [HttpPost]
     public async Task<ActionResult<BvClubRow>> AddClub(BvClubRow club)
     {
-        var v = new ClubValidator();
-        var res = v.Validate(club);
+        var v = new ClubValidator(_clubDbService);
+        var res = await v.ValidateAsync(club);
         if (!res.IsValid)
             return new JsonResult(new BvResponse
             {

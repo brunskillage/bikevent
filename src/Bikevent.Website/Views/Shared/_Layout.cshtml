@@ -7,24 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - Bikevent.Website</title>
 
-    <link rel="stylesheet" href="~/css/bikevent.css"/>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/toastr/toastr.min.js"></script>
     <link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
     <script src="~/js/common.js"></script>
     <script src="~/lib/pubsub.js"></script>
     <script src="~/js/eventManager.js"></script>
-    <script src="~/js/bvApiClient.js"></script>
+    <script src="~/js/apiClient.js"></script>
+
+
+    <link rel="stylesheet" href="~/css/bikevent.css" />
 
 </head>
 <body>
     <div class="header">
     <a class="" href="/">Bikeevent</a>
-    <a href="/" class="">Home</a>
-    <a asp-controller="ClubPages" asp-action="ViewClubs" class="">Clubs</a>
-    <a asp-controller="ClubPages" asp-action="Register" class="">Register</a>
-    <a asp-controller="AuthPages" asp-action="Login" class="">Login</a>
-    <a asp-controller="AuthPages" asp-action="SignUp" class="">SignUp</a>
+        <a href="/" class="">Home</a>
+        <a asp-controller="AuthPages" asp-action="Login" class="">Login</a>
+        <a asp-controller="AuthPages" asp-action="SignUp" class="">SignUp</a>
+
+  
+        <a asp-controller="ClubPages" asp-action="Register" class="">Register</a>
+        <a asp-controller="ClubPages" asp-action="GetClubs" class="">Clubs</a>
+        <a asp-controller="EventsPages" asp-action="GetEvents" class="">Events</a>
+        <a asp-controller="RidesPages" asp-action="GetRides" class="">Rides</a>
+
 
 </div>
 

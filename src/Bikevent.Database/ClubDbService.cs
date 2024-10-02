@@ -32,4 +32,10 @@ public class ClubDbService : BaseDbClientService
         var res = await conn.GetAsync<BvClubRow>(club.Id);
         return res;
     }
+
+    public async Task<bool> ClubExists(string nameOf)
+    {
+        var res = await BvQueryAsync<BvClubRow>("select id from clubs where nameof = @nameOf limit 1", new { nameOf });
+        return res.Count() == 1;
+    }
 }

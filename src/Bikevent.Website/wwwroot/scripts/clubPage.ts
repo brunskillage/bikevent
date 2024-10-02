@@ -1,5 +1,5 @@
 module app {
-    class AddClub implements FormPage {
+    class AddClub implements BvFormPage {
 
         get formButton() {
             return $("#submitButton").first()

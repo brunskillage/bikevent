@@ -39,12 +39,12 @@ public abstract class BaseDbClientService
     }
 
 
-    public async Task<IEnumerable<T>> BvQueryAsync<T>(string sql)
+    public async Task<IEnumerable<T>> BvQueryAsync<T>(string sql, object? parameters = null)
     {
         try
         {
             using var conn = await GetOpenConnectionAsync();
-            var res = await conn.QueryAsync<T>(sql);
+            var res = await conn.QueryAsync<T>(sql, param: parameters);
             return res;
         }
         catch (Exception e)
@@ -54,12 +54,12 @@ public abstract class BaseDbClientService
         }
     }
 
-    public IEnumerable<T> BvQuerySync<T>(string sql)
+    public IEnumerable<T> BvQuerySync<T>(string sql, object? parameters = null)
     {
         try
         {
             using var conn = GetOpenConnectionSync();
-            var res = conn.Query<T>(sql);
+            var res = conn.Query<T>(sql, param: parameters);
             return res;
         }
         catch (Exception e)
@@ -69,7 +69,7 @@ public abstract class BaseDbClientService
         }
     }
 
-    public async Task BvExecuteAsync(string sql)
+    public async Task BvExecuteAsync(string sql, object? parameters = null)
     {
         try
         {
