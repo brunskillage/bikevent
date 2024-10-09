@@ -8,21 +8,22 @@ namespace Bikevent.Website.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View("Login");
-        }       
+            return View("Login/Login");
+        }          
+        
         
         [Route("logout")]
         [HttpGet]
         public IActionResult LogOut()
         {
-            return View("Login");
+            return View("Login/Login");
         }
 
         [Route("signup")]
         [HttpGet]
         public IActionResult SignUp()
         {
-            return View("Signup");
+            return View("Login/CreateUser");
         }
     }
 }

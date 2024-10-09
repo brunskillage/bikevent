@@ -1,0 +1,47 @@
+﻿        <h3>Create Account</h3>
+        <form target="/api/v1/account" class="mainForm" method="post">
+            <div class="row">
+                <div class="col-8">
+
+                    <label for="username-input">Email *</label>
+                    <div class="col-auto">
+                        <input type="text" id="username-input" name="email" class="form-control">
+                    </div>
+                </div>
+
+            </div>           
+            
+            <div class="row">
+                <div class="col-8">
+
+                    <label for="nickname-input">Nickname *</label>
+                    <div class="col-auto">
+                        <input type="text" id="nickname-input" name="nickName" class="form-control">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-8">
+                    <label for="password-input">Password *</label>
+                    <div class="col-auto">
+                        <input type="password" id="password-input" name="encPassword" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8">
+                    <br />
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+
+@section Scripts {
+    <script src="~/js/userPage.js"></script>
+    <script language="javascript">
+        app.userPage.init();
+    </script>
+}

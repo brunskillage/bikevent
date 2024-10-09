@@ -1,4 +1,5 @@
 ﻿using Bikevent.Config;
+using Bikevent.Database.TableObjects;
 using Dapper.Contrib.Extensions;
 
 namespace Bikevent.Database;
@@ -37,5 +38,19 @@ public class ClubDbService : BaseDbClientService
     {
         var res = await BvQueryAsync<BvClubRow>("select id from clubs where nameof = @nameOf limit 1", new { nameOf });
         return res.Count() == 1;
+    }
+
+    public async Task<bool> UpdateClub(BvClubRow club)
+    {
+        await using var conn = await GetOpenConnectionAsync();
+        var res = await conn.UpdateAsync(club);
+        return res;
+    }
+
+    public async Task<bool> DeleteClub(BvClubRow club)
+    {
+        await using var conn = await GetOpenConnectionAsync();
+        var res = await conn.DeleteAsync(club);
+        return res;
     }
 }

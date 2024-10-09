@@ -48,42 +48,159 @@ var app;
     var ApiClient = /** @class */ (function () {
         function ApiClient() {
             var _this = this;
-            this.GetClubs = function () { return __awaiter(_this, void 0, void 0, function () {
-                var res;
+            this.Post = function (url, data) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.POST, url, data)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            this.Login = function (data) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.POST, "api/v1/login", data)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            this.CreateAccount = function (data) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.POST, "api/v1/account", data)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            this.GetClubs = function (args) { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.GET, "api/v1/clubs")];
-                        case 1:
-                            res = _a.sent();
-                            return [2 /*return*/, res];
+                        case 1: return [2 /*return*/, _a.sent()];
                     }
                 });
             }); };
             this.AddClub = function (club) { return __awaiter(_this, void 0, void 0, function () {
-                var res;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.POST, "api/v1/club", club)];
-                        case 1:
-                            res = _a.sent();
-                            return [2 /*return*/, res];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            this.RemoveClub = function (club) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.DELETE, "api/v1/club", club)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            this.UpdateClub = function (club) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.PATCH, "api/v1/club", club)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            // Rides
+            this.GetRides = function (args) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.GET, "api/v1/rides")];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            this.AddRide = function (ride) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.POST, "api/v1/ride", ride)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            this.RemoveRide = function (ride) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.DELETE, "api/v1/ride", ride)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            this.UpdateRide = function (ride) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.PATCH, "api/v1/ride", ride)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            // Rides
+            this.GetEvents = function (queryParams) {
+                if (queryParams === void 0) { queryParams = null; }
+                return __awaiter(_this, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.GET, "api/v1/events", queryParams)];
+                            case 1: return [2 /*return*/, _a.sent()];
+                        }
+                    });
+                });
+            };
+            this.AddEvent = function (event) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.POST, "api/v1/event", event)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            this.RemoveEvent = function (event) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.DELETE, "api/v1/event", event)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            this.UpdateEvent = function (event) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.PATCH, "api/v1/event", event)];
+                        case 1: return [2 /*return*/, _a.sent()];
                     }
                 });
             }); };
         }
         ApiClient.prototype.Makerequest = function (method, url, data) {
             return __awaiter(this, void 0, void 0, function () {
-                var res;
+                var body, queryString, fullUrl, res;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, fetch(url, {
-                                method: method.toString(),
-                                body: JSON.stringify(data),
-                                headers: {
-                                    "Content-Type": "application/json; charset=utf-8",
-                                    "Authorization": "TBC"
+                        case 0:
+                            fullUrl = url;
+                            switch (method) {
+                                case HttpMethod.DELETE:
+                                case HttpMethod.GET: {
+                                    if (data)
+                                        fullUrl = "".concat(url).concat($.serialize(data));
                                 }
-                            })];
+                                case HttpMethod.PATCH:
+                                case HttpMethod.PUT:
+                                case HttpMethod.POST: {
+                                    if (data)
+                                        body = JSON.stringify(data);
+                                }
+                            }
+                            return [4 /*yield*/, fetch(fullUrl, {
+                                    method: method.toString(),
+                                    body: body,
+                                    headers: {
+                                        "Content-Type": "application/json; charset=utf-8",
+                                    }
+                                })];
                         case 1:
                             res = _a.sent();
                             return [2 /*return*/, res.json()];

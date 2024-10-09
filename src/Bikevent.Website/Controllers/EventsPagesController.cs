@@ -1,4 +1,5 @@
 ﻿using Bikevent.Database;
+using Bikevent.Database.TableObjects;
 using Bikevent.Website.Models;
 using Microsoft.AspNetCore.Mvc;
 

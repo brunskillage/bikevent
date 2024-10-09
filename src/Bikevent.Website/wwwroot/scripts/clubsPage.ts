@@ -1,4 +1,4 @@
-module app {
+namespace app {
     class ClubsPage implements BvPage {
 
         get clubCards() {
@@ -25,7 +25,7 @@ module app {
                     <div class="id">id: ${item.id}</div>
                     <div class="createdOn">Created On: ${item.createdOn}</div>
                 </div>
-                <hr>
+                
                 `;
             })
 

@@ -1,4 +1,4 @@
-module app {
+namespace app {
     class EventAddPage implements BvPage {
         init() {
             console.log("Starting EventAddPage")

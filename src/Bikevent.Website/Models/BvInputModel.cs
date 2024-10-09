@@ -8,4 +8,6 @@ public class BvInputModel
     public string Prompt { get; set; }
     public string PlaceHolder { get; set; }
     public string Val { get; set; }
+    public string Type { get; set; } = "text";
+    public DisplayMode DMode { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace Bikevent.Website.Models;
+﻿using Bikevent.Database.TableObjects;
+
+namespace Bikevent.Website.Models;
 
 public class ClubPageModel : BasePageModel
 {

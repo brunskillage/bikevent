@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Bikevent.Database.TableObjects;
+using FluentValidation;
 
 namespace Bikevent.Validation;
 

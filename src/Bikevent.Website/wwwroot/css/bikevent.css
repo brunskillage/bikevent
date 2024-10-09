@@ -12,13 +12,6 @@
   color: black;
   letter-spacing: 2px;
 }
-html,
-body {
-  height: auto;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
 .footer,
 .header {
   padding: 0.5em;
@@ -26,76 +19,23 @@ body {
   color: white;
   font-weight: 100;
 }
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-}
-.mainContent {
-  height: 100%;
-}
-.mainPage {
-  padding: 1em;
-}
 .error {
   color: red;
   display: none;
 }
-.form {
+.errors {
+  border: 3px solid var(--redColor);
+  color: var(--redColor);
+  background-color: var(--redColor);
   padding: 1em;
-}
-.form input[type=text] {
-  width: 20em;
+  margin-bottom: 1em;
+  width: 30em;
 }
 .mainPage {
   height: 100%;
-  padding: 0;
-  margin: 0;
-  /* align-items: center;
-    justify-content: center; */
-}
-.mainContent {
-  letter-spacing: 2px;
-}
-.row {
-  /* height: auto; */
-}
-.mainText {
-  font-size: 3em;
-  text-align: center;
-  padding: 0.5em;
-}
-.secondText {
-  font-size: 2em;
-  text-align: center;
   padding: 1em;
+  margin: 0;
 }
-.mainImage {
-  display: flex;
-  background-color: grey;
-  width: 100vw;
-  height: 20vh;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-}
-.bikeSvg {
-  width: 30vh;
-  position: absolute;
-  -webkit-animation: linear;
-  -webkit-animation-name: run;
-  -webkit-animation-duration: 2s;
-  animation-iteration-count: 1;
-}
-@-webkit-keyframes run {
-  0% {
-    left: 0;
-  }
-  50% {
-    left: 25%;
-  }
-  100% {
-    left: 300%;
-  }
+.inputError {
+  color: var(--redColor);
 }

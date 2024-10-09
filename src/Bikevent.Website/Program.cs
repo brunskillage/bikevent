@@ -25,10 +25,12 @@ public class Program
         builder.Services.AddSingleton<MiscDbService>();
         builder.Services.AddSingleton<EventsDbService>();
         builder.Services.AddSingleton<RidesDbService>();
+        builder.Services.AddSingleton<UserDbService>();
 
         builder.Services.AddSingleton<RideValidator>();
         builder.Services.AddSingleton<EventValidator>();
         builder.Services.AddSingleton<ClubValidator>();
+        builder.Services.AddSingleton<UserValidator>();
 
 
         // Add services to the container.
@@ -41,7 +43,7 @@ public class Program
         // add migrations
         var ma = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bikevent.Migrations.dll");
         Assembly.LoadFile(ma);
-        var migrations = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name.Contains("Bike")).ToArray();
+        var migrations = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name!.Contains("Bike")).ToArray();
         builder.Services.AddSingleton<FluentMigrator.Runner.Processors.ProcessorOptions>(); // bug not found if line missing
 
         builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
@@ -61,7 +63,7 @@ public class Program
         
         var clubsDb = app.Services.GetService<ClubDbService>();
         var miscDb = app.Services.GetService<MiscDbService>();
-        clubsDb.TestAsync();
+        clubsDb!.TestAsync();
 
 
         // Configure the HTTP request pipeline.
@@ -80,7 +82,7 @@ public class Program
 
         app.UseRouting();
 
-        app.UseAuthorization();
+        // app.UseAuthorization();
 
         app.MapControllerRoute(
             "default",
@@ -89,12 +91,12 @@ public class Program
         app.UseSwagger(options => { options.SerializeAsV2 = true; });
 
         // run migrations
-        // miscDb.ClearDbVersionInfo();
+        miscDb.ClearDbVersionInfo();
         using (var scope = app.Services.CreateScope())
         {
             var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
-            migrator.ListMigrations();
-            migrator.MigrateUp(001);
+            migrator!.ListMigrations();
+            //migrator.MigrateUp(001);
         };
 
 

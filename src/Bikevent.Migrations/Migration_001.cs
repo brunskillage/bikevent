@@ -8,10 +8,27 @@ namespace Bikevent.Migrations
     {
         public override void Up()
         {
+            Delete.Table("users");
+            Delete.Table("userClubs");
             Delete.Table("clubs");
             Delete.Table("rides");
             Delete.Table("events");
 
+            Create.Table("users")
+                .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
+                .WithColumn("nickName").AsString(255).NotNullable()
+                .WithColumn("encPassword").AsString(255).Nullable()
+                .WithColumn("email").AsString(255).NotNullable()
+                .WithColumn("verifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
+                .WithColumn("createdOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
+                .WithColumn("modifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);                 
+            
+            Create.Table("userClubs")
+                .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
+                .WithColumn("clubId").AsInt32().NotNullable()
+                .WithColumn("createdOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
+                .WithColumn("modifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);            
+            
             Create.Table("clubs")
                 .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn("nameOf").AsString(255).NotNullable()

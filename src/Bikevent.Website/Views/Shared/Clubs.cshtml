@@ -1,8 +1,7 @@
 ﻿@model ClubsPageModel
 @{
 }
-<h1>Club</h1>
-<h2>View Clubs</h2>
+<h3>SuperAdmin > View Clubs</h3>
 
 <div id="clubCards">@{
                         foreach (var c in @Model.ClubRows)
@@ -10,7 +9,6 @@
                             <div class="clubCard">
                                 <div class="id"><a asp-controller="ClubPages" asp-action="GetClub" asp-route-id="@c.Id">@c.NameOf</a></div>
                                 </div>
-                            <hr>
                         }
                     }
 

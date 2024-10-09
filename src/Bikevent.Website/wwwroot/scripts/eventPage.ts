@@ -1,4 +1,4 @@
-module app {
+namespace app {
     class EventPage implements BvFormPage {
 
         get formButton() {

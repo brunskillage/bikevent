@@ -60,7 +60,7 @@ var app;
         ClubsPage.prototype.renderClubData = function () {
             var html = "";
             this.pageData.data.clubs.forEach(function (item) {
-                html += "\n                <div class=\"clubCard\">\n                    <div class=\"nameOf\"><h1>".concat(item.nameOf, "<h1></div>\n                    <div class=\"id\">id: ").concat(item.id, "</div>\n                    <div class=\"createdOn\">Created On: ").concat(item.createdOn, "</div>\n                </div>\n                <hr>\n                ");
+                html += "\n                <div class=\"clubCard\">\n                    <div class=\"nameOf\"><h1>".concat(item.nameOf, "<h1></div>\n                    <div class=\"id\">id: ").concat(item.id, "</div>\n                    <div class=\"createdOn\">Created On: ").concat(item.createdOn, "</div>\n                </div>\n                \n                ");
             });
             this.clubCards.html(html);
         };

@@ -1,11 +1,15 @@
 ﻿@model RidePageModel
 @{
 }
-<h2>Club Ride</h2>
+<h4>Rides > New Ride</h4>
 
-<div id="rideCard">
+<form class="mainForm" target="/api/v1/ride">
 
-</div>
+    @await Html.PartialAsync("BvPartials/_InputBox", new BvInputModel { Label = "Ride Name *", NameOf = "nameOf" })
+    @await Html.PartialAsync("BvPartials/_InputBox", new BvInputModel { Label = "Description *", NameOf = "description" })
+    @await Html.PartialAsync("BvPartials/_dateTimeBox", new BvInputModel { Label = "Stands Up Date and Time *", NameOf = "standsUpDateTime" })
+</form>
+
 
 @section Scripts {
     <script src="~/js/ridePage.js"></script>

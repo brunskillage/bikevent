@@ -1,25 +1,13 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model BvInputModel;
+<div class="row">
+    <div class="col-8">
 
-@using Humanizer
-@model BvInputModel;
-@{
-}
-<div class="@Model.NameOf-wrapper">
-    <div class="@Model.NameOf-label">
-        <label for="@Model.NameOf">@Model.NameOf.Humanize()
-            </label>
+        <label for="@Model.NameOf-input">@Model.Label</label>
+        <div class="col-auto">
+            <input type="@Model.Type" id="@Model.NameOf-input" name="@Model.NameOf" class="form-control">
+        </div>
     </div>
-    <div>
-        <input class="input-@Model.NameOf" id="@Model.NameOf" type="text" name="@Model.Label" placeholder="@Model.NameOf.Humanize()" value="@Model.Val" />
-    </div>
-    <div class="error" id="@Model.NameOf-error">
-        Error Message
-    </div>
+
 </div>
-
-
-
 
 

@@ -1,14 +1,18 @@
 ﻿@model RidesPageModel
 @{
 }
-<h1>Rides</h1>
-<p><a class="pure-button" asp-controller="ClubPagesController" asp-action="AddClub">Add a Ride</a></p>
-<h2>View Rides</h2>
+
+<h3>Rides </h3>
+<p>
+    <a class="btn btn-sm btn-primary" asp-controller="RidesPages" asp-action="AddRide">+ New Ride</a>
+
+</p>
+<h4>View Rides</h4>
 
 <div id="clubCards">@{
-                        if (@Model.Rides.Count() > 0)
+                        if (!Model.Rides.Any())
                         {
-                            <p>No Rides Found <a asp-controller="ClubPagesController" asp-action="AddClub">Add a Ride</a></p>
+                            <p>No Rides Found</p>
                         }
                         else
                         {

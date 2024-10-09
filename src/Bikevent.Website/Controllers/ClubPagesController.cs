@@ -1,4 +1,5 @@
 ﻿using Bikevent.Database;
+using Bikevent.Database.TableObjects;
 using Bikevent.Validation;
 using Bikevent.Website.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,7 @@ namespace Bikevent.Website.Controllers
         
         [Route("/club")]
         [HttpGet]
-        public async Task<ActionResult> AddClub([FromBody]BvClubRow bvClub)
+        public async Task<ActionResult> AddClub()
         {
             return View("RegisterClub");
         }        
@@ -47,19 +48,19 @@ namespace Bikevent.Website.Controllers
         [HttpGet]
         public async Task<ActionResult> GetClub([FromRoute]int id)
         {
-            var club = await _clubDb.GetClub(new BvClubRow {Id = id});
+            var club = await _clubDb.GetClub(new BvClubRow { Id = id});
             var model = new ClubPageModel
             {
                Club  = club
             };
-            return View("ViewClub", model);
+            return View("Club", model);
         }       
         
         [Route("/club/{id}/edit")]
         [HttpGet]
         public async Task<ActionResult> EditClub([FromRoute]int id)
         {
-            var club = await _clubDb.GetClub(new BvClubRow {Id = id});
+            var club = await _clubDb.GetClub(new BvClubRow { Id = id});
             var model = new ClubPageModel
             {
                Club  = club

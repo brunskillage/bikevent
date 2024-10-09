@@ -84,8 +84,10 @@
         // CS Classes
 
         var linesCs = new List<string>();
+
+
         linesCs.Add($"[Table(\"{t}\")]");
-        linesCs.Add($"public class Bv{t.Humanize().Singularize()}Row");
+        linesCs.Add($"public class Bv{t.Singularize().Transform(To.TitleCase)}Row");
         linesCs.Add("{");
         linesCs.Add("&nbsp;&nbsp;&nbsp;[Key]");
         linesCs.Add("&nbsp;&nbsp;&nbsp;public int Id {get;set;}");
@@ -133,19 +135,33 @@
     @Html.Raw(allTsFileContent)
     <hr/>
     <h1>Csharp</h1>
-    @Html.Raw(allCsFileContent)
+    @Html.Raw("using Dapper.Contrib.Extensions;" + allCsFileContent)
     
     
 @foreach (var t in await db.GetTableNames())
 {
-        var meta = (await db.GetTableMeta(t)).ToList();
-    <h3>Inputs</h3>
-    <div class="form" id="inputs">
+     var meta = (await db.GetTableMeta(t)).ToList();
+    <div class="form" id="formInputs">
+        <h3>Add @t.Humanize().Singularize()</h3>
         @foreach (var m in meta.OrderBy(x => x.Field))
         {
-            @Html.Partial("BvPartials/_InputBox", new BvInputModel { Label = m.Field, NameOf = m.Field, PlaceHolder = m.Field, Prompt = m.Field, Error = "" })
+            @Html.Partial("BvPartials/_InputBox", new BvInputModel { DMode = DisplayMode.Edit, Label = m.Field, NameOf = m.Field.Humanize(), PlaceHolder = m.Field, Prompt = m.Field, Error = "" })
             <br/>
         }
+
+        <button id="submitButton">Submit</button>
+    </div>
+
+    meta = (await db.GetTableMeta(t)).ToList();
+    <div class="form" id="formInputs">
+        <h3>Add @t.Humanize().Singularize()</h3>
+        @foreach (var m in meta.OrderBy(x => x.Field))
+        {
+            @Html.Partial("BvPartials/_InputBox", new BvInputModel { DMode = DisplayMode.View, Label = m.Field, NameOf = m.Field.Humanize(), PlaceHolder = m.Field, Prompt = m.Field, Error = "" })
+            <br/>
+        }
+
+        <button id="submitButton">Submit</button>
     </div>
 }
 </div>

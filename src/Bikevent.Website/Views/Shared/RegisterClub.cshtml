@@ -2,93 +2,25 @@
     ViewData["Title"] = "Bikevent - New Zealand Motorcycle Rides and Events";
 }
 
-<h1>Register Club</h1>
-<form class="form" id="mainForm">
-    <div id="register-club">
-        <div id="inputs">
-            <div class="nameOf-wrapper">
-                <div id="nameOf-label">
-                    <label for="nameOf">
-                        Club Name
-                    </label>
-                </div>
-                <div>
-                    <input class="input-nameOf" id="nameOf" type="text" name="nameOf" placeholder="Name of">
-                </div>
-                <div class="error" id="nameOf-error">
-                    Error Message
-                </div>
-            </div>
+<h3>Register you Motorbike Club</h3>
+<form class="mainForm" target="/api/v1/club">
+    
+    @await Html.PartialAsync("BvPartials/_InputBox", new BvInputModel{Label = "Club Name *", NameOf = "nameOf"})
+    @await Html.PartialAsync("BvPartials/_InputBox", new BvInputModel { Label = "Description *", NameOf = "description" })
+    @await Html.PartialAsync("BvPartials/_InputBox", new BvInputModel { Label = "Email *", NameOf = "email" })
+    @await Html.PartialAsync("BvPartials/_InputBox", new BvInputModel { Label = "President / Main Contact *", NameOf = "president" })
+    @await Html.PartialAsync("BvPartials/_InputBox", new BvInputModel { Label = "Website *", NameOf = "websiteUrl" })
+    <div class="row">
+        <div class="col-8">
             <br />
-            <div class="description-wrapper">
-                <div id="description-label">
-                    <label for="description">
-                        Description
-                    </label>
-                </div>
-                <div>
-                    <input class="input-description" id="description" type="text" name="description" placeholder="Description">
-                </div>
-                <div class="error" id="description-error">
-                    Error Message
-                </div>
-            </div>
-
-            <br>
-
-            <div class="email-wrapper">
-                <div id="email-label">
-                    <label for="email">
-                        Email
-                    </label>
-                </div>
-                <div>
-                    <input class="input-email" id="email" type="text" name="email" placeholder="Email">
-                </div>
-                <div class="error" id="email-error">
-                    Error Message
-                </div>
-            </div>
-            <br />
-            <div class="president-wrapper">
-                <div id="president-label">
-                    <label for="president">
-                        President
-                    </label>
-                </div>
-                <div>
-                    <input class="input-president" id="president" type="text" name="president" placeholder="President">
-                </div>
-                <div class="error" id="president-error">
-                    Error Message
-                </div>
-            </div>
-            <br />
-            <div class="websiteUrl-wrapper">
-                <div id="websiteUrl-label">
-                    <label for="websiteUrl">
-                        Website url
-                    </label>
-                </div>
-                <div>
-                    <input class="input-websiteUrl" id="websiteUrl" type="text" name="websiteUrl" placeholder="Website url">
-                </div>
-                <div class="error" id="websiteUrl-error">
-                    Error Message
-                </div>
-            </div>
-            <br />
-            <button id="submitButton" type="submit">Submit</button>
+            <button type="submit" class="btn btn-primary">Sign In</button>
         </div>
-
-
     </div>
-
 </form>
 
 @section Scripts {
     <script src="~/js/clubPage.js"></script>
     <script language="javascript">
-        app.addClub.init();
+        app.clubPage.init();
     </script>
 }

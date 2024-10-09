@@ -47,3 +47,22 @@ class ride {
         public lng?: unknown,
     ) { }
 }
+
+
+class userClub {
+    constructor(
+        public id: number,
+        public clubId: number,
+        public createdOn: Date,
+        public modifiedOn: Date,
+    ) { }
+}
+
+class user {
+    constructor(
+        public id: number,
+        public username: string,
+        public nickName: string,
+        public email: string,
+    ) { }
+}

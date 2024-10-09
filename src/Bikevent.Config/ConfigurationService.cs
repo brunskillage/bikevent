@@ -4,11 +4,6 @@ using Microsoft.Extensions.Options;
 
 namespace Bikevent.Config
 {
-    public class AppSettingsValues
-    {
-        public string Domain { get; set; }
-    }
-
     public class BvConfigurationService
     {
         private readonly IConfiguration _configuration;
@@ -19,20 +14,20 @@ namespace Bikevent.Config
 
             BikeventConstring = configuration.GetConnectionString("BikeventMySqlConnection");
             Domain = options.Value.Domain;
+            Salt = options.Value.Salt;
             if (BikeventConstring == null)
             {
                 throw new ArgumentNullException("BikeventMySqlConnection");
             }
 
-            HostedEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").ToUpperInvariant();
+            HostedEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")?.ToUpperInvariant();
             IsDevEnvironment = HostedEnvironment == "DEVELOPMENT";
-
         }
-
-
+        
         public string? BikeventConstring { get; private set; }
         public string? HostedEnvironment { get; private set; }
         public bool IsDevEnvironment { get; private set; }
         public string Domain { get; private set; }
+        public string Salt { get; private set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Bikevent.Config;
+using Bikevent.Database.TableObjects;
 using Dapper.Contrib.Extensions;
 
 namespace Bikevent.Database;

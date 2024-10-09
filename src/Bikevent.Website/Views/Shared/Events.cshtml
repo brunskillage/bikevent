@@ -1,13 +1,24 @@
 ﻿@model EventsPageModel
 @{
 }
-<h1>Events</h1>
-<a asp-controller="EventsPages" asp-action="AddEvent">Add Event</a>
-<h2>View Events</h2>
+<h3>Events</h3>
+<p>
+    <a class="btn btn-sm btn-primary" asp-controller="EventsPages" asp-action="AddEvent">Add Event</a>
+</p>
+
+
+<h4>View Events</h4>
 
 <div id="clubCards">@{
 
-                        if (@Model.Events.Count() > 0)
+                        if (!Model.Events.Any())
+                        {
+
+                            <p>No Events
+                                Found <a asp-controller="EventsPages"  asp-action="AddEvent">Add Event</a></p>
+
+                        }
+                        else
                         {
                             foreach (var c in @Model.Events)
                             {
@@ -16,11 +27,6 @@
                                 </div>
                                 <hr>
                             }
-                        }
-                        else
-                        {
-                            <p>No Events
-                                Found <a asp-controller="EventsPages"  asp-action="AddEvent">Add Event</a></p>
                         }
 
                     }

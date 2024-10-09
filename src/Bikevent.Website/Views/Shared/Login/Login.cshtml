@@ -1,0 +1,49 @@
+﻿
+
+<h3>Login</h3>
+<form target="/api/v1/login" class="mainForm" method="post">
+    <div class="row">
+        <div class="col-8">
+
+            <label for="username-input">Email or Nickname</label>
+            <div class="col-auto">
+                <input type="text" id="username-input" name="email" class="form-control">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-8">
+            <label for="password-input">Password</label>
+            <div class="col-auto">
+                <input type="password" id="password-input" name="encPassword" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8">
+            <br/>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8">
+            <br/>
+            <div class="alert alert-primary" role="alert">
+                Not signed up? <a asp-controller="AuthPages" asp-action="SignUp">Create</a> an account
+            </div>
+        </div>
+    </div>
+</form>
+@* 
+https://www.c-sharpcorner.com/article/jwt-token-creation-authentication-and-authorization-in-asp-net-core-6-0-with-po/
+ *@
+@section Scripts {
+    <script src="~/js/loginPage.js"></script>
+    <script language="javascript">
+        app.loginPage.init();
+    </script>
+}

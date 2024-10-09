@@ -1,4 +1,4 @@
-module app {
+namespace app {
 
     export enum BvEventNames {
         Request = "Request",

@@ -1,11 +1,9 @@
 ﻿@model ClubPageModel
-@{
-}
-<h2>View Club</h2>
+<h3>View Club</h3>
 
-<div id="clubCards">
+<h4>@Model.Club.NameOf</h4>
 
-</div>
+<form class="mainForm" target="/api/v1/club"></form>
 
 @section Scripts {
     <script src="~/js/clubPage.js"></script>

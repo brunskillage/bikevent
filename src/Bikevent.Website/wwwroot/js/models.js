@@ -48,4 +48,22 @@ var ride = /** @class */ (function () {
     }
     return ride;
 }());
+var userClub = /** @class */ (function () {
+    function userClub(id, clubId, createdOn, modifiedOn) {
+        this.id = id;
+        this.clubId = clubId;
+        this.createdOn = createdOn;
+        this.modifiedOn = modifiedOn;
+    }
+    return userClub;
+}());
+var user = /** @class */ (function () {
+    function user(id, username, nickName, email) {
+        this.id = id;
+        this.username = username;
+        this.nickName = nickName;
+        this.email = email;
+    }
+    return user;
+}());
 //# sourceMappingURL=models.js.map

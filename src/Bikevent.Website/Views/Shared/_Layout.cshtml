@@ -5,50 +5,53 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - Bikevent.Website</title>
+
+    <title>Bikevent - The place for all the rides</title>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/toastr/toastr.min.js"></script>
-    <link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
-    <script src="~/js/common.js"></script>
+    <link rel="stylesheet" href="~/lib/toastr/toastr.min.css"/>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/moment/moment.min.js"></script>
+
+    <script src="~/js/app.common.js"></script>
+    <script src="~/js/models.js"></script>
     <script src="~/lib/pubsub.js"></script>
     <script src="~/js/eventManager.js"></script>
     <script src="~/js/apiClient.js"></script>
 
+    @*     <link rel="stylesheet" href="~/css/pure.css"/> *@
 
-    <link rel="stylesheet" href="~/css/bikevent.css" />
+    <link rel="stylesheet" href="~/css/bikevent.css"/>
 
 </head>
 <body>
-    <div class="header">
-    <a class="" href="/">Bikeevent</a>
-        <a href="/" class="">Home</a>
-        <a asp-controller="AuthPages" asp-action="Login" class="">Login</a>
-        <a asp-controller="AuthPages" asp-action="SignUp" class="">SignUp</a>
-
-  
-        <a asp-controller="ClubPages" asp-action="Register" class="">Register</a>
-        <a asp-controller="ClubPages" asp-action="GetClubs" class="">Clubs</a>
-        <a asp-controller="EventsPages" asp-action="GetEvents" class="">Events</a>
-        <a asp-controller="RidesPages" asp-action="GetRides" class="">Rides</a>
-
-
+<div class="header">
+    <a class="btn btn-sm" href="/" class="">Home</a>
+    <a class="btn btn-sm" asp-controller="AuthPages" asp-action="Login" class="">Login</a>
+    <a class="btn btn-sm" asp-controller="ClubPages" asp-action="Register" class="">Register Your Club</a>
+    <a class="btn btn-sm" asp-controller="ClubPages" asp-action="GetClubs" class="">Clubs</a>
+    <a class="btn btn-sm" asp-controller="EventsPages" asp-action="GetEvents" class="">Events</a>
+    <a class="btn btn-sm" asp-controller="RidesPages" asp-action="GetRides" class="">Rides</a>
 </div>
-
-<div class="mainContent">
-    <div class="mainPage">
-        @RenderBody()
+<div class="container mainPage">
+    <div class="row">
+        <div class="col-12">
+            @RenderBody()
+        </div>
     </div>
-
 </div>
+
 <div class="footer">
-    BikeEvents Copyright 2024
+    bikevent.com/nz Copyright 2024
 
     @if (Configuration.IsDevEnvironment)
     {
-        <a href="/swagger/index.html" target="_blank">API Browser</a> 
+        <a href="/swagger/index.html" target="_blank">API Browser</a>
         <a href="http://192.168.1.140/phpMyAdmin/db_structure.php?server=1&db=bikeventdb" target="_blank">DB Browser</a>
-        <a asp-controller="UtilPages" asp-action="Index" >Util Page</a>
+        <a asp-controller="UtilPages" asp-action="Index">Util Page</a>
     }
 
 </div>

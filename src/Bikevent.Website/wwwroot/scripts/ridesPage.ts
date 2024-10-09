@@ -1,4 +1,4 @@
-module app {
+namespace app {
     class RidesPage implements BvPage {
         init() {
             console.log("StartingRidesAddPage")
@@ -12,7 +12,7 @@ module app {
     export let ridesPage = new RidesPage();
 }
 
-module app {
+namespace app {
     class FormRidesPage implements BvFormPage {
         submit(e: FormDataEvent) {
 

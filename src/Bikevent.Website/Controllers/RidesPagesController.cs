@@ -1,4 +1,5 @@
 ﻿using Bikevent.Database;
+using Bikevent.Database.TableObjects;
 using Bikevent.Validation;
 using Bikevent.Website.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,7 @@ public class RidesPagesController : Controller
         return View("Ride", model);
     }
     
-    [Route("ride/add")]
+    [Route("ride")]
     [HttpGet]
     public async Task<IActionResult> AddRide(BvRideRow bvEvent)
     {
