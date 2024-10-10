@@ -13,13 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikevent.DataObjects", "Bik
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikevent.Services", "Bikevent.Services\Bikevent.Services.csproj", "{6468AC1E-8843-41E7-BB46-9176D345EE35}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikevent.Api", "Bikevent.Api\Bikevent.Api.csproj", "{7D8116C8-0983-435C-9FF1-A0AEA6957FFF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikevent.Validation", "Bikevent.Validation\Bikevent.Validation.csproj", "{E7AA2844-815C-4227-B5BA-6DE799EB274C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikevent.Migrations", "Bikevent.Migrations\Bikevent.Migrations.csproj", "{C689FC3B-40B5-4569-8B88-8D4C1B915875}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bikevent.Generator", "Bikevent.Generator\Bikevent.Generator.csproj", "{940F2668-26EE-4AB6-8EA0-C979B0CDAAA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikevent.Generator", "Bikevent.Generator\Bikevent.Generator.csproj", "{940F2668-26EE-4AB6-8EA0-C979B0CDAAA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +45,6 @@ Global
 		{6468AC1E-8843-41E7-BB46-9176D345EE35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6468AC1E-8843-41E7-BB46-9176D345EE35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6468AC1E-8843-41E7-BB46-9176D345EE35}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D8116C8-0983-435C-9FF1-A0AEA6957FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D8116C8-0983-435C-9FF1-A0AEA6957FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D8116C8-0983-435C-9FF1-A0AEA6957FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D8116C8-0983-435C-9FF1-A0AEA6957FFF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E7AA2844-815C-4227-B5BA-6DE799EB274C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E7AA2844-815C-4227-B5BA-6DE799EB274C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7AA2844-815C-4227-B5BA-6DE799EB274C}.Release|Any CPU.ActiveCfg = Release|Any CPU
