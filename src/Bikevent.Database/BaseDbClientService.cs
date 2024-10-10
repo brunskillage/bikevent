@@ -10,7 +10,7 @@ namespace Bikevent.Database;
 /// </summary>
 public abstract class BaseDbClientService
 {
-    private readonly BvConfigurationService _config;
+    public readonly BvConfigurationService _config;
 
     public BaseDbClientService(BvConfigurationService config)
     {

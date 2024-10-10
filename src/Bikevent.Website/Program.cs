@@ -3,6 +3,7 @@ using Bikevent.Config;
 using Bikevent.Database;
 using Bikevent.Migrations;
 using Bikevent.Validation;
+using Bikevent.Website.Controllers;
 using FluentMigrator.Runner;
 
 namespace Bikevent.Website;
@@ -32,13 +33,18 @@ public class Program
         builder.Services.AddSingleton<ClubValidator>();
         builder.Services.AddSingleton<UserValidator>();
 
+        // experimental
+        // use a dynamically invoked remote call to drastically reduce bolierplate and get out v1
+        builder.Services.AddTransient<DoHandler>();
+
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
+       
+        //builder.Services.AddWebOptimizer();
 
         // add migrations
         var ma = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bikevent.Migrations.dll");
@@ -78,6 +84,11 @@ public class Program
         app.UseSwaggerUI();
 
         app.UseHttpsRedirection();
+
+        // minify and optimise
+        // https://github.com/ligershark/WebOptimizer?tab=readme-ov-file#install-and-setup
+        //app.UseWebOptimizer();
+
         app.UseStaticFiles();
 
         app.UseRouting();

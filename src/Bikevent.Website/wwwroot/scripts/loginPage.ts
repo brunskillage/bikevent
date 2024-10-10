@@ -1,7 +1,7 @@
 namespace app {
-    class LoginPage {
+    class LoginPage extends BaseFormPage {
         init() {
-            // app.formUtils.formInit()
+            super.init()
         }
     }
 

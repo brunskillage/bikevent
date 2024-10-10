@@ -18,7 +18,7 @@ namespace Bikevent.Website.wwwroot
                     {
                         PropName = e.PropertyName.Camelize(),
                         Message = e.ErrorMessage,
-                        CurrentVal = e.AttemptedValue?.ToString()
+                        CurrentVal = e.PropertyName.Contains("password", StringComparison.OrdinalIgnoreCase) ? "xxx" : e.AttemptedValue?.ToString()
                     })
                 }
             };

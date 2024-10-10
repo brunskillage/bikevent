@@ -5,14 +5,15 @@ using Bikevent.DataObjects;
 using Bikevent.Validation;
 using Bikevent.Website.wwwroot;
 using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
 
 namespace Bikevent.Website.Controllers;
 
 [Route("api/v1")]
 public class ApiAuthController : Controller
 {
-    private readonly UserDbService _userDbService;
     private readonly BvConfigurationService _configurationService;
+    private readonly UserDbService _userDbService;
 
     public ApiAuthController(UserDbService userDbService, BvConfigurationService configurationService)
     {
@@ -20,28 +21,32 @@ public class ApiAuthController : Controller
         _configurationService = configurationService;
     }
 
+
     [Route("login")]
     [HttpPost]
-    public async Task<ActionResult<BvResponse>> Login([FromBody]BvUserRow user)
+    public async Task<ActionResult<BvResponse>> Login([FromBody] BvUserRow user)
     {
         var val = new UserValidator(_userDbService);
-        var res = await val.ValidateAsync(new BvUserRow { Email = user.Email, NickName = user.NickName, EncPassword = user.EncPassword});
+        var res = await val.ValidateAsync(new BvUserRow
+            { Email = user.Email, NickName = user.NickName, EncPassword = user.EncPassword }, options => options.IncludeRuleSets("Login"));
+
+
         return Ok(res.ToBvResponse());
-    }    
-    
+    }
+
     [Route("account")]
     [HttpPost]
     public async Task<ActionResult<BvResponse>> SignUp([FromBody] BvUserRow user)
     {
         var val = new UserValidator(_userDbService);
-        var res = await val.ValidateAsync(new BvUserRow { Email = user.Email, NickName = user.NickName, EncPassword = user.EncPassword});
+        var res = await val.ValidateAsync(new BvUserRow
+            { Email = user.Email, NickName = user.NickName, EncPassword = user.EncPassword }, options => options.IncludeRuleSets("Create"));
 
         if (res.IsValid)
-        {
             try
             {
-                var hash =  BCrypt.Net.BCrypt.HashPassword("test");
-                var ep =  BCrypt.Net.BCrypt.Verify("test",hash);
+                var hash = BCrypt.Net.BCrypt.HashPassword(user.EncPassword);
+                // var ep = BCrypt.Net.BCrypt.Verify("test", hash);
 
                 user.EncPassword = hash;
                 await _userDbService.AddUser(user);
@@ -51,8 +56,6 @@ public class ApiAuthController : Controller
                 Console.WriteLine(e);
                 throw;
             }
-
-        }
 
         return Ok(res.ToBvResponse());
     }

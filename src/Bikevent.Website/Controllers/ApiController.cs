@@ -28,13 +28,12 @@ public class ApiController : Controller
     [HttpGet]
     public async Task<object> Config()
     {
-        return Ok(new BvResponse
-        {
-            Data = new
+        return Ok(new
             {
-                _configurationService.Domain
+                _configurationService.Domain,
+                _configurationService.IsDevEnvironment
             }
-        });
+        );
     }
     
     // dev only endpoints

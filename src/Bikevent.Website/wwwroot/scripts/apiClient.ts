@@ -10,7 +10,7 @@ namespace app {
 
     class ApiClient {
 
-        async Makerequest(method: HttpMethod, url: string, data?: any) {
+        async Makerequest(method: HttpMethod, url: string, data: any = null) {
 
             let body;
             let queryString;
@@ -39,8 +39,16 @@ namespace app {
             return res.json();
         }
 
-        Post = async (url: string, data: any) => {
+        Get = async (url: string, data?: any) => {
+            return await this.Makerequest(HttpMethod.GET, url, data)
+        }
+
+        Post = async (url: string, data?: any) => {
             return await this.Makerequest(HttpMethod.POST, url, data)
+        }
+
+        GetConfig = async () => {
+            return await this.Makerequest(HttpMethod.GET, "api/v1/config")
         }
 
         Login = async (data: any) => {

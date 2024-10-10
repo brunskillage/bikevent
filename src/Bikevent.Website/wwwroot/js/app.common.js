@@ -55,6 +55,10 @@ toastr.options = {
 };
 var app;
 (function (app) {
+    // interface IConfig {
+    //     Domain: string,
+    //     IsDevEnvironment: boolean
+    // }
     var BaseFormPage = /** @class */ (function () {
         function BaseFormPage() {
             var _this = this;
@@ -71,10 +75,7 @@ var app;
                         case 1:
                             resp = _a.sent();
                             if (!resp.success) {
-                                resp.data.errors.forEach(function (x) {
-                                    $(".mainForm input[name=".concat(x.propName, "]"))
-                                        .after("<div class='inputError'>".concat(x.message, "</div> ")).fadeOut().fadeIn();
-                                });
+                                this.apply_validation(resp.data.errors);
                             }
                             console.log(resp);
                             return [2 /*return*/];
@@ -112,6 +113,9 @@ var app;
             if (!this.formTarget)
                 alert('no target');
             this.submitButton.off("click").on("click", this.onSubmit);
+            //if (app.config.isDevEnvironment) {
+            this.apply_fakeData();
+            //}
         };
         BaseFormPage.prototype.getFormInputs = function () {
             var input = {};
@@ -150,15 +154,16 @@ var app;
             return input;
         };
         // utitlity : applies error messages to their respective elements
-        BaseFormPage.prototype.apply_validation = function (validationResponse, form) {
-            $(".text-danger, .alert").remove();
+        BaseFormPage.prototype.apply_validation = function (errors) {
+            var _this = this;
+            $(".inputError").remove();
             var first = null;
-            $.each(validationResponse.Errors, function (idx, v) {
-                var el = $("#".concat(v.PropertyName));
+            $.each(errors, function (idx, item) {
+                var el = _this.form.find("input[name=".concat(item.propName, "]"));
                 if (idx === 0)
                     first = el;
-                var message = $("<div class='text-danger'>".concat(v.ErrorMessage, "</div>")).hide();
-                el.before(message.fadeIn().fadeOut().fadeIn());
+                var message = $("<div class='inputError'>".concat(item.message, "</div>")).hide();
+                el.after(message.fadeIn().fadeOut().fadeIn());
             });
             first.focus();
         };
@@ -171,15 +176,23 @@ var app;
                 s += Math.random().toString(36).substr(2, len - s.length);
             return s;
         };
-        BaseFormPage.prototype.addRandomClubData = function () {
-            var fakeId = this.randStr(5);
-            var fakeClub = new club(1, "Name ".concat(fakeId), "Email ".concat(fakeId), new Date(), new Date(), "President ".concat(fakeId));
-            console.dir(fakeClub);
-            for (var prop in fakeClub) {
-                $("#" + prop).val(fakeClub[prop]);
+        BaseFormPage.prototype.apply_fakeData = function () {
+            var fakeId = this.randStr(6);
+            var inputs = this.getFormInputs();
+            for (var x in inputs) {
+                console.log(x);
+                var el = this.form.find("input[name=".concat(x, "]"));
+                if (x === 'email') {
+                    el.val("".concat(fakeId, "@fake.com"));
+                    continue;
+                }
+                if (x === 'encPassword') {
+                    el.val("Pass123");
+                    continue;
+                }
+                el.val("".concat(x + fakeId));
             }
-            $("#email").val("".concat(fakeId, "@").concat(fakeId, ".com"));
-            $("#websiteUrl").val("http://www.".concat(fakeId, ".com"));
+            ;
         };
         return BaseFormPage;
     }());

@@ -26,17 +26,15 @@ public class UserDbService : BaseDbClientService
         return res;
     }
     
-    public async Task<bool> GetUserByNameOrEmail(BvUserRow user)
+    public async Task<BvUserRow> GetUserByNameOrEmail(BvUserRow user)
     {
         await using var conn = await GetOpenConnectionAsync();
-        var res = await conn.QueryAsync<BvUserRow>("select id from users where (nickName = @Nickname or email=@email) limit 1", new BvUserRow
+        var res = await conn.QueryAsync<BvUserRow>("select id,encPassword from users where (nickName = @Nickname or email=@email) limit 1", new BvUserRow
         {
             NickName = user.NickName, Email = user.Email
         });
-        return res.Any();
+        return res.FirstOrDefault();
     }
-
-    
 
     public async Task<BvUserRow> AddUser(BvUserRow row)
     {

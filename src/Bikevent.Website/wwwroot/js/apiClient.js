@@ -35,6 +35,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var app;
 (function (app) {
     var HttpMethod;
@@ -48,10 +57,26 @@ var app;
     var ApiClient = /** @class */ (function () {
         function ApiClient() {
             var _this = this;
+            this.Get = function (url, data) { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.GET, url, data)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
             this.Post = function (url, data) { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.POST, url, data)];
+                        case 1: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            this.GetConfig = function () { return __awaiter(_this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.GET, "api/v1/config")];
                         case 1: return [2 /*return*/, _a.sent()];
                     }
                 });
@@ -138,9 +163,13 @@ var app;
                 });
             }); };
             // Rides
-            this.GetEvents = function (queryParams) {
-                if (queryParams === void 0) { queryParams = null; }
-                return __awaiter(_this, void 0, void 0, function () {
+            this.GetEvents = function () {
+                var args_1 = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args_1[_i] = arguments[_i];
+                }
+                return __awaiter(_this, __spreadArray([], args_1, true), void 0, function (queryParams) {
+                    if (queryParams === void 0) { queryParams = null; }
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, this.Makerequest(HttpMethod.GET, "api/v1/events", queryParams)];
@@ -174,9 +203,10 @@ var app;
                 });
             }); };
         }
-        ApiClient.prototype.Makerequest = function (method, url, data) {
-            return __awaiter(this, void 0, void 0, function () {
+        ApiClient.prototype.Makerequest = function (method_1, url_1) {
+            return __awaiter(this, arguments, void 0, function (method, url, data) {
                 var body, queryString, fullUrl, res;
+                if (data === void 0) { data = null; }
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:

@@ -3,7 +3,12 @@
 
 <h4>@Model.Club.NameOf</h4>
 
-<form class="mainForm" target="/api/v1/club"></form>
+<form class="mainForm" target="/api/v1/club">
+    @await Html.PartialAsync("BvPartials/_submitButton")
+
+</form>
+
+
 
 @section Scripts {
     <script src="~/js/clubPage.js"></script>

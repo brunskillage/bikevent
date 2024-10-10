@@ -24,16 +24,35 @@ toastr.options = {
 
 namespace app {
 
+    // interface IConfig {
+    //     Domain: string,
+    //     IsDevEnvironment: boolean
+    // }
+
+    // class Config {
+    //     public domain: string = "";
+    //     public isDevEnvironment: boolean = false;
+
+    //     // domain: string;
+    //     // isDevEnvironment: boolean;
+
+    //     constructor() {
+
+    //     }
+
+    //     async GetConfig() {
+    //         let config = await bvApiClient.GetConfig()
+    //         this.domain = config.domain;
+    //         this.isDevEnvironment = config.isDevEnvironment;
+    //         console.log(config)
+    //     }
+    // }
+
+    export let config;
+
     export interface BvPage {
         init()
         addEvents()
-    }
-
-    export interface BvFormPage {
-        init()
-        addEvents()
-        submit(e: FormDataEvent)
-        validate()
     }
 
     export abstract class BaseFormPage {
@@ -59,6 +78,10 @@ namespace app {
 
             this.submitButton.off("click").on("click", this.onSubmit)
 
+            //if (app.config.isDevEnvironment) {
+            this.apply_fakeData()
+            //}
+
         }
 
         onSubmit = async (e: FormDataEvent) => {
@@ -68,10 +91,8 @@ namespace app {
             var inputs = this.getFormInputs()
             var resp = await bvApiClient.Post(this.formTarget, inputs)
             if (!resp.success) {
-                resp.data.errors.forEach(x => {
-                    $(`.mainForm input[name=${x.propName}]`)
-                        .after(`<div class='inputError'>${x.message}</div> `).fadeOut().fadeIn()
-                })
+
+                this.apply_validation(resp.data.errors)
             }
             console.log(resp)
         }
@@ -101,14 +122,17 @@ namespace app {
                 const txt = jitem.val();
                 input[jitem.attr("name") + ""] = txt;
             });
+
             this.form.find("select").each((idx: any, item: any) => {
                 const jitem = $(item);
                 input[jitem.attr("name") + ""] = jitem.val();
             });
+
             this.form.find("input[type=radio]:checked").each((idx: any, item: any) => {
                 const jitem = $(item);
                 input[jitem.attr("name") + ""] = jitem.val();
             });
+
             this.form.find("input[type=checkbox]").each((idx: any, item: any) => {
                 const jitem = $(item);
                 input[jitem.attr("name") + ""] = jitem.is(":checked") ? 1 : 0;
@@ -120,14 +144,14 @@ namespace app {
         }
 
         // utitlity : applies error messages to their respective elements
-        apply_validation(validationResponse: any, form: any): void {
-            $(".text-danger, .alert").remove();
+        apply_validation(errors: any): void {
+            $(".inputError").remove();
             let first: any = null;
-            $.each(validationResponse.Errors, (idx: any, v: any) => {
-                const el = $(`#${v.PropertyName}`);
+            $.each(errors, (idx: any, item: any) => {
+                const el = this.form.find(`input[name=${item.propName}]`)
                 if (idx === 0) first = el;
-                const message = $(`<div class='text-danger'>${v.ErrorMessage}</div>`).hide();
-                el.before(message.fadeIn().fadeOut().fadeIn());
+                const message = $(`<div class='inputError'>${item.message}</div>`).hide();
+                el.after(message.fadeIn().fadeOut().fadeIn());
             });
             first.focus();
         }
@@ -144,16 +168,26 @@ namespace app {
         }
 
 
-        addRandomClubData() {
-            let fakeId = this.randStr(5)
-            let fakeClub = new club(1, `Name ${fakeId}`, `Email ${fakeId}`, new Date(), new Date(), `President ${fakeId}`);
-            console.dir(fakeClub)
-            for (let prop in fakeClub) {
-                $("#" + prop).val(fakeClub[prop])
-            }
+        apply_fakeData() {
+            let fakeId = this.randStr(6)
+            let inputs = this.getFormInputs()
+            for (let x in inputs) {
+                console.log(x)
+                const el = this.form.find(`input[name=${x}]`)
 
-            $("#email").val(`${fakeId}@${fakeId}.com`)
-            $("#websiteUrl").val(`http://www.${fakeId}.com`)
+                if (x === 'email') {
+                    el.val(`${fakeId}@fake.com`)
+                    continue;
+                }
+
+                if (x === 'encPassword') {
+                    el.val(`Pass123`)
+                    continue;
+                }
+
+                el.val(`${x + fakeId}`)
+            };
         }
     }
+
 }

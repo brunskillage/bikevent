@@ -27,7 +27,7 @@ public class RidesDbService : BaseDbClientService
     public async Task<BvRideRow> AddRide(BvRideRow row)
     {
         await using var conn = await GetOpenConnectionAsync();
-        var res = await conn.UpdateAsync(row);
+        var res = await conn.InsertAsync(row);
         return row;
     }
 
