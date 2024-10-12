@@ -1,0 +1,16 @@
+.planners{
+    background-color: red;
+    height:100%;
+    width: 50%;
+}
+
+.planItems {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: aqua;
+    width: 100%;
+    .planItem {
+        width: 100%;
+        border: 1px solid black;
+    }
+}

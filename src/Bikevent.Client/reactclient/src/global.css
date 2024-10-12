@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  font-family: 'Arial', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.header {
+  background-color: red;
+  padding: 1em;
+  height: 1em;
+}
+.header .link {
+  padding-left: 1em;
+  font-weight: bold;
+  color: white;
+}
+.app {
+  background-color: azure;
+  height: 90vh;
+  display: flex;
+  padding: 0.5em;
+}
+.app .content {
+  display: flex;
+  flex-grow: 1;
+  width: 100vw;
+}
+.footer {
+  background-color: red;
+  padding: 1em;
+  height: 1em;
+}

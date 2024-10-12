@@ -1,0 +1,113 @@
+@use "sass:color";
+
+$colour1: #e00000db;
+$colour2: #301c05;
+$colour3: #f4d47e;
+$colour4: #feffff;
+
+$dark: scale($colour1, 20%);
+$light: scale($colour1, 20%);
+$lighter: scale($colour1, 40%);
+
+@font-face {
+  font-family: "Yummyline Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Yummyline Regular"), url("./../font/Yummyline.woff") format("woff");
+}
+
+.splitter {
+  display: flex;
+  .left {
+    //width: 50px;
+    display: flex;
+    justify-items: center;
+    //flex-direction: column;
+  }
+  .right {
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 100%;
+  }
+}
+
+.navbar {
+  flex-wrap: wrap;
+  width: 100%;
+  display: flex;
+  //align-items: center;
+  background-color: $colour1;
+  color: $lighter;
+  padding: 1em !important;
+  font-weight: bold;
+
+  .left {
+    flex: 1;
+    // border: 1px solid red;
+    position: absolute;
+    .logo {
+      font-family: "Yummyline Regular";
+      font-size: 3em;
+      color: white;
+    }
+  }
+
+  .right {
+    flex: 5;
+    display: flex;
+    justify-content: end;
+    //border: 1px solid green;
+
+    .iconSmall {
+      width: 1.3em;
+      height: 1.8em;
+      padding-left: 0.1em;
+      margin-left: 1em;
+    }
+  }
+}
+
+.sideNavBar {
+  display: flex;
+  flex-direction: column;
+  //flex-basis: auto;
+  // align-items: flex-end;
+  background-color: $colour3;
+  color: $light;
+  width: 50px;
+  padding: 0.7em;
+
+  .iconSmall {
+    padding-bottom: 0.9em;
+    // padding: 2px;
+    .txt {
+      padding-top: 0.5em;
+      font-size: 0.6em;
+      font-weight: bold;
+    }
+  }
+
+  .spacer {
+    height: 1em;
+  }
+}
+
+.mainContent {
+  flex-wrap: wrap;
+  width: 100%;
+  flex-direction: column;
+  height: 100vh;
+ // background-color: black;
+  //background-color: scale($colour4, $lightness: 2%);
+  // color.adjust($colour4, $lightness: 15%, $space: hsl);
+  //color.change(#998099, $lightness: 30%),
+
+
+  display: flex;
+  align-items: center;
+}
+.footer {
+  background-color: $colour3;
+  height: 11vh;
+}

@@ -1,0 +1,33 @@
+$colour1: #0241ad;
+$colour2: #301c05;
+$colour3: #f4d47e;
+$colour4: #feffff;
+
+$primary: 90; // set to brand primary color
+$secondary: 270; // set to brand secondary color
+$red: 0;
+$amber: 60;
+$green: 165;
+
+$lightness: 50%;
+
+@function lighten($depth) {
+  @return $lightness + $depth;
+}
+
+$foreground: lighten(-40);
+$darkest: lighten(-30);
+$darker: lighten(-20);
+$dark: lighten(-10);
+$light: lighten(10);
+$lighter: lighten(20);
+$lightest: lighten(30);
+$background: lighten(40);
+
+@function spin($hue, $depth: 50) {
+  @return hsl($hue, 50%, $depth);
+}
+
+@function neutral($depth: 50) {
+  @return hsl($primary, 5%, $depth);
+}
