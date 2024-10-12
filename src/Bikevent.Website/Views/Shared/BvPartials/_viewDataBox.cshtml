@@ -1,0 +1,15 @@
+﻿@model BvInputModel;
+<div class="row">
+    <div class="col-8">
+
+        <label for="@Model.NameOf-input">@Model.Label</label>
+        <div class="col-auto">
+            <input type="@Model.Type" id="@Model.NameOf-input" name="@Model.NameOf" class="form-control">
+            @Model.NameOf
+
+        </div>
+    </div>
+
+</div>
+
+
