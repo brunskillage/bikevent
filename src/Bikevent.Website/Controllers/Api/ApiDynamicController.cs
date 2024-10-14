@@ -1,15 +1,18 @@
 ﻿using System.Net;
+using System.Net.Mime;
 using Bikevent.DataObjects;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace Bikevent.Website.Controllers;
+namespace Bikevent.Website.Controllers.Api;
 
 /// <summary>
 /// Experimental to reduce boilerplate
 /// idea is that can quickly wire up server functions
 /// in doHandler - we will see!
 /// </summary>
+[ApiController]
+[Produces(MediaTypeNames.Application.Json)]
 [Route("api/v1")]
 public class ApiDynamicController : Controller
 {

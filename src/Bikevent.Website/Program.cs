@@ -1,10 +1,14 @@
 using System.Reflection;
+using System.Text;
 using Bikevent.Config;
 using Bikevent.Database;
 using Bikevent.Migrations;
 using Bikevent.Validation;
 using Bikevent.Website.Controllers;
 using FluentMigrator.Runner;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Bikevent.Website;
 
@@ -43,8 +47,39 @@ public class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-       
+
         //builder.Services.AddWebOptimizer();
+
+        //JWT Authentication
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            };
+        });
+        
+        // add CORS
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(
+                policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000", 
+                            "https://localhost:3000",
+                            "https://api.brunskillage.org.uk",
+                            "https://auth.brunskillage.org.uk")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+        });
+
 
         // add migrations
         var ma = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bikevent.Migrations.dll");
@@ -63,6 +98,11 @@ public class Program
             });
 
         // end add migrations
+
+        // ! stop automatic model validation for ApiControllers - When using it automatically caused
+        // validation errors depite nothing I was aware of being enforced
+        builder.Services.Configure<ApiBehaviorOptions>(options
+            => options.SuppressModelStateInvalidFilter = true);
 
 
         var app = builder.Build();
@@ -93,7 +133,9 @@ public class Program
 
         app.UseRouting();
 
-        // app.UseAuthorization();
+        app.UseAuthentication();
+
+        app.UseCors();
 
         app.MapControllerRoute(
             "default",

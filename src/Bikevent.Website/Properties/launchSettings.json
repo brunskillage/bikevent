@@ -3,8 +3,8 @@
     "Watch": {
       "commandName": "Executable",
       "executablePath": "dotnet.exe",
-      "workingDirectory": "$(ProjectDir)",
       "commandLineArgs": "watch --non-interactive run",
+      "workingDirectory": "$(ProjectDir)",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
@@ -15,6 +15,8 @@
     },
     "https": {
       "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "https://localhost:7186/swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -30,7 +32,6 @@
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5048"
     },
-
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,

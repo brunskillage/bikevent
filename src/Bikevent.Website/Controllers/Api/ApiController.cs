@@ -1,13 +1,12 @@
-﻿using Bikevent.Config;
+﻿using System.Net.Mime;
+using Bikevent.Config;
 using Bikevent.Database;
-using Bikevent.DataObjects;
-using Bikevent.Validation;
-using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bikevent.Website.Controllers;
+namespace Bikevent.Website.Controllers.Api;
 
 [ApiController]
+[Produces(MediaTypeNames.Application.Json)]
 [Route("api/v1")]
 public class ApiController : Controller
 {
@@ -30,8 +29,9 @@ public class ApiController : Controller
     {
         return Ok(new
             {
-                _configurationService.Domain,
-                _configurationService.IsDevEnvironment
+                ApiDomain = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host,
+                _configurationService.IsDevEnvironment,
+                _configurationService.TokenExpiryMinutes
             }
         );
     }
@@ -41,7 +41,7 @@ public class ApiController : Controller
     [HttpGet]
     public async Task<List<DbTableMeta>> GetTableMeta(string table)
     {
-        if (_configurationService.IsDevEnvironment)
+        if (_configurationService.IsDevEnvironment.Value)
         {
             var meta = await _miscDbService.GetTableMeta(table);
             return meta.ToList();

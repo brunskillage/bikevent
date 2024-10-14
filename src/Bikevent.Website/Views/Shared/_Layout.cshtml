@@ -14,7 +14,7 @@
         app = {}
         app.config = {
             isDevEnvironment: @Configuration.IsDevEnvironment.ToString().ToLower(),
-            domain: "@Configuration.Domain"
+            domain: "@Configuration.ApiDomain"
         }
     </script>
 
@@ -58,7 +58,7 @@
 <div class="footer">
     bikevent.com/nz Copyright 2024
 
-    @if (Configuration.IsDevEnvironment)
+    @if (Configuration.IsDevEnvironment.Value)
     {
         <a href="/swagger/index.html" target="_blank">API Browser</a>
         <a href="http://192.168.1.140/phpMyAdmin/db_structure.php?server=1&db=bikeventdb" target="_blank">DB Browser</a>

@@ -6,6 +6,9 @@ namespace Bikevent.Validation;
 
 public class UserValidator : AbstractValidator<BvUserRow>
 {
+
+    public BvUserRow UserRow { get; set; }
+
     public UserValidator(UserDbService userDbService)
     {
         var userDbService1 = userDbService;
@@ -16,11 +19,10 @@ public class UserValidator : AbstractValidator<BvUserRow>
         const int maxPwdLength = 50;
 
         RuleFor(x => x.Email).EmailAddress().WithMessage("Please enter a valid Email Address");
-        RuleFor(x => x.NickName).Length(minNickNameLength, maxNickNameLength).WithMessage(
-            $"Please enter a value between {minNickNameLength} and {maxNickNameLength} characters length");
-        ;
+
         RuleFor(x => x.EncPassword).Length(minPwdLength, maxPwdLength)
             .WithMessage($"Please enter a value between {minPwdLength} and {maxPwdLength}");
+
         RuleFor(x => x.EncPassword).Matches("[A-Za-z0-9!@#$%^&*()_+{}[]|\\:\";'<>,.\\?/'\"\\]")
             .WithMessage("Please use characters A-Z, 0-9 a symbol");
 
@@ -28,6 +30,9 @@ public class UserValidator : AbstractValidator<BvUserRow>
         {
             When(x => !string.IsNullOrWhiteSpace(x.Email), () =>
             {
+                RuleFor(x => x.NickName).Length(minNickNameLength, maxNickNameLength).WithMessage(
+                    $"Please enter a value between {minNickNameLength} and {maxNickNameLength} characters length");
+
                 RuleFor(x => x.Email).MustAsync(async (nameOf, s) =>
                 {
                     var res = await userDbService1.EmailExists(nameOf);
@@ -52,7 +57,13 @@ public class UserValidator : AbstractValidator<BvUserRow>
             {
                 var res = await userDbService1.GetUserByNameOrEmail(new BvUserRow{Email = email});
                 encPassword = res?.EncPassword;
-                return res != null;
+
+                if (res != null)
+                {
+                    UserRow = res;
+                    return true;
+                }
+                return false;
             }).WithMessage("Email doesnt exist");
 
 

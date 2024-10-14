@@ -13,21 +13,46 @@ namespace Bikevent.Config
             _configuration = configuration;
 
             BikeventConstring = configuration.GetConnectionString("BikeventMySqlConnection");
-            Domain = options.Value.Domain;
-            Salt = options.Value.Salt;
+
             if (BikeventConstring == null)
             {
                 throw new ArgumentNullException("BikeventMySqlConnection");
             }
 
-            HostedEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")?.ToUpperInvariant();
+            Salt = GetConfigValueOrThrow<string>("AppSettings:Salt")!;
+            ApiDomain = GetConfigValueOrThrow<string>("AppSettings:Domain")!;
+            TokenExpiryMinutes = configuration.GetValue<int>("AppSettings:TokenExpiryMinutes")!;
+
+            HostedEnvironment = GetEnvironmentValueOrThrow("ASPNETCORE_ENVIRONMENT").ToUpperInvariant();
             IsDevEnvironment = HostedEnvironment == "DEVELOPMENT";
+            JwtKey = GetConfigValueOrThrow<string>("Jwt:Key");
+            JwtIssuer = GetConfigValueOrThrow<string>("Jwt:Issuer");
+            JwtAudience= GetConfigValueOrThrow<string>("Jwt:Audience");
         }
         
-        public string? BikeventConstring { get; private set; }
-        public string? HostedEnvironment { get; private set; }
-        public bool IsDevEnvironment { get; private set; }
-        public string Domain { get; private set; }
-        public string Salt { get; private set; }
+        public string? BikeventConstring { get; }
+        public string? HostedEnvironment { get; }
+        public bool? IsDevEnvironment { get; }
+        public string? ApiDomain { get; }
+        public string? Salt { get; }
+        public string? JwtIssuer { get; }
+        public string? JwtKey { get; }
+        public string? JwtAudience { get; }
+        public int? TokenExpiryMinutes { get; }
+
+        public T GetConfigValueOrThrow<T>(string path)
+        {
+            var val = _configuration.GetValue<T>(path);
+            if (val is null) throw new FieldAccessException("Configuration item not found " + path);
+            return val;
+        }
+
+        public string GetEnvironmentValueOrThrow(string path)
+        {
+            var val = Environment.GetEnvironmentVariable(path);
+            if (string.IsNullOrWhiteSpace(val)) throw new FieldAccessException("Environment Variable item not found " + path);
+            return val;
+        }
+
     }
 }
