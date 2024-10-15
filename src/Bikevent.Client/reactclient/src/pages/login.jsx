@@ -1,90 +1,105 @@
-import React, { createContext, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import {appConfigContext } from '../App';
 import axios from "axios";
 import { jwtDecode } from 'jwt-decode';
-import { redirect, Router } from 'react-router-dom';
-let moment = require('moment')
-//import Moment from 'react-moment'
+import { useLocalStorage } from '../hooks/useLocalStorage';
+
+import { increment } from './../store/counterSlice'
+import { setUserState } from './../store/userSlice'
+import { useSelector, useDispatch } from 'react-redux'
 
 
-export const Login = (args) => {  
-    var appConfigCtx = useContext(appConfigContext)
+export const Login = (args) => {
+    const count = useSelector(state => state.counter.value)
+    const appConfig = useSelector(state => state.appConfig)
+    const user = useSelector(state => state.user)
+    const dispatch = useDispatch()
+    // dispatch(setUserState({email:"text@test"}))
+    // 
+
+    const { setLocalStorageItem, removeLocalStorageItemsByPrefix2 } = useLocalStorage()
 
     const {
         register,
-        handleSubmit,   
+        handleSubmit,
         setError,
         formState: { errors }
-      } = useForm();
+    } = useForm();
 
-      const onSubmit = (formData) =>{
+    const onSubmit = (formData) => {
         // serverside check values
-        axios.post(`${appConfigCtx.apiDomain}/api/v1/login`, formData)
-        .then(resp => {
-            // console.log(resp.data)
-            if(!resp?.data?.success){
-                resp?.data?.data?.errors?.forEach(err => {
-                     // add to the react hook errors list
-                     setError( err.propName, {type: 'manual', message : err.message} )
-                })
+        axios.post(`${appConfig.apiDomain}/api/v1/login`, formData)
+            .then(resp => {
+                if (!resp?.data?.success) {
+                    resp?.data?.data?.errors?.forEach(err => {
+                        // add to the react hook errors list
+                        setError(err.propName, { type: 'manual', message: err.message })
+                    })
 
-                return false;
-            }
+                    return false;
+                }
 
-            // login ok use token
+                // login ok use token
+                var token = resp.data.data.token;
 
-            var token = resp.data.data.token;
-            let userConfigCtx = {}
+                let userConfigCtx = {}
+                userConfigCtx.isLoggedIn = true;
+                userConfigCtx.userName = resp.data.data.user.nickName;
+                userConfigCtx.email = resp.data.data.user.email;
 
- 
-            
+                //dispatch(setUserState(userConfigCtx))
+                dispatch(setUserState(userConfigCtx))
 
-            // for ( var i = 0, len = localStorage.length; i < len; ++i ) {
-            //     console.log( localStorage.getItem( localStorage.key( i ) ) );
-            //     if(localStorage.key( i ).startsWith('be_') )localStorage.removeItem(localStorage.key( i ));
-            // }
+                const decodedToken = jwtDecode(token)
 
-            userConfigCtx.loggedIn = true;
-            userConfigCtx.userName = resp.data.data.user.nickName;
-            userConfigCtx.email = resp.data.data.user.email;
-            
-            const user = jwtDecode(token)
+                removeLocalStorageItemsByPrefix2()
+                setLocalStorageItem('user', JSON.stringify(userConfigCtx), 5)
+                setLocalStorageItem('token', token, 5)
 
-            localStorage.setItem("be_user", JSON.stringify(userConfigCtx))
-            localStorage.setItem('be_token', token)
-            var expires = moment().add(appConfigCtx.tokenExpiryMinutes, 'minutes');
-            localStorage.setItem('be_token_expires', expires);
-            return window.location.href = '/account'
 
-        })
+                // not working...
+                // return <redirect to='/account'></redirect>
+                // for now...
+                // return window.location.href = '/account'
+
+            })
     }
 
-    return ( <>
+    return (<>
         <div className='login'>
-            <h3>Login</h3>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="row">
-                    <div className="col c2">Email *</div>
-                    <div className="col c10"><input {...register('email')}></input>
-                    <br/>
-                    {errors?.email && <div className='error'>{errors?.email?.message}</div>}
-                    </div>
-                </div>
+            {!user.isLoggedIn ?
+                <>
+                    <h3>Login</h3>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="row">
+                            <div className="col c2">Email *</div>
+                            <div className="col c10"><input {...register('email')}></input>
+                                <br />
+                                {errors?.email && <div className='error'>{errors?.email?.message}</div>}
+                            </div>
+                        </div>
 
-                <div className="row">
-                    <div className="col c2">Password *</div>
-                    <div className="col c10"><input {...register('encPassword')}></input>                  <br/>
-                    {errors?.encPassword && <div className='error'>{errors?.encPassword?.message}</div>}</div>
-                </div>
-                  
-                <div className="row">
-                    <div className="col c2">&nbsp;</div>
-                    <div className="col c10"> <input className='btn btn-a btn-sm' type="submit" /></div>
-                </div>               
-            </form> 
+                        <div className="row">
+                            <div className="col c2">Password *</div>
+                            <div className="col c10"><input {...register('encPassword')}></input>                  <br />
+                                {errors?.encPassword && <div className='error'>{errors?.encPassword?.message}</div>}</div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col c2">&nbsp;</div>
+                            <div className="col c10"> <input className='btn btn-a btn-sm' type="submit" /></div>
+                        </div>
+                    </form>
+                </>
+                :
+                <>
+                    <h3>You are now logged in</h3>
+                    <p>Welcome {user?.email} select a memu item to continue</p>
+                </>}
+
+
         </div>
 
-    </> );
+    </>);
 }
