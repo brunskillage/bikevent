@@ -1,6 +1,7 @@
 import axios from "axios"
 import { setTodos } from "./counterSlice"
 import { setConfigState } from "./appConfigSlice"
+import axiosConfig from "../lib/apiClientConfig"
 
 export const getTodos = () =>  async (dispatch, getState) => {
     axios.get('https://jsonplaceholder.typicode.com/todos')
@@ -8,6 +9,6 @@ export const getTodos = () =>  async (dispatch, getState) => {
 }
 
 export const setAppConfig = () =>  async (dispatch, getState) => {
-    axios.get("https://localhost:7186/api/v1/config")
+    axiosConfig.get("/api/v1/config")
         .then(response => dispatch(setConfigState(response.data)))
 }

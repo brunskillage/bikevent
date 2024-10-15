@@ -1,23 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import axios from "axios";
-import { jwtDecode } from 'jwt-decode';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-
-import { increment } from './../store/counterSlice'
 import { setUserState } from './../store/userSlice'
 import { useSelector, useDispatch } from 'react-redux'
+import { removeLocalStorageItemsByPrefix, setLocalStorageItem } from '../lib/localStorageClient';
+import { NavLink, useNavigate } from 'react-router-dom';
+import axiosConfig from '../lib/apiClientConfig';
 
 
 export const Login = (args) => {
-    const count = useSelector(state => state.counter.value)
     const appConfig = useSelector(state => state.appConfig)
     const user = useSelector(state => state.user)
+    const navigate = useNavigate()
     const dispatch = useDispatch()
-    // dispatch(setUserState({email:"text@test"}))
-    // 
-
-    const { setLocalStorageItem, removeLocalStorageItemsByPrefix2 } = useLocalStorage()
 
     const {
         register,
@@ -27,8 +21,9 @@ export const Login = (args) => {
     } = useForm();
 
     const onSubmit = (formData) => {
+
         // serverside check values
-        axios.post(`${appConfig.apiDomain}/api/v1/login`, formData)
+        axiosConfig.post("/api/v1/login", formData)
             .then(resp => {
                 if (!resp?.data?.success) {
                     resp?.data?.data?.errors?.forEach(err => {
@@ -39,28 +34,26 @@ export const Login = (args) => {
                     return false;
                 }
 
-                // login ok use token
-                var token = resp.data.data.token;
+                // successful login
 
-                let userConfigCtx = {}
-                userConfigCtx.isLoggedIn = true;
-                userConfigCtx.userName = resp.data.data.user.nickName;
-                userConfigCtx.email = resp.data.data.user.email;
+                var auth = {
+                    email: resp.data.data.user.email,
+                    isLoggedIn: true,
+                    nickName: resp.data.data.user.nickName,
+                    token: resp.data.data.token
+                }
 
-                //dispatch(setUserState(userConfigCtx))
-                dispatch(setUserState(userConfigCtx))
+                // save in user state
+                dispatch(setUserState(auth))
 
-                const decodedToken = jwtDecode(token)
+                // clear exisiting 
+                removeLocalStorageItemsByPrefix()
 
-                removeLocalStorageItemsByPrefix2()
-                setLocalStorageItem('user', JSON.stringify(userConfigCtx), 5)
-                setLocalStorageItem('token', token, 5)
+                // save in local storage
+                setLocalStorageItem('auth', JSON.stringify(auth, appConfig.tokenExpiry))
 
-
-                // not working...
-                // return <redirect to='/account'></redirect>
-                // for now...
-                // return window.location.href = '/account'
+                // navigate to the account page
+                navigate('/account')
 
             })
     }
@@ -72,6 +65,11 @@ export const Login = (args) => {
                 <>
                     <h3>Login</h3>
                     <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="row">
+                            <div className="col c2"></div>
+                            <div className="col c2"><div className='msg'>No account? Create one <NavLink to="/account/create">here</NavLink></div></div>
+                        </div>
+
                         <div className="row">
                             <div className="col c2">Email *</div>
                             <div className="col c10"><input {...register('email')}></input>
@@ -103,3 +101,4 @@ export const Login = (args) => {
 
     </>);
 }
+

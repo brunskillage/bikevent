@@ -2,11 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const appConfigSlice = createSlice({
   name: 'appConfig',
-  initialState: {
-    apiDomain: "https://localhost:7186",
-    isDevEnvironment: true,
-    tokenExpiryMinutes: 60
-  },
+  initialState: {isDevEnvironment : true, tokenExpiryminutes: 60}
+  ,
   reducers: {
     setConfigState: (state, action) => {
       return action.payload;

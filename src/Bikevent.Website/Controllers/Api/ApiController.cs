@@ -29,8 +29,7 @@ public class ApiController : Controller
     {
         return Ok(new
             {
-                ApiDomain = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host,
-                _configurationService.IsDevEnvironment,
+                 _configurationService.IsDevEnvironment,
                 _configurationService.TokenExpiryMinutes
             }
         );

@@ -11,6 +11,10 @@ import { Logout } from "./pages/logout";
 import { Tester } from "./pages/tester";
 import { useDispatch, useSelector } from "react-redux";
 import { setAppConfig } from "./store/thunks";
+import { isAuthValid } from "./lib/auth";
+import { getLocalStorageItem } from "./lib/localStorageClient";
+import { setUserState } from "./store/userSlice";
+import { CreateAccount } from "./pages/createAccount";
 
 // unprotected routes
 
@@ -31,15 +35,17 @@ const Layout = () => {
 }
 
 export const LayoutProtected = () => {
+
+    // only show if logged in
+    var auth = useSelector(state => state.user)
+
     return (
         <>
             <div className='app'>
                 <Header />
                 <div className="container">
                     <div className="row">
-                        {/* {appConfigData.isDevEnvironment && <Outlet />}
-                {!appConfigData?.loggedIn && <Login />} */}
-                        <Outlet />
+                        {auth?.isLoggedIn ? <Outlet /> : <Login />}
                     </div>
                 </div>
                 <Footer />
@@ -52,9 +58,14 @@ export const LayoutProtected = () => {
 export const App = () => {
 
     const dispatch = useDispatch();
-
     // load intial app configuration
     dispatch(setAppConfig())
+
+    var valid = isAuthValid()
+    if (valid) {
+        const auth = getLocalStorageItem('auth')
+        dispatch(setUserState(auth))
+    }
 
     return (<>
         <RouterProvider router={createBrowserRouter(
@@ -90,6 +101,10 @@ export const App = () => {
                         {
                             path: "/account",
                             element: <Account />,
+                        },
+                        {
+                            path: "/account/create",
+                            element: <CreateAccount />,
                         },
                         {
                             path: "/rides",

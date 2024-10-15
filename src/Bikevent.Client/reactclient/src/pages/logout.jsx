@@ -1,21 +1,18 @@
-import { NavLink } from "react-router-dom";
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { NavLink, useNavigate } from "react-router-dom";
 import { setUserState } from './../store/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { removeLocalStorageItemsByPrefix } from "../lib/localStorageClient";
 
 export const Logout = () => {
     const user = useSelector(state => state.user)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const { removeLocalStorageItemsByPrefix2 } = useLocalStorage()
-    removeLocalStorageItemsByPrefix2()
+    removeLocalStorageItemsByPrefix()
 
     const onLogout = () => {
-        dispatch(setUserState({
-            email: '',
-            isLoggedIn: false,
-            userName: ''
-        }))
+        dispatch(setUserState({}))
+        navigate('/login')
     }
 
     return (<>
@@ -31,7 +28,7 @@ export const Logout = () => {
                 :
                 <>
                     <h3>You are now signed out</h3>
-                    <p>
+                    <p className="msg">
                         Thanks for using bikevent! <NavLink to="/login">Sign In</NavLink> to use again.
                     </p>
                 </>}

@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { Auth } from '../lib/dataObjects';
 
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    email: "",
+    email:"",
+    isLoggedIn: false,
     userName: "",
-    isLoggedIn: false
+    token:""
   },
   reducers: {
     setUserState: (state, action) => {
