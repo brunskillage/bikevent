@@ -89,7 +89,10 @@ export const App = () => {
                         {
                             path: "/tester",
                             element: <Tester />,
-                        }
+                        }, {
+                            path: "/account/create",
+                            element: <CreateAccount />,
+                        },
                     ]
                 },
                 {
@@ -101,10 +104,6 @@ export const App = () => {
                         {
                             path: "/account",
                             element: <Account />,
-                        },
-                        {
-                            path: "/account/create",
-                            element: <CreateAccount />,
                         },
                         {
                             path: "/rides",

@@ -1,16 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from "axios";
-import { jwtDecode } from 'jwt-decode';
-import { setUserState } from './../store/userSlice'
-import { useSelector, useDispatch } from 'react-redux'
-import { removeLocalStorageItemsByPrefix, setLocalStorageItem } from '../lib/localStorageClient';
-import { NavLink } from 'react-router-dom';
+import axiosConfig from '../lib/apiClientConfig';
+import { InputA } from '../partials/wrappers/input';
+import { FormA } from '../partials/wrappers/form';
 
 
 export const CreateAccount = (args) => {
-    const appConfig = useSelector(state => state.appConfig)
-    const dispatch = useDispatch()
+    const [isCreated, setIsCreated] = useState(false)
 
     const {
         register,
@@ -22,7 +18,7 @@ export const CreateAccount = (args) => {
     const onSubmit = (formData) => {
 
         // serverside check values
-        axios.post(`${appConfig.apiDomain}/api/v1/account`, formData)
+        axiosConfig.post("/api/v1/account", formData)
             .then(resp => {
                 if (!resp?.data?.success) {
                     resp?.data?.data?.errors?.forEach(err => {
@@ -33,48 +29,27 @@ export const CreateAccount = (args) => {
                     return false;
                 }
 
-                var auth = {
-                    email: resp.data.data.user.email,
-                    isLoggedIn: true,
-                    nickName: resp.data.data.user.nickName,
-                    token: resp.data.data.token
-                }
+                setIsCreated(true)
 
-                dispatch(setUserState(auth))
-                removeLocalStorageItemsByPrefix()
-                setLocalStorageItem('auth', JSON.stringify(auth, appConfig.tokenExpiry))
+                return true;
             })
     }
 
     return (<>
-        <div className='login'>
-            <h3>Login</h3>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="row">
-                    <div className="col c2"></div>
-                    <div className="col c2"><div className='msg'>No account? Create one <NavLink to="/account/create">here</NavLink></div></div>
-                </div>
+        <div className='createAccount'>
+            <h3>Create Account</h3>
+            <div className='msg success'>hello</div>
+            {!isCreated ?
+                <FormA onSubmit={handleSubmit(onSubmit)}>
+                    <InputA label='Email *' fieldName='email' errors={errors} register={register}></InputA>
+                    <InputA label='Password *' fieldName='encPassword' errors={errors} register={register}></InputA>
+                    <InputA label='Nick Name *' fieldName='nickName' errors={errors} register={register}></InputA>
+                </FormA>
+                :
+                <p><div class="msg">Account has been successfully created. Please conjfirm on your email. Unfonfirmed accounts will be removed after 7 days.</div></p>
+            }
 
-                <div className="row">
-                    <div className="col c2">Email *</div>
-                    <div className="col c10"><input {...register('email')}></input>
-                        <br />
-                        {errors?.email && <div className='error'>{errors?.email?.message}</div>}
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col c2">Password *</div>
-                    <div className="col c10"><input {...register('encPassword')}></input>                  <br />
-                        {errors?.encPassword && <div className='error'>{errors?.encPassword?.message}</div>}</div>
-                </div>
-
-                <div className="row">
-                    <div className="col c2">&nbsp;</div>
-                    <div className="col c10"> <input className='btn btn-a btn-sm' type="submit" /></div>
-                </div>
-            </form>
-        </div>
+        </div >
 
     </>);
 }

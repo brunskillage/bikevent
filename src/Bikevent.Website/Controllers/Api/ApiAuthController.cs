@@ -37,7 +37,7 @@ public class ApiAuthController : ControllerBase
         var val = new UserValidator(_userDbService);
         var res = await val.ValidateAsync(new BvUserRow
         { Email = user.Email, EncPassword = user.EncPassword },
-            options => options.IncludeRuleSets("Login"));
+            options => options.IncludeRuleSets("Login").IncludeRulesNotInRuleSet());
 
         if (res.IsValid)
         {
@@ -69,7 +69,7 @@ public class ApiAuthController : ControllerBase
         var val = new UserValidator(_userDbService);
         var res = await val.ValidateAsync(new BvUserRow
                 { Email = user.Email, NickName = user.NickName, EncPassword = user.EncPassword },
-            options => options.IncludeRuleSets("Create"));
+            options => options.IncludeRuleSets("Create").IncludeRulesNotInRuleSet());
 
         if (res.IsValid)
         {

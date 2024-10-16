@@ -120,9 +120,7 @@ public class Program
             app.UseHsts();
         }
 
-        app.UseSwagger();
-        app.UseSwaggerUI();
-
+        
         app.UseHttpsRedirection();
 
         // minify and optimise
@@ -141,8 +139,14 @@ public class Program
             "default",
             "{controller=Home}/{action=Index}/{id?}");
 
-        app.UseSwagger(options => { options.SerializeAsV2 = true; });
 
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            app.UseSwagger(options => { options.SerializeAsV2 = true; });
+        }
+        
         // run migrations
         miscDb.ClearDbVersionInfo();
         using (var scope = app.Services.CreateScope())

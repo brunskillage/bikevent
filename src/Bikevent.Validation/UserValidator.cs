@@ -6,11 +6,10 @@ namespace Bikevent.Validation;
 
 public class UserValidator : AbstractValidator<BvUserRow>
 {
-
-    public BvUserRow UserRow { get; set; }
-
     public UserValidator(UserDbService userDbService)
     {
+        ClassLevelCascadeMode = CascadeMode.Stop;
+
         var userDbService1 = userDbService;
 
         const int minNickNameLength = 6;
@@ -18,36 +17,33 @@ public class UserValidator : AbstractValidator<BvUserRow>
         const int minPwdLength = 6;
         const int maxPwdLength = 50;
 
-        RuleFor(x => x.Email).EmailAddress().WithMessage("Please enter a valid Email Address");
-
+        RuleFor(x => x.Email).NotEmpty().WithMessage("Email is Required");
+        
         RuleFor(x => x.EncPassword).Length(minPwdLength, maxPwdLength)
             .WithMessage($"Please enter a value between {minPwdLength} and {maxPwdLength}");
+
+        RuleFor(x => x.Email).EmailAddress().WithMessage("Please enter a valid Email Address");
 
         RuleFor(x => x.EncPassword).Matches("[A-Za-z0-9!@#$%^&*()_+{}[]|\\:\";'<>,.\\?/'\"\\]")
             .WithMessage("Please use characters A-Z, 0-9 a symbol");
 
         RuleSet("Create", () =>
         {
-            When(x => !string.IsNullOrWhiteSpace(x.Email), () =>
+            RuleFor(x => x.Email).MustAsync(async (nameOf, s) =>
             {
-                RuleFor(x => x.NickName).Length(minNickNameLength, maxNickNameLength).WithMessage(
-                    $"Please enter a value between {minNickNameLength} and {maxNickNameLength} characters length");
+                var emailExists = await userDbService1.EmailExists(nameOf);
+                // opposite of login email must not exist
+                return !emailExists;
+            }).WithMessage("Email already exists");
 
-                RuleFor(x => x.Email).MustAsync(async (nameOf, s) =>
-                {
-                    var res = await userDbService1.EmailExists(nameOf);
-                    return !res;
-                }).WithMessage("Email already exists");
-            });
+            RuleFor(x => x.NickName).Length(minNickNameLength, maxNickNameLength).WithMessage(
+                $"Please enter a value between {minNickNameLength} and {maxNickNameLength} characters length");
 
-            When(x => !string.IsNullOrWhiteSpace(x.NickName), () =>
+            RuleFor(x => x.NickName).MustAsync(async (nickName, s) =>
             {
-                RuleFor(x => x.NickName).MustAsync(async (nickName, s) =>
-                {
-                    var res = await userDbService1.EmailExists(nickName);
-                    return !res;
-                }).WithMessage("Nick Name already exists");
-            });
+                var res = await userDbService1.EmailExists(nickName);
+                return !res;
+            }).WithMessage("Nick Name already exists");
         });
 
         RuleSet("Login", () =>
@@ -55,7 +51,7 @@ public class UserValidator : AbstractValidator<BvUserRow>
             var encPassword = string.Empty;
             RuleFor(x => x.Email).MustAsync(async (email, s) =>
             {
-                var res = await userDbService1.GetUserByNameOrEmail(new BvUserRow{Email = email});
+                var res = await userDbService1.GetUserByNameOrEmail(new BvUserRow { Email = email });
                 encPassword = res?.EncPassword;
 
                 if (res != null)
@@ -63,8 +59,9 @@ public class UserValidator : AbstractValidator<BvUserRow>
                     UserRow = res;
                     return true;
                 }
+
                 return false;
-            }).WithMessage("Email doesnt exist");
+            }).WithMessage("Email doesn't exist");
 
 
             When(x => encPassword != null, () =>
@@ -77,4 +74,6 @@ public class UserValidator : AbstractValidator<BvUserRow>
             });
         });
     }
+
+    public BvUserRow UserRow { get; set; }
 }

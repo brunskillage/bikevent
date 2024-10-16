@@ -7,6 +7,7 @@
     <UserSecretsId>aspnet-Bikevent.Website-8cd597a9-7164-459d-af81-c133e328122d</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,5 +49,11 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Release'">
+    <Exec Command="call build.bat" />
+  </Target>
+
+
 
 </Project>

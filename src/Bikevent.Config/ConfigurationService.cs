@@ -1,6 +1,5 @@
 ﻿using System.Runtime.InteropServices.Marshalling;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace Bikevent.Config
 {
@@ -8,20 +7,19 @@ namespace Bikevent.Config
     {
         private readonly IConfiguration _configuration;
 
-        public BvConfigurationService(IConfiguration configuration, IOptions<AppSettingsValues> options)
+        public BvConfigurationService(IConfiguration configuration)
         {
             _configuration = configuration;
 
             BikeventConstring = configuration.GetConnectionString("BikeventMySqlConnection");
 
-            if (BikeventConstring == null)
-            {
-                throw new ArgumentNullException("BikeventMySqlConnection");
-            }
+            if (string.IsNullOrWhiteSpace(BikeventConstring))
+                throw new ArgumentNullException(nameof(BikeventConstring));
 
             Salt = GetConfigValueOrThrow<string>("AppSettings:Salt")!;
             ApiDomain = GetConfigValueOrThrow<string>("AppSettings:Domain")!;
             TokenExpiryMinutes = configuration.GetValue<int>("AppSettings:TokenExpiryMinutes")!;
+            StaticHomepageHtmlRelativePath = configuration.GetValue<string>("AppSettings:StaticHomepageHtmlRelativePath")!;
 
             HostedEnvironment = GetEnvironmentValueOrThrow("ASPNETCORE_ENVIRONMENT").ToUpperInvariant();
             IsDevEnvironment = HostedEnvironment == "DEVELOPMENT";
@@ -39,6 +37,7 @@ namespace Bikevent.Config
         public string? JwtKey { get; }
         public string? JwtAudience { get; }
         public int? TokenExpiryMinutes { get; }
+        public string StaticHomepageHtmlRelativePath { get; set; }
 
         public T GetConfigValueOrThrow<T>(string path)
         {
@@ -47,7 +46,7 @@ namespace Bikevent.Config
             return val;
         }
 
-        public string GetEnvironmentValueOrThrow(string path)
+        public static string GetEnvironmentValueOrThrow(string path)
         {
             var val = Environment.GetEnvironmentVariable(path);
             if (string.IsNullOrWhiteSpace(val)) throw new FieldAccessException("Environment Variable item not found " + path);

@@ -5,6 +5,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { removeLocalStorageItemsByPrefix, setLocalStorageItem } from '../lib/localStorageClient';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axiosConfig from '../lib/apiClientConfig';
+import { FormA } from '../partials/wrappers/form';
+import { InputA } from '../partials/wrappers/input';
+import { MsgA, MsgHighlight } from '../partials/wrappers/msg';
 
 
 export const Login = (args) => {
@@ -64,31 +67,12 @@ export const Login = (args) => {
             {!user.isLoggedIn ?
                 <>
                     <h3>Login</h3>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="row">
-                            <div className="col c2"></div>
-                            <div className="col c2"><div className='msg'>No account? Create one <NavLink to="/account/create">here</NavLink></div></div>
-                        </div>
+                    <FormA onSubmit={handleSubmit(onSubmit)}>
+                        <InputA label='Email *' fieldName='email' errors={errors} register={register}></InputA>
+                        <InputA label='Password *' fieldName='encPassword' errors={errors} register={register}></InputA>
+                    </FormA>
 
-                        <div className="row">
-                            <div className="col c2">Email *</div>
-                            <div className="col c10"><input {...register('email')}></input>
-                                <br />
-                                {errors?.email && <div className='error'>{errors?.email?.message}</div>}
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col c2">Password *</div>
-                            <div className="col c10"><input {...register('encPassword')}></input>                  <br />
-                                {errors?.encPassword && <div className='error'>{errors?.encPassword?.message}</div>}</div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col c2">&nbsp;</div>
-                            <div className="col c10"> <input className='btn btn-a btn-sm' type="submit" /></div>
-                        </div>
-                    </form>
+                    <MsgHighlight>No account? <NavLink to='/account/create'>Create</NavLink> an account.</MsgHighlight>
                 </>
                 :
                 <>
