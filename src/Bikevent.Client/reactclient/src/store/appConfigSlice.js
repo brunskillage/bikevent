@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const appConfigSlice = createSlice({
   name: 'appConfig',
-  initialState: {isDevEnvironment : true, tokenExpiryminutes: 60}
+  initialState: {isDevEnvironment : true, tokenExpiryminutes: 60, isLoading: false}
   ,
   reducers: {
     setConfigState: (state, action) => {

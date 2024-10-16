@@ -15,11 +15,10 @@ export const Header = () => {
 
                 <NavLink className='link pagename current' to="#">Bikevent</NavLink>
                 <NavLink className='link' to="/">HOME</NavLink>
-                <NavLink className='link' to="/rides">RIDES</NavLink>
-                <NavLink className='link' to="/events">EVENTS</NavLink>
-                <NavLink className='link' to="/account">ACCOUNT</NavLink>
-                {user?.isLoggedIn ?
-                    <NavLink className='link' to="/logout">LOGOUT {user.email}</NavLink>
+                {user?.isLoggedIn ? <>
+                    <NavLink className='link' to="/logout">LOGOUT {user.nickName}</NavLink>
+
+                </>
                     :
                     <NavLink className='link' to="/login">LOGIN</NavLink>
                 }

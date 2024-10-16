@@ -1,11 +1,10 @@
+import { MsgA } from "../partials/wrappers/msg";
 
 export const Rides = (args) => {
-    return ( <>
+    return (<>
         <div className='rides'>
             <h3>Rides</h3>
-            <p>
-
-            </p>
-        </div>   
-    </> );
+            <MsgA>Select your ride</MsgA>
+        </div>
+    </>);
 }
