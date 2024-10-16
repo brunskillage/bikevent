@@ -9,6 +9,7 @@ import { Events } from "./pages/events";
 import { Account } from "./pages/account";
 import { Logout } from "./pages/logout";
 import { Tester } from "./pages/tester";
+import { Clubs } from "./pages/clubs";
 import { useDispatch, useSelector } from "react-redux";
 import { setAppConfig } from "./store/thunks";
 import { isAuthValid } from "./lib/auth";
@@ -104,6 +105,10 @@ export const App = () => {
                         {
                             path: "/account",
                             element: <Account />,
+                        },
+                        {
+                            path: "/clubs",
+                            element: <Clubs />,
                         },
                         {
                             path: "/rides",

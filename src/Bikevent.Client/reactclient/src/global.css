@@ -300,3 +300,9 @@ form input {
 form input[type=submit] {
   width: 9em;
 }
+.homePage .btn {
+  padding: 1em;
+  margin: 0.5em;
+  width: 6em;
+  text-align: center;
+}
