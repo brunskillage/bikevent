@@ -6,35 +6,11 @@ using Bikevent.Validation;
 using Bikevent.Website.wwwroot;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-
+using FluentValidation;
 namespace Bikevent.Website.Controllers.Api;
 
 [ApiController]
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1")]
-public class ApiRidesController : Controller
-{
-    private readonly RidesDbService _ridesDbService;
-
-    public ApiRidesController(RidesDbService ridesDbService)
-    {
-        _ridesDbService = ridesDbService;
-    }
-
-    [Route("ride")]
-    [HttpPost]
-    public async Task<ActionResult<BvClubRow>> AddRide([FromBody] BvRideRow ride)
-    {
-        var v = new RideValidator();
-        var res = await v.ValidateAsync(ride);
-        if (!res.IsValid)
-            return Ok(res.ToBvResponse());
-
-        var id = await _ridesDbService.AddRide(ride);
-        return Ok(new BvResponse { Data = new { id } });
-    }
-}
-
 [Route("api/v1")]
 public class ApiClubsController : Controller
 {
@@ -61,7 +37,7 @@ public class ApiClubsController : Controller
     public async Task<ActionResult<BvClubRow>> AddClub([FromBody]BvClubRow club)
     {
         var v = new ClubValidator(_clubDbService);
-        var res = await v.ValidateAsync(club);
+        var res = await v.ValidateAsync(club, options => options.IncludeRuleSets("Add").IncludeRulesNotInRuleSet());
         if (!res.IsValid)
             return Ok(res.ToBvResponse());
 
@@ -73,6 +49,12 @@ public class ApiClubsController : Controller
     [HttpPatch]
     public async Task<ActionResult<BvClubRow>> UpdateClub([FromBody]BvClubRow club)
     {
+
+        var v = new ClubValidator(_clubDbService);
+        var res = await v.ValidateAsync(club, options => options.IncludeRuleSets("Update").IncludeRulesNotInRuleSet());
+        if (!res.IsValid)
+            return Ok(res.ToBvResponse());
+
         var id = await _clubDbService.UpdateClub(club);
         return Ok(new BvResponse { Data = new { id } });
     }        
@@ -84,7 +66,7 @@ public class ApiClubsController : Controller
         if (!confirmed)
         {
             return Ok(new ValidationResult(new List<ValidationFailure>
-                { new("confirmed", "You must confirm deletion ro all removal.") }).ToBvResponse());
+                { new("confirmed", "You must confirm deletion or all removal.") }).ToBvResponse());
         }
         await _clubDbService.DeleteClub(new BvClubRow{Id = id});
         return Ok();
@@ -94,10 +76,10 @@ public class ApiClubsController : Controller
     [HttpGet]
     public async Task<ActionResult<BvClubRow>> GetClub([FromRoute]int id)
     {
-        var res = await _clubDbService.GetClub(new BvClubRow{Id = id});
+        var club = await _clubDbService.GetClubById(new BvClubRow{Id = id});
         return Ok(new BvResponse
         {
-            Data = new { res }
+            Data = new { club }
         });
     }
 }

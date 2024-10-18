@@ -10,15 +10,13 @@ namespace Bikevent.Website.Controllers.Api;
 [Route("api/v1")]
 public class ApiController : Controller
 {
-    private readonly ClubDbService _clubDbService;
     private readonly BvConfigurationService _configurationService;
     private readonly MiscDbService _miscDbService;
 
 
-    public ApiController(ClubDbService clubDbService, BvConfigurationService configurationService,
+    public ApiController(BvConfigurationService configurationService,
         MiscDbService miscDbService)
     {
-        _clubDbService = clubDbService;
         _configurationService = configurationService;
         _miscDbService = miscDbService;
     }
@@ -29,8 +27,9 @@ public class ApiController : Controller
     {
         return Ok(new
             {
-                 _configurationService.IsDevEnvironment,
-                _configurationService.TokenExpiryMinutes
+                _configurationService.IsDevEnvironment,
+                _configurationService.TokenExpiryMinutes,
+                _configurationService.TimerASeconds
             }
         );
     }

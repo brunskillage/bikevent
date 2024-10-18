@@ -27,7 +27,7 @@ public class ClubDbService : BaseDbClientService
         return res;
     }
 
-    public async Task<BvClubRow> GetClub(BvClubRow club)
+    public async Task<BvClubRow> GetClubById(BvClubRow club)
     {
         await using var conn = await GetOpenConnectionAsync();
         var res = await conn.GetAsync<BvClubRow>(club.Id);

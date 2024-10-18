@@ -26,13 +26,16 @@ export const Footer = () => {
                         <a className="link" href="https://reactrouter.com/en/main/start/overview/" target="_blank">React Router</a></li>
                     <li>
                         <a className="link" href="https://momentjs.com/" target="_blank">Moment</a></li>
+
+                    <li>
+                        <a className="link" href="https://docs.fluentvalidation.net/en/latest/" target="_blank">Fluent Validation</a></li>
                     <li>
                         <NavLink className='link' to="/tester">Test Page</NavLink></li>
                 </ul>
 
-                <pre>
+                {/* <pre>
                     {JSON.stringify(appConfig)}
-                </pre>
+                </pre> */}
             </>
             }
         </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axiosConfig from '../lib/apiClientConfig';
+import axiosConfig from '../lib/axiosConfig';
 import { InputA } from '../partials/wrappers/input';
 import { FormA } from '../partials/wrappers/form';
 

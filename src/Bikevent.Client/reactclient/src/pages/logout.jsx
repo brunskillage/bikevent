@@ -8,9 +8,8 @@ export const Logout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    removeLocalStorageItemsByPrefix()
-
     const onLogout = () => {
+        removeLocalStorageItemsByPrefix()
         dispatch(setUserState({}))
         navigate('/login')
     }
@@ -23,7 +22,6 @@ export const Logout = () => {
                     <h3>Sign out</h3>
                     <p>Click 'Sign out' button below to sign out.</p>
                     <p><button className="btn btn-a btn-sm" onClick={() => onLogout()}>Sign Out</button></p>
-
                 </>
                 :
                 <>

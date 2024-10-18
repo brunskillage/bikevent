@@ -20,12 +20,14 @@ namespace Bikevent.Config
             ApiDomain = GetConfigValueOrThrow<string>("AppSettings:Domain")!;
             TokenExpiryMinutes = configuration.GetValue<int>("AppSettings:TokenExpiryMinutes")!;
             StaticHomepageHtmlRelativePath = configuration.GetValue<string>("AppSettings:StaticHomepageHtmlRelativePath")!;
+            TimerASeconds = configuration.GetValue<int>("AppSettings:TimerASeconds")!;
 
             HostedEnvironment = GetEnvironmentValueOrThrow("ASPNETCORE_ENVIRONMENT").ToUpperInvariant();
             IsDevEnvironment = HostedEnvironment == "DEVELOPMENT";
             JwtKey = GetConfigValueOrThrow<string>("Jwt:Key");
             JwtIssuer = GetConfigValueOrThrow<string>("Jwt:Issuer");
             JwtAudience= GetConfigValueOrThrow<string>("Jwt:Audience");
+           
         }
         
         public string? BikeventConstring { get; }
@@ -37,7 +39,8 @@ namespace Bikevent.Config
         public string? JwtKey { get; }
         public string? JwtAudience { get; }
         public int? TokenExpiryMinutes { get; }
-        public string StaticHomepageHtmlRelativePath { get; set; }
+        public string? StaticHomepageHtmlRelativePath { get; set; }
+        public int? TimerASeconds { get; set; }
 
         public T GetConfigValueOrThrow<T>(string path)
         {

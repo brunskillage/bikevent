@@ -4,11 +4,10 @@ import { setUserState } from './../store/userSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeLocalStorageItemsByPrefix, setLocalStorageItem } from '../lib/localStorageClient';
 import { NavLink, useNavigate } from 'react-router-dom';
-import axiosConfig from '../lib/apiClientConfig';
+import axiosConfig from '../lib/axiosConfig';
 import { FormA } from '../partials/wrappers/form';
 import { InputA } from '../partials/wrappers/input';
-import { MsgA, MsgHighlight } from '../partials/wrappers/msg';
-
+import { MsgHighlight } from '../partials/wrappers/msg';
 
 export const Login = (args) => {
     const appConfig = useSelector(state => state.appConfig)

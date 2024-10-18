@@ -12,9 +12,11 @@ namespace Bikevent.Validation
 
         public ClubValidator(ClubDbService clubDbService)
         {
-            RuleFor(c => c.NameOf).Length(minClubNameLength, maxClubNameLength).WithMessage($"Club Name must be at least {minClubNameLength} Letters and no more than {maxClubNameLength}");
-            RuleFor(c => c.President).Length(minClubNameLength, maxClubNameLength).WithMessage($"President/Contact must be at least {minClubNameLength} Letters and no more than {maxClubNameLength}");
-            RuleFor(c => c.Email).EmailAddress().WithMessage("Please use a valid email address");
+            ClassLevelCascadeMode = CascadeMode.Stop;
+
+            RuleFor(c => c.NameOf).NotEmpty().Length(minClubNameLength, maxClubNameLength).WithMessage($"Club Name must be at least {minClubNameLength} Letters and no more than {maxClubNameLength}");
+            RuleFor(c => c.President).NotEmpty().Length(minClubNameLength, maxClubNameLength).WithMessage($"President/Contact must be at least {minClubNameLength} Letters and no more than {maxClubNameLength}");
+            RuleFor(c => c.Email).NotEmpty().EmailAddress().WithMessage("Please use a valid email address");
 
             When(c => c.WebsiteUrl != null, () =>
             {
@@ -22,11 +24,49 @@ namespace Bikevent.Validation
                     .WithMessage("Please enter a valid website address");
             });
 
-            RuleFor(x => x.NameOf).MustAsync( async (nameOf, s) =>
+            RuleSet("Add", () =>
             {
-                var res = await clubDbService.ClubExists(nameOf);
-                return !res;
-            }).WithMessage("The Club already exists, please enter a different name");
+                RuleFor(club => club.NameOf).MustAsync(async (nameOf, s) =>
+                {
+                    var res = await clubDbService.ClubExists(nameOf);
+                    return !res;
+                }).WithMessage("The Club already exists, please enter a different name");
+            });
+
+            RuleSet("Update", () =>
+            {
+                RuleFor(club => club).MustAsync(async (club, s) =>
+                {
+                    
+                    var current = await clubDbService.GetClubById(club);
+                    if (current.NameOf != club.NameOf)
+                    {
+                        var res = await clubDbService.ClubExists(club.NameOf);
+                        return !res;
+                    }
+
+                    return true;
+                    
+                }).WithName("nameOf").WithMessage("The Club already exists, please enter a different name");
+            });
+            
+            
+            RuleSet("Update", () =>
+            {
+                RuleFor(club => club).MustAsync(async (club, s) =>
+                {
+                    var current = await clubDbService.GetClubById(club);
+                    if (current.NameOf != club.NameOf)
+                    {
+                        var res = await clubDbService.ClubExists(club.NameOf);
+                        return !res;
+                    }
+
+                    return true;
+                    
+                }).WithName(c=>c.NameOf).WithMessage("The Club already exists, please enter a different name");
+            });
+
         }
     }
 }

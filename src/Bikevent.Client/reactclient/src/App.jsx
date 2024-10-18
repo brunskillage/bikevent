@@ -16,6 +16,9 @@ import { isAuthValid } from "./lib/auth";
 import { getLocalStorageItem } from "./lib/localStorageClient";
 import { setUserState } from "./store/userSlice";
 import { CreateAccount } from "./pages/createAccount";
+import { NotFound } from "./pages/notFound";
+import { TimerA } from "./partials/wrappers/timer";
+import { Club } from "./pages/club";
 
 // unprotected routes
 
@@ -94,13 +97,18 @@ export const App = () => {
                             path: "/account/create",
                             element: <CreateAccount />,
                         },
+                        {
+                            path: "*",
+                            element: <NotFound />,
+                        }
                     ]
                 },
                 {
                     element:
-                        <LayoutProtected />
+                        <><TimerA /><LayoutProtected /></>
                     ,
                     errorElement: <Error />,
+
                     children: [
                         {
                             path: "/account",
@@ -109,6 +117,10 @@ export const App = () => {
                         {
                             path: "/clubs",
                             element: <Clubs />,
+                        },
+                        {
+                            path: "/club/:id/:pageMode?",
+                            element: <Club />,
                         },
                         {
                             path: "/rides",
@@ -121,6 +133,10 @@ export const App = () => {
                         {
                             path: "/logout",
                             element: <Logout />,
+                        },
+                        {
+                            path: "*",
+                            element: <NotFound />,
                         }
                     ]
                 }
