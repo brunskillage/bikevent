@@ -11,18 +11,13 @@ export const Clubs = (args) => {
     const loading = useSelector(state => state.util.isLoading)
 
     useEffect(() => {
-
         dispatch(setClubs())
     }, [])
-
-    const onReloadClick = () => {
-        dispatch(setClubs())
-    }
 
     return (<>
         <div className='clubs'>
             <h3>Clubs </h3>
-            <NavLink className="btn btn-a btn-sm" to="/club/add">+Add</NavLink>
+            <NavLink className="btn btn-a btn-sm" to="/club/-/add">+Add</NavLink>
             <LoadingA isLoading={loading}></LoadingA>
             {clubs && clubs.length ? <>
                 <table className='table'>

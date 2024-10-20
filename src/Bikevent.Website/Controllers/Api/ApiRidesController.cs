@@ -20,16 +20,18 @@ public class ApiRidesController : Controller
         _ridesDbService = ridesDbService;
     }
 
-    [Route("ride")]
-    [HttpPost]
-    public async Task<ActionResult<BvClubRow>> AddRide([FromBody] BvRideRow ride)
+    [Route("rides")]
+    [HttpGet]
+    public async Task<ActionResult<BvResponse>> GetClubs()
     {
-        var v = new RideValidator();
-        var res = await v.ValidateAsync(ride);
-        if (!res.IsValid)
-            return Ok(res.ToBvResponse());
-
-        var id = await _ridesDbService.AddRide(ride);
-        return Ok(new BvResponse { Data = new { id } });
+        var clubs = await _ridesDbService.GetRides();
+        return Ok(
+            new BvResponse
+            {
+                Data = new
+                {
+                    clubs = clubs.ToList()
+                }
+            });
     }
 }

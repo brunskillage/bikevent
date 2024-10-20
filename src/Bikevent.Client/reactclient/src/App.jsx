@@ -19,6 +19,7 @@ import { CreateAccount } from "./pages/createAccount";
 import { NotFound } from "./pages/notFound";
 import { TimerA } from "./partials/wrappers/timer";
 import { Club } from "./pages/club";
+import { Ride } from "./pages/ride";
 
 // unprotected routes
 
@@ -115,16 +116,29 @@ export const App = () => {
                             element: <Account />,
                         },
                         {
+                            // list
                             path: "/clubs",
                             element: <Clubs />,
                         },
                         {
+                            // delete edit
                             path: "/club/:id/:pageMode?",
                             element: <Club />,
                         },
                         {
+                            // list
                             path: "/rides",
                             element: <Rides />,
+                        },
+                        {
+                            // handles add
+                            path: "/ride/:pageMode",
+                            element: <Ride />,
+                        },
+                        {
+                            // delete edit
+                            path: "/ride/:id/:pageMode?",
+                            element: <Ride />,
                         },
                         {
                             path: "/events",

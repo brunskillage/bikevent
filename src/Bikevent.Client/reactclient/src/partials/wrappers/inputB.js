@@ -3,7 +3,7 @@ export const InputB = ({pageMode, label, fieldName, errors, register, curentVal}
         <>
             <div className="row">
                 <div className="col c3 label">{label}</div>
-
+            
             {pageMode === undefined ? 
             (<div className="col c3"><div>{curentVal}</div></div>) 
             : 

@@ -11,19 +11,7 @@ export const Header = () => {
         e.currentTarget.focus()
     }
 
-
     return (<>
-
-        {/* <nav className="nav" tabIndex="-1" onClick={onNavClick} ref={navDiv}>
-            <div className="container">
-                <a className="pagename current" href="#">Your Site Name</a>
-                <a href="#">One</a>
-                <a href="#">Two</a>
-                <a href="#">Three</a>
-            </div>
-        </nav> */}
-
-
         <nav className="nav" tabIndex="-1" onClick={onNavClick}>
             <div className="container">
 

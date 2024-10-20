@@ -55,7 +55,7 @@ export const Login = (args) => {
                 setLocalStorageItem('auth', JSON.stringify(auth, appConfig.tokenExpiry))
 
                 // navigate to the account page
-                navigate('/account')
+                navigate('/')
 
             })
     }
