@@ -48,12 +48,11 @@ public class ApiAuthController : ControllerBase
                 Data = new
                 {
                     token,
-                    user = new BvUserRow
+                    user = new 
                     {
                         NickName = val.UserRow.NickName,
-                        Email = val.UserRow.Email
-                        
-
+                        Email = val.UserRow.Email,
+                        UserId = val.UserRow.Id
                     }
                 }
             });

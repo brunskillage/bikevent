@@ -16,17 +16,24 @@ namespace Bikevent.Website.Controllers
             _configurationService = configurationService;
         }
 
-        [Route("")]
+        //[Route("")]
+        //[HttpGet]
+        //public IActionResult Home()
+        //{
+        //    // dev "\\..\\..\\..\\wwwroot\\index.html"
+        //    // build "\\wwwroot\\index.html"
+        //    var index = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + _configurationService.StaticHomepageHtmlRelativePath); 
+        //    return Content(index, contentType:"text/html");
+        //    // return View("Home");
+        //}
+
+        [Route("utility")]
         [HttpGet]
-        public IActionResult Home()
+        public IActionResult Util()
         {
-            // dev "\\..\\..\\..\\wwwroot\\index.html"
-            // build "\\wwwroot\\index.html"
-            var index = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + _configurationService.StaticHomepageHtmlRelativePath); 
-            return Content(index, contentType:"text/html");
-            // return View("Home");
+            return View("UtilPage");
         }
-        
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -46,7 +46,7 @@ export const CreateAccount = (args) => {
                     <InputA label='Nick Name *' fieldName='nickName' errors={errors} register={register}></InputA>
                 </FormA>
                 :
-                <p><div class="msg">Account has been successfully created. Please conjfirm on your email. Unfonfirmed accounts will be removed after 7 days.</div></p>
+                <p><div className="msg">Account has been successfully created. Please conjfirm on your email. Unfonfirmed accounts will be removed after 7 days.</div></p>
             }
 
         </div >

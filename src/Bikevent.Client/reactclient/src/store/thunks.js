@@ -29,7 +29,6 @@ export const setClubs = () =>  async (dispatch, getState) => {
        dispatch(setClubsState(res.data));
        dispatch(setIsNotLoading())
     },10)
-
 }
 
 export const setSelectedClub = (id) =>  async (dispatch, getState) => {

@@ -42,7 +42,8 @@ export const Login = (args) => {
                     email: resp.data.data.user.email,
                     isLoggedIn: true,
                     nickName: resp.data.data.user.nickName,
-                    token: resp.data.data.token
+                    token: resp.data.data.token,
+                    userId: resp.data.data.user.userId
                 }
 
                 // save in user state

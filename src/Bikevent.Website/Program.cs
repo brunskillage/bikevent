@@ -43,7 +43,11 @@ public class Program
 
 
         // Add services to the container.
-        builder.Services.AddControllersWithViews();
+        builder.Services.AddControllersWithViews(options =>
+        {
+            // used becuase empty dates were not being allowed
+            options.AllowEmptyInputInBodyModelBinding = true;
+        });
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
@@ -153,7 +157,7 @@ public class Program
         {
             var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
             migrator!.ListMigrations();
-            //migrator.MigrateUp(001);
+            // migrator.MigrateUp(001);
         };
 
 

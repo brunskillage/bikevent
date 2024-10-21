@@ -21,16 +21,17 @@ namespace Bikevent.Migrations
                 .WithColumn("email").AsString(255).NotNullable()
                 .WithColumn("verifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
                 .WithColumn("createdOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
-                .WithColumn("modifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);                 
-            
+                .WithColumn("modifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+
             Create.Table("userClubs")
                 .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn("clubId").AsInt32().NotNullable()
                 .WithColumn("createdOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
-                .WithColumn("modifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);            
-            
+                .WithColumn("modifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+
             Create.Table("clubs")
                 .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
+                .WithColumn("createdById").AsInt32().NotNullable()
                 .WithColumn("nameOf").AsString(255).NotNullable()
                 .WithColumn("president").AsString(255).Nullable()
                 .WithColumn("email").AsString(255).NotNullable()
@@ -42,11 +43,12 @@ namespace Bikevent.Migrations
 
             Create.Table("rides")
                 .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
-                .WithColumn("club_id").AsInt32().NotNullable()
+                .WithColumn("createdById").AsInt32().NotNullable()
+                .WithColumn("clubId").AsInt32().NotNullable()
                 .WithColumn("title").AsString(255).NotNullable()
                 .WithColumn("description").AsString(255).Nullable()
                 .WithColumn("startsOn").AsDateTime().NotNullable()
-                .WithColumn("endsOnOn").AsDateTime().Nullable()
+                .WithColumn("endsOn").AsDateTime().Nullable()
                 .WithColumn("linklUrl").AsString(255).Nullable()
                 .WithColumn("startLocation").AsString(255).NotNullable()
                 .WithColumn("endLocation").AsString(255).Nullable()
@@ -58,7 +60,8 @@ namespace Bikevent.Migrations
 
             Create.Table("events")
                 .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
-                .WithColumn("club_id").AsInt32().NotNullable()
+                .WithColumn("createdById").AsInt32().NotNullable()
+                .WithColumn("clubId").AsInt32().NotNullable()
                 .WithColumn("title").AsString(255).NotNullable()
                 .WithColumn("description").AsString(255).NotNullable()
                 .WithColumn("standsUp").AsDateTime().NotNullable()
@@ -68,7 +71,6 @@ namespace Bikevent.Migrations
                 .WithColumn("lng").AsDecimal().Nullable()
                 .WithColumn("createdOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
                 .WithColumn("modifiedOn").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
-
         }
 
         public override void Down()

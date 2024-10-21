@@ -1,7 +1,6 @@
 ﻿using Dapper.Contrib.Extensions;
 
 namespace Bikevent.Database.TableObjects;
-
 [Table("VersionInfo")]
 public class BvVersioninfoRow
 {
@@ -17,6 +16,7 @@ public class BvClubRow
 {
     [Key]
     public int Id { get; set; }
+    public int CreatedById { get; set; }
     public DateTime CreatedOn { get; set; }
     public string Email { get; set; }
     public string? GoogleMapUrl { get; set; }
@@ -32,7 +32,8 @@ public class BvEventRow
 {
     [Key]
     public int Id { get; set; }
-    public int Club_id { get; set; }
+    public int ClubId { get; set; }
+    public int CreatedById { get; set; }
     public DateTime CreatedOn { get; set; }
     public string Description { get; set; }
     public DateTime? EndsOnOn { get; set; }
@@ -49,11 +50,12 @@ public class BvRideRow
 {
     [Key]
     public int Id { get; set; }
-    public int Club_id { get; set; }
+    public int ClubId { get; set; }
+    public int CreatedById { get; set; }
     public DateTime CreatedOn { get; set; }
     public string? Description { get; set; }
     public string? EndLocation { get; set; }
-    public DateTime? EndsOnOn { get; set; }
+    public DateTime? EndsOn { get; set; }
     public decimal? Lat { get; set; }
     public string? LinklUrl { get; set; }
     public decimal? Lng { get; set; }

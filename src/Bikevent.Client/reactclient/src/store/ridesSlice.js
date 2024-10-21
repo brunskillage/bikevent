@@ -7,12 +7,12 @@ export const ridesSlice = createSlice({
     setRidesState: (state, action) => {
         return {...state, rides:action.payload.data.rides}
     },
-    setRidestate: (state, action) => {
-        return {...state, selectedRides:action.payload.data.Rides}
+    setRideState: (state, action) => {
+        return {...state, selectedRide:action.payload.data.ride}
     }
   }
 })
 
 // add new functions here
-export const { setRideState, setRidesState } = ridesSlice.actions
+export const { setRidesState, setRideState } = ridesSlice.actions
 export const ridesReducer = ridesSlice.reducer

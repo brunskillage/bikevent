@@ -294,7 +294,7 @@ h3 {
 }
 form input {
   border: 1px solid black;
-  width: 20em;
+  width: 21em;
   border-radius: 3px;
 }
 form input[type=submit] {
@@ -305,4 +305,17 @@ form input[type=submit] {
   margin: 0.5em;
   width: 6em;
   text-align: center;
+}
+.react-datepicker__time-list-item {
+  letter-spacing: normal;
+}
+.react-datepicker__input-container {
+  font-family: mainFont2;
+}
+.react-datepicker-wrapper {
+  height: 2.3em !important;
+}
+.react-datepicker-wrapper input {
+  height: 1.5em;
+  width: 19em;
 }

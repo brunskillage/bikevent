@@ -31,7 +31,7 @@ export const Clubs = (args) => {
                     <tbody>
                         {clubs.map(club => {
                             return <tr key={club.id}>
-                                <td>{club.nameOf}</td>
+                                <td><NavLink className="" to={`/club/${club.id}`} >{club.nameOf}</NavLink></td>
                                 <td>{club.president}</td>
                                 <td><NavLink className="btn btn-a btn-sm" to={`/club/${club.id}`} >View</NavLink>&nbsp;<NavLink className="btn btn-a btn-sm" to={`/club/${club.id}/edit`}>Edit</NavLink></td>
                             </tr>

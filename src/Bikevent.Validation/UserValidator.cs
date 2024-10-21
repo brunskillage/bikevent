@@ -18,7 +18,7 @@ public class UserValidator : AbstractValidator<BvUserRow>
         const int maxPwdLength = 50;
 
         RuleFor(x => x.Email).NotEmpty().WithMessage("Email is Required");
-        
+
         RuleFor(x => x.EncPassword).Length(minPwdLength, maxPwdLength)
             .WithMessage($"Please enter a value between {minPwdLength} and {maxPwdLength}");
 
@@ -75,5 +75,5 @@ public class UserValidator : AbstractValidator<BvUserRow>
         });
     }
 
-    public BvUserRow UserRow { get; set; }
+    public BvUserRow? UserRow { get; set; }
 }

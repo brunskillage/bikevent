@@ -67,9 +67,9 @@ export const Club = (args) => {
             </>}
 
             <FormB {...{ urlPath: "/api/v1/club", pageMode, setError, handleSubmit, onSuccessFunc, selectorFunc: club, getValues }}>
-                <InputB label='Name *' fieldName='nameOf' curentVal={club?.nameOf} {...{ pageMode, errors, register }}></InputB>
-                <InputB label='President / Leader *' fieldName="president" curentVal={club?.president}  {...{ pageMode, errors, register }} ></InputB>
-                <InputB label='Email *' fieldName='email' curentVal={club?.email}  {...{ errors, register, pageMode }}></InputB>
+                <InputB label='Name *' fieldName='nameOf' currentVal={club?.nameOf} {...{ pageMode, errors, register }}></InputB>
+                <InputB label='President / Leader *' fieldName="president" currentVal={club?.president}  {...{ pageMode, errors, register }} ></InputB>
+                <InputB label='Email *' fieldName='email' currentVal={club?.email}  {...{ errors, register, pageMode }}></InputB>
             </FormB>
         </div >
     </>);

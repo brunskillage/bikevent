@@ -40,6 +40,7 @@ public class ApiDynamicController : Controller
         if (string.IsNullOrWhiteSpace(json))
             return StatusCode((int)HttpStatusCode.BadRequest);
 
+        // only Json.net does what I want here to 
         var payload = JsonConvert.DeserializeObject<ClientPayload>(json);
 
         var methodInfo = _doHandler.GetType().GetMethod(payload.action);

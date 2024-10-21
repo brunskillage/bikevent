@@ -1,6 +1,5 @@
 ﻿using System.Net.Mime;
 using Bikevent.Config;
-using Bikevent.Database;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bikevent.Website.Controllers.Api;
@@ -8,17 +7,12 @@ namespace Bikevent.Website.Controllers.Api;
 [ApiController]
 [Produces(MediaTypeNames.Application.Json)]
 [Route("api/v1")]
-public class ApiController : Controller
+public class ApiConfigController : Controller
 {
     private readonly BvConfigurationService _configurationService;
-    private readonly MiscDbService _miscDbService;
-
-
-    public ApiController(BvConfigurationService configurationService,
-        MiscDbService miscDbService)
-    {
+    
+    public ApiConfigController(BvConfigurationService configurationService) {
         _configurationService = configurationService;
-        _miscDbService = miscDbService;
     }
 
     [Route("config")]
@@ -32,19 +26,5 @@ public class ApiController : Controller
                 _configurationService.TimerASeconds
             }
         );
-    }
-    
-    // dev only endpoints
-    [Route("db/{table}")]
-    [HttpGet]
-    public async Task<List<DbTableMeta>> GetTableMeta(string table)
-    {
-        if (_configurationService.IsDevEnvironment.Value)
-        {
-            var meta = await _miscDbService.GetTableMeta(table);
-            return meta.ToList();
-        }
-
-        return null;
     }
 }

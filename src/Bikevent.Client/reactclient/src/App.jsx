@@ -131,11 +131,6 @@ export const App = () => {
                             element: <Rides />,
                         },
                         {
-                            // handles add
-                            path: "/ride/:pageMode",
-                            element: <Ride />,
-                        },
-                        {
                             // delete edit
                             path: "/ride/:id/:pageMode?",
                             element: <Ride />,
