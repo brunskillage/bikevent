@@ -10,7 +10,6 @@ using Bikevent.Website.wwwroot;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Bikevent.Website.Controllers.Api;
@@ -74,6 +73,10 @@ public class ApiAuthController : ControllerBase
         {
             var hash = BCrypt.Net.BCrypt.HashPassword(user.EncPassword);
             user.EncPassword = hash;
+            user.CreatedOn = DateTime.Now;
+            user.ModifiedOn = DateTime.Now;
+         
+
             await _userDbService.AddUser(user);
         }
 

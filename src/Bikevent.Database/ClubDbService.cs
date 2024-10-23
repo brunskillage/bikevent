@@ -43,6 +43,7 @@ public class ClubDbService : BaseDbClientService
     public async Task<bool> UpdateClub(BvClubRow club)
     {
         await using var conn = await GetOpenConnectionAsync();
+        club.ModifiedOn = DateTime.Now;
         var res = await conn.UpdateAsync(club);
         return res;
     }

@@ -7,11 +7,13 @@ import { useForm } from 'react-hook-form';
 import { FormB } from '../partials/wrappers/formB';
 import * as common from './../lib/common'
 import { setSelectedClub } from './../store/thunks'
+import { InputHidden } from '../partials/wrappers/inputHidden';
 
 
 export const Club = (args) => {
 
     const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
     const club = useSelector(state => state.club.selectedClub)
     const { pageMode, id } = useParams()
 
@@ -66,10 +68,11 @@ export const Club = (args) => {
                 <MsgSuccessA>Club {pageMode === common.PAGE_MODE_ADD ? "Added" : pageMode === common.PAGE_MODE_EDIT ? "Updated" : ""}</MsgSuccessA>
             </>}
 
-            <FormB {...{ urlPath: "/api/v1/club", pageMode, setError, handleSubmit, onSuccessFunc, selectorFunc: club, getValues }}>
+            <FormB {...{ urlPath: "/api/v1/club", pageMode, setError, handleSubmit, onSuccessFunc, selectorFunc: club, getValues, setValue, user }}>
                 <InputB label='Name *' fieldName='nameOf' currentVal={club?.nameOf} {...{ pageMode, errors, register }}></InputB>
                 <InputB label='President / Leader *' fieldName="president" currentVal={club?.president}  {...{ pageMode, errors, register }} ></InputB>
                 <InputB label='Email *' fieldName='email' currentVal={club?.email}  {...{ errors, register, pageMode }}></InputB>
+                <InputHidden label='User Id' fieldName="createdById" currentVal={+(user?.userId)}  {...{ pageMode, errors, register }} ></InputHidden>
             </FormB>
         </div >
     </>);

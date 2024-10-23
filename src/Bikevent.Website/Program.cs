@@ -77,6 +77,7 @@ public class Program
                 {
                     policy.WithOrigins("http://localhost:3000", 
                             "https://localhost:3000",
+                            "https://www.bikevent.nz",
                             "https://api.brunskillage.org.uk",
                             "https://auth.brunskillage.org.uk")
                         .AllowAnyHeader()
@@ -157,7 +158,7 @@ public class Program
         {
             var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
             migrator!.ListMigrations();
-            // migrator.MigrateUp(001);
+            migrator.MigrateUp(001);
         };
 
 

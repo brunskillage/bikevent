@@ -16,7 +16,9 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit, onSuccessFunc
     const onSubmit = (formData) => {
         console.log("submitting...")
 
-        onProcessFormData(formData)
+        if(typeof onProcessFormData === 'function'){
+            onProcessFormData(formData)
+        }
 
         setValue("userId", user.userId)
         // the count would be 0 if not keys are presed
