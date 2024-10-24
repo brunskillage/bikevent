@@ -20,6 +20,7 @@ import { NotFound } from "./pages/notFound";
 import { TimerA } from "./partials/wrappers/timer";
 import { Club } from "./pages/club";
 import { Ride } from "./pages/ride";
+import { GlobalNavigate } from "./lib/globalHooks";
 
 // unprotected routes
 
@@ -62,6 +63,7 @@ export const LayoutProtected = () => {
 
 export const App = () => {
 
+
     const dispatch = useDispatch();
     // load intial app configuration
     dispatch(setAppConfig())
@@ -72,85 +74,88 @@ export const App = () => {
         dispatch(setUserState(auth))
     }
 
+    const router = createBrowserRouter(
+        [
+            {
+                element: <> <GlobalNavigate /><Layout /></>,
+                errorElement: <Error />,
+                children: [
+                    {
+                        path: "/",
+                        element: <Home />,
+                    },
+                    {
+                        path: "/login",
+                        element: <Login />,
+                    },
+                    {
+                        path: "/error",
+                        element: <Error />,
+                    },
+                    {
+                        path: "/tester",
+                        element: <Tester />,
+                    }, {
+                        path: "/account/create",
+                        element: <CreateAccount />,
+                    },
+                    {
+                        path: "*",
+                        element: <NotFound />,
+                    }
+                ]
+            },
+            {
+                element:
+                    <><TimerA /><GlobalNavigate /><LayoutProtected /></>
+                ,
+                errorElement: <Error />,
+
+                children: [
+                    {
+                        path: "/account",
+                        element: <Account />,
+                    },
+                    {
+                        // list
+                        path: "/clubs",
+                        element: <Clubs />,
+                    },
+                    {
+                        // delete edit
+                        path: "/club/:id/:pageMode?",
+                        element: <Club />,
+                    },
+                    {
+                        // list
+                        path: "/rides",
+                        element: <Rides />,
+                    },
+                    {
+                        // delete edit
+                        path: "/ride/:id/:pageMode?",
+                        element: <Ride />,
+                    },
+                    {
+                        path: "/events",
+                        element: <Events />,
+                    },
+                    {
+                        path: "/logout",
+                        element: <Logout />,
+                    },
+                    {
+                        path: "*",
+                        element: <NotFound />,
+                    }
+                ]
+            }
+
+        ])
+
+
+
     return (<>
-        <RouterProvider router={createBrowserRouter(
-            [
-                {
-                    element: <Layout />,
-                    errorElement: <Error />,
-                    children: [
-                        {
-                            path: "/",
-                            element: <Home />,
-                        },
-                        {
-                            path: "/login",
-                            element: <Login />,
-                        },
-                        {
-                            path: "/error",
-                            element: <Error />,
-                        },
-                        {
-                            path: "/tester",
-                            element: <Tester />,
-                        }, {
-                            path: "/account/create",
-                            element: <CreateAccount />,
-                        },
-                        {
-                            path: "*",
-                            element: <NotFound />,
-                        }
-                    ]
-                },
-                {
-                    element:
-                        <><TimerA /><LayoutProtected /></>
-                    ,
-                    errorElement: <Error />,
-
-                    children: [
-                        {
-                            path: "/account",
-                            element: <Account />,
-                        },
-                        {
-                            // list
-                            path: "/clubs",
-                            element: <Clubs />,
-                        },
-                        {
-                            // delete edit
-                            path: "/club/:id/:pageMode?",
-                            element: <Club />,
-                        },
-                        {
-                            // list
-                            path: "/rides",
-                            element: <Rides />,
-                        },
-                        {
-                            // delete edit
-                            path: "/ride/:id/:pageMode?",
-                            element: <Ride />,
-                        },
-                        {
-                            path: "/events",
-                            element: <Events />,
-                        },
-                        {
-                            path: "/logout",
-                            element: <Logout />,
-                        },
-                        {
-                            path: "*",
-                            element: <NotFound />,
-                        }
-                    ]
-                }
-
-            ])}
-        />
+        <RouterProvider router={router} />
     </>);
 }

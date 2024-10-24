@@ -2,18 +2,26 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const utilSlice = createSlice({
   name: 'util',
-  initialState: {isLoading: false}
+  initialState: { isLoading: false }
   ,
   reducers: {
     setIsLoading: (state, action) => {
-        return {...state, isLoading: true}
+      return { ...state, isLoading: true }
     },
     setIsNotLoading: (state, action) => {
-        return {...state, isLoading: false}
+      return { ...state, isLoading: false }
+    },
+    setError: (state, action) => {
+      const error = action.payload
+      return { ...state, error }
+    },
+    clearError: (state, action) => {
+      const error = null
+      return { ...state, error }
     }
   }
 })
 
 // add new functions here
-export const { setIsLoading, setIsNotLoading } = utilSlice.actions
+export const { setIsLoading, setIsNotLoading, setError, clearError } = utilSlice.actions
 export const utilReducer = utilSlice.reducer

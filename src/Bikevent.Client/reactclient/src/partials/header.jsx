@@ -1,9 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import { useRef } from "react";
+import { useOnline } from "../hooks/useOnline";
+import { MsgErrorA } from "./wrappers/msg"
 
 
 export const Header = () => {
+    const isOnline = useOnline(true)
     const count = useSelector(state => state.counter.value)
     const user = useSelector(state => state.user)
     const navDiv = useRef(null)
@@ -14,7 +17,6 @@ export const Header = () => {
     return (<>
         <nav className="nav" tabIndex="-1" onClick={onNavClick}>
             <div className="container">
-
                 <NavLink className='pagename current' to="/">Bikevent</NavLink>
                 <NavLink className='link' to="/">HOME</NavLink>
                 {user?.isLoggedIn ?
@@ -25,5 +27,11 @@ export const Header = () => {
 
             </div>
         </nav>
+        {!!isOnline && <><nav className="nav" tabIndex="-1" onClick={onNavClick}>
+            <div className="container">
+                <MsgErrorA>You are offLine</MsgErrorA>
+            </div>
+        </nav></>}
+
     </>);
 }

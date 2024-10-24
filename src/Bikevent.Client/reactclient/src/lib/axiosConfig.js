@@ -1,38 +1,50 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { getLocalStorageItem, removeLocalStorageItemsByPrefix } from "./localStorageClient";
-import { useNavigate } from "react-router-dom";
+import { globaldispatch, globalNavigate } from "./globalHooks";
+import { setError } from "../store/utilSlice";
 
 const axiosConfig = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:3000",
+  baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:3000",
 });
 
 axiosConfig.interceptors.request.use((config) => {
-    config.headers = {
-      "Content-Type": "application/json"
-    }
+  console.log("using interceptor")
+  config.headers = {
+    "Content-Type": "application/json"
+  }
 
-    if(config.url.includes("config")){
-      return config;
-    }
-
-    if(config.url.includes("login")){
-      return config;
-    }
-
-    var user  = getLocalStorageItem('auth')
-    if(user?.token){
-        config.headers.Authorization = `Bearer ${user.token}`;
-    }
-    else{
-        removeLocalStorageItemsByPrefix()
-    }
-
+  if (config.url.includes("config")) {
     return config;
-   
-  }, function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  });
+  }
+
+  if (config.url.includes("login")) {
+    return config;
+  }
+
+  var user = getLocalStorageItem('auth')
+  if (user?.token) {
+    config.headers.Authorization = `Bearer ${user.token}`;
+  }
+  else {
+    removeLocalStorageItemsByPrefix()
+  }
+
+  return config;
+
+});
+
+// Add a response interceptor
+axiosConfig.interceptors.response.use((response) => {
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  return response;
+}, function (error) {
+  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  // Do something with response error
+  console.log("error")
+  globaldispatch(setError(error.message))
+  globalNavigate("/error")
+  return Promise.resolve(false);
+});
 
 export default axiosConfig;
