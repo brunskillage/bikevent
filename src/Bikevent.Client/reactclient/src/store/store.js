@@ -5,16 +5,18 @@ import { userSliceReducer } from "./userSlice";
 import { clubsReducer } from "./clubsSlice";
 import { utilReducer } from "./utilSlice";
 import { ridesReducer } from "./ridesSlice";
+import { regionsReducer, regionsSlice } from "./regionsSlice";
 
 // add reducers here
 export const store = configureStore({
-        reducer: {
-            counter: counterReducer,
-            appConfig: appConfigReducer,
-            user: userSliceReducer,
-            club: clubsReducer,
-            util: utilReducer,
-            ride: ridesReducer
-        }
+    reducer: {
+        counter: counterReducer,
+        appConfig: appConfigReducer,
+        user: userSliceReducer,
+        club: clubsReducer,
+        util: utilReducer,
+        ride: ridesReducer,
+        region: regionsReducer
     }
+}
 )

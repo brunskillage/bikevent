@@ -2,16 +2,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { setUserState } from './../store/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeLocalStorageItemsByPrefix } from "../lib/localStorageClient";
+import { globaldispatch } from "../lib/globalHooks";
 
 export const Logout = () => {
     const user = useSelector(state => state.user)
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const onLogout = () => {
         removeLocalStorageItemsByPrefix()
-        dispatch(setUserState({}))
-        navigate('/login')
+        globaldispatch(setUserState({}))
     }
 
     return (<>

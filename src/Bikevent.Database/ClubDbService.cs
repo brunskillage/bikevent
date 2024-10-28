@@ -1,5 +1,6 @@
 ﻿using Bikevent.Config;
 using Bikevent.Database.TableObjects;
+using Dapper;
 using Dapper.Contrib.Extensions;
 
 namespace Bikevent.Database;
@@ -53,5 +54,12 @@ public class ClubDbService : BaseDbClientService
         await using var conn = await GetOpenConnectionAsync();
         var res = await conn.DeleteAsync(club);
         return res;
+    }
+
+    public async Task<List<BvRideRow>> GetRidesForClub(BvClubRow bvClubRow)
+    {
+        await using var conn = await GetOpenConnectionAsync();
+        var res = await conn.QueryAsync<BvRideRow>("select * from rides where clubId=@clubId", new {clubId = bvClubRow.Id});
+        return res.ToList();
     }
 }

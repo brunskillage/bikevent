@@ -1,25 +1,24 @@
 import { useState } from "react";
 import axiosConfig from "../../lib/axiosConfig";
-import { PAGE_MODE_ADD, PAGE_MODE_EDIT } from "../../lib/common";
-import { MsgA } from "./msg";
-import { useNavigate } from "react-router-dom";
+import { areObjectsTheSame, PAGE_MODE_ADD, PAGE_MODE_EDIT } from "../../lib/common";
 
-export const FormB = ({ urlPath, pageMode, setError, handleSubmit, onSuccessFunc, selectorFunc, children, getValues, getValue, setValue, user, onProcessFormData }) => {
-
-    const navigate = useNavigate()
+export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
+    onSuccessFunc, selectorFunc, children, getValues, getValue,
+    setValue, user, onProcessFormData, editPath, addPath, deletePath }) => {
 
     const [userHasInteracted, setUserHasInteracted] = useState(0)
-
-    let [objectsTheSame, setObjectsTheSame] = useState(true)
+    const [objectsTheSame, setObjectsTheSame] = useState(true)
 
     // on form Submission
     const onSubmit = (formData) => {
         console.log("submitting...")
 
-        if(typeof onProcessFormData === 'function'){
+        // run any supplied function
+        if (typeof onProcessFormData === 'function') {
             onProcessFormData(formData)
         }
 
+        // react hook forms
         setValue("userId", user.userId)
         // the count would be 0 if not keys are presed
         setUserHasInteracted(true)
@@ -46,41 +45,6 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit, onSuccessFunc
     }
 
 
-    const areObjectsTheSame = (obj1, obj2) => {
-
-        let obj1Props = Object.getOwnPropertyNames(obj1).sort();
-        let obj2Props = Object.getOwnPropertyNames(obj2).sort()
-
-        // check they are the same length
-        if (obj1Props.length !== obj2Props.length) {
-            console.log("The objects have different properties count")
-            return false;
-        }
-
-        // check the properties
-        let theSameProps = obj1Props.every((val, idx) => {
-            return obj1Props[idx] === obj2Props[idx]
-        })
-
-        // they are the same check the values
-        if (theSameProps) {
-            var propName = ""
-            for (let i = 0; i < obj1Props.length; i++) {
-                propName = obj1Props[i]
-                if (obj2[propName] !== obj1[propName]) {
-                    console.log("item changed " + obj1[propName])
-                    return false;
-                }
-            }
-        }
-        else {
-            console.log("The objects have different properties")
-            return false
-        }
-
-        return true;
-    }
-
     const handleResponse = (resp) => {
         if (!resp?.data?.success) {
             resp?.data?.data?.errors?.forEach(err => {
@@ -93,28 +57,9 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit, onSuccessFunc
         return true;
     }
 
-
-    const onEditClick = () => {
-        navigate(`${window.location.pathname}/edit`)
-    }
-
-
-    const renderButton = (pageMode) => {
-        switch (pageMode) {
-            case PAGE_MODE_ADD: {
-                return <input className='btn btn-a btn-sm' type="submit" value="Add" />
-            }
-            case PAGE_MODE_EDIT: {
-                return <input className='btn btn-a btn-sm' type="submit" value="Save" />
-            }
-            default:
-                return <button className='btn btn-a btn-sm' onClick={onEditClick}>Edit</button>
-        }
-    }
-
-
-    const setFormState = () => {
-        if (pageMode === PAGE_MODE_EDIT) {
+    const handleOnKeyUp = () => {
+        if (pageMode === PAGE_MODE_EDIT || pageMode === PAGE_MODE_ADD) {
+            console.log("keypress")
             setUserHasInteracted(true)
             let formData = getValues()
             let hasFormChanged = areObjectsTheSame(formData, selectorFunc)
@@ -122,17 +67,23 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit, onSuccessFunc
         }
     }
 
+    const shouldDisplay = () => {
+        const shouldDisplay = !!userHasInteracted && !objectsTheSame && (pageMode === PAGE_MODE_EDIT || pageMode === PAGE_MODE_ADD)
+        return shouldDisplay
+    }
 
     return <>
-        <form onSubmit={handleSubmit(onSubmit)} onKeyUp={setFormState}>
-            <div className="row">
-                {!!userHasInteracted && objectsTheSame && (pageMode === PAGE_MODE_EDIT || pageMode === PAGE_MODE_ADD) && <MsgA>Values have not changed</MsgA>}
-            </div>
+        <form onSubmit={handleSubmit(onSubmit)} onChange={handleOnKeyUp}>
             <div className="row">
                 {children}
-                <div className="col c3">&nbsp;</div>    
-                <div className="col c14">{renderButton(pageMode)}</div>
             </div>
+            {shouldDisplay() &&
+                <div className="row">
+                    <div className="col c3">&nbsp;</div>
+                    <div className="col c14">
+                        <input className="btn btn-a btn-sm" type="submit" value="Save" />
+                    </div>
+                </div>}
         </form>
     </>
 }

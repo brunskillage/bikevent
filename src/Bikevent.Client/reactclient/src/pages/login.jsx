@@ -37,7 +37,6 @@ export const Login = (args) => {
                 }
 
                 // successful login
-
                 var auth = {
                     email: resp.data.data.user.email,
                     isLoggedIn: true,
@@ -56,7 +55,7 @@ export const Login = (args) => {
                 setLocalStorageItem('auth', JSON.stringify(auth, appConfig.tokenExpiry))
 
                 // navigate to the account page
-                navigate('/')
+                document.location.href = "/";
 
             })
     }

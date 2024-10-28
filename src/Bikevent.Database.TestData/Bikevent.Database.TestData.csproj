@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Bogus" Version="35.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bikevent.Config\Bikevent.Config.csproj" />
+    <ProjectReference Include="..\Bikevent.Database\Bikevent.Database.csproj" />
+    <ProjectReference Include="..\Bikevent.DataObjects\Bikevent.DataObjects.csproj" />
+  </ItemGroup>
+
+</Project>

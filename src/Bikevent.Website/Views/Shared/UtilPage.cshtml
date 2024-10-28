@@ -94,7 +94,7 @@
 
         @foreach (var m in meta.OrderBy(x => x.Field))
         {
-            if (m.Field == "id") continue;
+            if (m.Field == "rideId") continue;
             var nullSign = m.Null == "YES" ? "?" : "";
             var theType = GetCsType(m.Type);
             var line = $"&nbsp;&nbsp;&nbsp;public {theType}{nullSign} {FirstCapital(m.Field)} {{get; set;}}";
@@ -106,22 +106,22 @@
 
 @*
         var insertSql = "";
-        var iFields = string.Join(", ", meta.Where(m=>m.Field != "id").Select(m=> $"{m.Field}"));
-        var iVals = string.Join(", ", meta.Where(m=>m.Field != "id").Select(m=> $"@{FirstCapital(m.Field)}"));
+        var iFields = string.Join(", ", meta.Where(m=>m.Field != "rideId").Select(m=> $"{m.Field}"));
+        var iVals = string.Join(", ", meta.Where(m=>m.Field != "rideId").Select(m=> $"@{FirstCapital(m.Field)}"));
         insertSql += $"Insert into {t} ({iFields}) values ({iVals});";
 
 
       
 
-        var uFields = string.Join(", ", meta.Where(m=>m.Field != "id").Select(m=> $"{m.Field} = @{FirstCapital(m.Field)}"));
+        var uFields = string.Join(", ", meta.Where(m=>m.Field != "rideId").Select(m=> $"{m.Field} = @{FirstCapital(m.Field)}"));
         
-        var updateSql = $"update {t} set ({uFields}) where id = @id;"; 
+        var updateSql = $"update {t} set ({uFields}) where rideId = @rideId;"; 
         <br/><br/> @updateSql
         
-        var deleteSql = $"delete from {t} where id = @id;"; 
+        var deleteSql = $"delete from {t} where rideId = @rideId;"; 
         <br/><br/> @deleteSql
         
-        var selectSql = $"select from {t} where id = @id;"; 
+        var selectSql = $"select from {t} where rideId = @rideId;"; 
         
         <br/><span>public class @FirstCapital(t)</span>
         <br/><br/> @selectSql

@@ -31,6 +31,7 @@ public class Program
         builder.Services.AddSingleton<EventsDbService>();
         builder.Services.AddSingleton<RidesDbService>();
         builder.Services.AddSingleton<UserDbService>();
+        builder.Services.AddSingleton<RegionDbService>();
 
         builder.Services.AddSingleton<RideValidator>();
         builder.Services.AddSingleton<EventValidator>();
@@ -158,7 +159,7 @@ public class Program
         {
             var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
             migrator!.ListMigrations();
-            migrator.MigrateUp(001);
+            // migrator.MigrateUp(001);
         };
 
 

@@ -5,6 +5,7 @@ import axiosConfig from "../lib/axiosConfig"
 import { setClubsState, setClubState } from "./clubsSlice"
 import { setIsLoading, setIsNotLoading } from "./utilSlice"
 import { setRidesState, setRideState } from "./ridesSlice"
+import { setRegionsState } from "./regionsSlice"
 
 export const getTodos = () => async (dispatch, getState) => {
     axios.get('https://jsonplaceholder.typicode.com/todos')
@@ -34,6 +35,7 @@ export const setSelectedClub = (id) => async (dispatch, getState) => {
         dispatch(setIsLoading())
         var res = await axiosConfig.get("/api/v1/club/" + id)
         dispatch(setClubState(res.data));
+        dispatch(setIsNotLoading())
     }
     else {
         dispatch(setClubState({ data: { club: {} } }));
@@ -49,7 +51,18 @@ export const setRides = () => async (dispatch, getState) => {
         dispatch(setRidesState(res.data));
         dispatch(setIsNotLoading())
     }, 10)
+}
 
+export const setClubRides = (clubId) => async (dispatch, getState) => {
+    dispatch(setRidesState({ data: { rides: [] } }));
+    if (clubId) {
+        dispatch(setIsLoading())
+        setTimeout(async () => {
+            var res = await axiosConfig.get(`/api/v1/club/${clubId}/rides`)
+            dispatch(setRidesState(res.data));
+            dispatch(setIsNotLoading())
+        }, 500)
+    }
 }
 
 export const setSelectedRide = (id) => async (dispatch, getState) => {
@@ -57,9 +70,18 @@ export const setSelectedRide = (id) => async (dispatch, getState) => {
         dispatch(setIsLoading())
         var res = await axiosConfig.get("/api/v1/ride/" + id)
         dispatch(setRideState(res.data));
+        dispatch(setIsNotLoading())
     }
     else {
         dispatch(setRideState({ data: { ride: {} } }));
     }
+}
+
+export const setRegions = (id) => async (dispatch, getState) => {
+    dispatch(setIsLoading())
+    var res = await axiosConfig.get("/api/v1/regions")
+    dispatch(setRegionsState(res.data));
+    dispatch(setIsNotLoading())
+
 }
 

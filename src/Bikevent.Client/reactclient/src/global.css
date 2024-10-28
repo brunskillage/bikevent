@@ -306,6 +306,9 @@ form input[type=submit] {
   width: 6em;
   text-align: center;
 }
+.linkButton {
+  margin-right: 0.5em;
+}
 .react-datepicker__time-list-item {
   letter-spacing: normal;
 }
@@ -318,4 +321,39 @@ form input[type=submit] {
 .react-datepicker-wrapper input {
   height: 1.5em;
   width: 19em;
+  font-family: "mainFont2";
+}
+input,
+select {
+  font-family: "mainFont2";
+  font-style: italic;
+  color: black;
+  letter-spacing: 2px;
+  border-radius: 3px;
+  border: 1px solid black;
+  padding: 6px;
+}
+select {
+  height: 2.2em;
+  padding-left: 0;
+}
+.clubs .clubData {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.clubs .clubData .clubListItem {
+  background-color: black;
+  color: red;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  border-radius: 1em;
+  padding: 0.5em;
+  margin: 0.2em;
+  width: 15em;
+}
+.clubs .clubData .clubListItem .nameOf {
+  color: white;
 }

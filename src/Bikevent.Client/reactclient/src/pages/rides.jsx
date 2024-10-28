@@ -1,28 +1,33 @@
 import { MsgA } from './../partials/wrappers/msg'
 import { useDispatch, useSelector } from 'react-redux';
-import { setRides } from '../store/thunks';
+import { setClubRides } from '../store/thunks';
 import { useEffect } from 'react';
 import { LoadingA } from '../partials/wrappers/loading';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import moment from 'moment';
-import { momentToLocal } from '../lib/common';
+import { ADD_RIDE_TO_CLUB, EDIT_RIDE_FOR_CLUB, momentToLocal, VIEW_RIDE_FOR_CLUB } from '../lib/common';
+import { LinkButton } from '../partials/wrappers/linkButton';
 
 export const Rides = (args) => {
 
     const dispatch = useDispatch()
     const rides = useSelector(state => state.ride.rides)
+    const club = useSelector(state => state.club.selectedClub)
     const loading = useSelector(state => state.util.isLoading)
-
+    const { clubId } = useParams()
 
     useEffect(() => {
-        dispatch(setRides())
+        if (clubId) {
+            dispatch(setClubRides(clubId))
+        }
+
     }, [])
 
 
     return (<>
-        <div className='clubs'>
-            <h3>Rides</h3>
-            <NavLink className="btn btn-a btn-sm" to="/ride/-/add">+Add</NavLink>
+        <div className='rides'>
+            <h3>Rides for {club.nameOf}</h3>
+            <LinkButton path={ADD_RIDE_TO_CLUB.replace("clubId", club.id)} text="Add"></LinkButton>
             <LoadingA isLoading={loading}></LoadingA>
             {rides && rides.length ? <>
                 <table className='table'>
@@ -36,15 +41,15 @@ export const Rides = (args) => {
                     <tbody>
                         {rides.map(ride => {
                             return <tr key={ride.id}>
-                                <td><NavLink className="" to={`/ride/${ride.id}`} >{ride.title}</NavLink></td>
+                                <td><LinkButton path={VIEW_RIDE_FOR_CLUB.replace(":rideId", ride.id).replace(":clubId", ride.clubId)} text={ride.title}></LinkButton></td>
                                 <td>   {momentToLocal(ride.startsOn).format("h:mma, ddd Do MMM")}  ({moment(ride.startsOn).fromNow()})</td>
-                                <td><NavLink className="btn btn-a btn-sm" to={`/ride/${ride.id}`} >View</NavLink>&nbsp;<NavLink className="btn btn-a btn-sm" to={`/ride/${ride.id}/edit`}>Edit</NavLink></td>
+                                <td><LinkButton path={EDIT_RIDE_FOR_CLUB.replace(":rideId", ride.id).replace(":clubId", ride.clubId)} text="Edit"></LinkButton></td>
                             </tr>
                         })}
                     </tbody>
                 </table>
             </> : <>
-                <p>No clubs found</p>
+                <p>No rides found</p>
             </>}
 
         </div>

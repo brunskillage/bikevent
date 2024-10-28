@@ -1,9 +1,8 @@
-import { MsgA } from './../partials/wrappers/msg'
 import { useDispatch, useSelector } from 'react-redux';
 import { setClubs } from '../store/thunks';
 import { useEffect } from 'react';
 import { LoadingA } from '../partials/wrappers/loading';
-import { NavLink } from 'react-router-dom';
+import { ClubListItem } from '../partials/clubListItem';
 
 export const Clubs = (args) => {
     const dispatch = useDispatch()
@@ -17,31 +16,18 @@ export const Clubs = (args) => {
     return (<>
         <div className='clubs'>
             <h3>Clubs </h3>
-            <NavLink className="btn btn-a btn-sm" to="/club/-/add">+Add</NavLink>
-            <LoadingA isLoading={loading}></LoadingA>
-            {clubs && clubs.length ? <>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>President/Owner</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {clubs.map(club => {
-                            return <tr key={club.id}>
-                                <td><NavLink className="" to={`/club/${club.id}`} >{club.nameOf}</NavLink></td>
-                                <td>{club.president}</td>
-                                <td><NavLink className="btn btn-a btn-sm" to={`/club/${club.id}`} >View</NavLink>&nbsp;<NavLink className="btn btn-a btn-sm" to={`/club/${club.id}/edit`}>Edit</NavLink></td>
-                            </tr>
-                        })}
-                    </tbody>
-                </table>
-            </> : <>
-                <p>No clubs found</p>
-            </>}
 
+            <LoadingA isLoading={loading}></LoadingA>
+            <div className="clubData">
+                {clubs && clubs.length ? <>
+                    {clubs.map(club => {
+                        return <ClubListItem key={club.id} club={club}></ClubListItem>
+                    })}
+
+                </> : <>
+                    <p>No clubs found</p>
+                </>}
+            </div>
         </div>
     </>);
 }

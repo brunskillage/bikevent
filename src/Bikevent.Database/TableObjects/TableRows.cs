@@ -25,6 +25,7 @@ public class BvClubRow
     public string NameOf { get; set; }
     public string? President { get; set; }
     public string? WebsiteUrl { get; set; }
+    public int RegionId { get; set; }
 }
 
 [Table("events")]

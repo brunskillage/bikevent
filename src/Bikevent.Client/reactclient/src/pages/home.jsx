@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 export const Home = () => {
-
     const auth = useSelector(state => state.user)
     return (<>
 
@@ -15,8 +14,6 @@ export const Home = () => {
                 : (<>
                     <div className="homeMenu">
                         <NavLink className='btn btn-a btn-sm' to="/clubs">CLUBS</NavLink>
-                        <NavLink className='btn btn-a btn-sm' to="/rides">RIDES</NavLink>
-                        <NavLink className='btn btn-a btn-sm' to="/events">EVENTS</NavLink>
                         <NavLink className='btn btn-a btn-sm' to="/account">ACCOUNT</NavLink>
                     </div>
 

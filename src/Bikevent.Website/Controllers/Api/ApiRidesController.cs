@@ -64,7 +64,7 @@ public class ApiRidesController : Controller
         return Ok(new BvResponse { Data = new { id } });
     }
 
-    [Route("ride/{id}")]
+    [Route("ride/{rideId}")]
     [HttpDelete]
     public async Task<ActionResult<BvRideRow>> DeleteRide([FromRoute] int id, bool confirmed = false)
     {
@@ -77,11 +77,11 @@ public class ApiRidesController : Controller
         return Ok();
     }
 
-    [Route("ride/{id}")]
+    [Route("ride/{rideId}")]
     [HttpGet]
-    public async Task<ActionResult<BvRideRow>> GetRide([FromRoute] int id)
+    public async Task<ActionResult<BvRideRow>> GetRide([FromRoute] int rideId)
     {
-        var Ride = await _ridesDbService.GetRideById(new BvRideRow { Id = id });
+        var Ride = await _ridesDbService.GetRideById(new BvRideRow { Id = rideId });
         return Ok(new BvResponse
         {
             Data = new { Ride }

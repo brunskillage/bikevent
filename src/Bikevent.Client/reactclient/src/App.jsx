@@ -20,7 +20,8 @@ import { NotFound } from "./pages/notFound";
 import { TimerA } from "./partials/wrappers/timer";
 import { Club } from "./pages/club";
 import { Ride } from "./pages/ride";
-import { GlobalNavigate } from "./lib/globalHooks";
+import { globaldispatch, GlobalNavigate } from "./lib/globalHooks";
+import { ADD_CLUB, ADD_RIDE_TO_CLUB, EDIT_CLUB, EDIT_RIDE_FOR_CLUB, VIEW_CLUB, VIEW_CLUBS, VIEW_RIDE_FOR_CLUB, VIEW_RIDES_FOR_CLUB } from "./lib/common";
 
 // unprotected routes
 
@@ -63,8 +64,7 @@ export const LayoutProtected = () => {
 
 export const App = () => {
 
-
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     // load intial app configuration
     dispatch(setAppConfig())
 
@@ -74,9 +74,12 @@ export const App = () => {
         dispatch(setUserState(auth))
     }
 
+
     const router = createBrowserRouter(
         [
             {
+                // GlobalNavigate hoists hooks to global level in a null view 
+                // unusual but works
                 element: <> <GlobalNavigate /><Layout /></>,
                 errorElement: <Error />,
                 children: [
@@ -117,28 +120,36 @@ export const App = () => {
                         element: <Account />,
                     },
                     {
-                        // list
-                        path: "/clubs",
-                        element: <Clubs />,
-                    },
-                    {
-                        // delete edit
-                        path: "/club/:id/:pageMode?",
-                        element: <Club />,
-                    },
-                    {
-                        // list
-                        path: "/rides",
-                        element: <Rides />,
-                    },
-                    {
-                        // delete edit
-                        path: "/ride/:id/:pageMode?",
+                        path: VIEW_RIDE_FOR_CLUB,
                         element: <Ride />,
                     },
                     {
-                        path: "/events",
-                        element: <Events />,
+                        path: ADD_RIDE_TO_CLUB,
+                        element: <Ride />,
+                    },
+                    {
+                        path: EDIT_RIDE_FOR_CLUB,
+                        element: <Ride />,
+                    },
+                    {
+                        path: VIEW_RIDES_FOR_CLUB,
+                        element: <Rides />,
+                    },
+                    {
+                        path: ADD_CLUB,
+                        element: <Club />,
+                    },
+                    {
+                        path: EDIT_CLUB,
+                        element: <Club />,
+                    },
+                    {
+                        path: VIEW_CLUB,
+                        element: <Club />,
+                    },
+                    {
+                        path: VIEW_CLUBS,
+                        element: <Clubs />,
                     },
                     {
                         path: "/logout",

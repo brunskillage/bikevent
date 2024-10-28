@@ -15,10 +15,12 @@ namespace Bikevent.Website.Controllers.Api;
 public class ApiClubsController : Controller
 {
     private readonly ClubDbService _clubDbService;
+    private readonly RegionDbService _regionDbService;
 
-    public ApiClubsController(ClubDbService clubDbService)
+    public ApiClubsController(ClubDbService clubDbService, RegionDbService regionDbService)
     {
         _clubDbService = clubDbService;
+        _regionDbService = regionDbService;
     }
 
     [Route("clubs")]
@@ -42,7 +44,7 @@ public class ApiClubsController : Controller
             return Ok(res.ToBvResponse());
 
         var id = await _clubDbService.AddClub(club);
-        return Ok(new BvResponse { Data = new { id } });
+        return Ok(new BvResponse { Data = new { id }});
     }        
         
     [Route("club")]
@@ -59,27 +61,38 @@ public class ApiClubsController : Controller
         return Ok(new BvResponse { Data = new { id } });
     }        
         
-    [Route("club/{id}")]
+    [Route("club/{clubId}")]
     [HttpDelete]
-    public async Task<ActionResult<BvClubRow>> DeleteClub([FromRoute]int id, bool confirmed = false)
+    public async Task<ActionResult<BvClubRow>> DeleteClub([FromRoute]int clubId, bool confirmed = false)
     {
         if (!confirmed)
         {
             return Ok(new ValidationResult(new List<ValidationFailure>
                 { new("confirmed", "You must confirm deletion or all removal.") }).ToBvResponse());
         }
-        await _clubDbService.DeleteClub(new BvClubRow{Id = id});
+        await _clubDbService.DeleteClub(new BvClubRow{Id = clubId });
         return Ok();
     }
 
-    [Route("club/{id}")]
+    [Route("club/{clubId}")]
     [HttpGet]
-    public async Task<ActionResult<BvClubRow>> GetClub([FromRoute]int id)
+    public async Task<ActionResult<BvClubRow>> GetClub([FromRoute]int clubId)
     {
-        var club = await _clubDbService.GetClubById(new BvClubRow{Id = id});
+        var club = await _clubDbService.GetClubById(new BvClubRow{Id = clubId });
+        var regions = _regionDbService.GetRegions();
         return Ok(new BvResponse
         {
             Data = new { club }
+        });
+    }
+    [Route("club/{clubId}/rides")]
+    [HttpGet]
+    public async Task<ActionResult<BvClubRow>> GetClubRides([FromRoute]int clubId)
+    {
+        var rides = await _clubDbService.GetRidesForClub(new BvClubRow{Id = clubId});
+        return Ok(new BvResponse
+        {
+            Data = new { rides }
         });
     }
 }
