@@ -17,7 +17,7 @@ namespace Bikevent.Validation
             RuleFor(c => c.NameOf).NotEmpty().Length(minClubNameLength, maxClubNameLength).WithMessage($"Club Name must be at least {minClubNameLength} Letters and no more than {maxClubNameLength}");
             RuleFor(c => c.President).NotEmpty().Length(minClubNameLength, maxClubNameLength).WithMessage($"President/Contact must be at least {minClubNameLength} Letters and no more than {maxClubNameLength}");
             RuleFor(c => c.Email).NotEmpty().EmailAddress().WithMessage("Please use a valid email address");
-            RuleFor(c => c.RegionId).GreaterThan(0).WithMessage("Please region");
+            RuleFor(c => c.RegionId).GreaterThan(0).WithMessage("Please select a region.");
 
             When(c => c.WebsiteUrl != null, () =>
             {

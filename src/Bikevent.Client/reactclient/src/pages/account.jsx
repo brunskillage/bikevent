@@ -1,11 +1,14 @@
 import { ADD_CLUB } from '../lib/common';
+import { PageTitle } from '../partials/wrappers/pageTitle';
 import { LinkButton } from '../partials/wrappers/linkButton';
-import { MsgHighlight, MsgSuccessA } from './../partials/wrappers/msg'
+import { MsgA, MsgHighlight, MsgSuccessA } from './../partials/wrappers/msg'
 
 export const Account = () => {
    return (<>
-      <h3>Account</h3>
-      <MsgSuccessA>You are now signed in.</MsgSuccessA>
-      <div><LinkButton path={ADD_CLUB} text="Add Club" /></div>
+      <PageTitle title="Account">
+         <LinkButton path="/clubs" text={"Clubs"}></LinkButton>
+
+      </PageTitle>
+      <MsgA>You are now signed in.</MsgA>
    </>)
 };

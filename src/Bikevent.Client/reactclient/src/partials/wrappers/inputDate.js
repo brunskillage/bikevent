@@ -3,19 +3,32 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import moment from 'moment';
-import { momentDisplayFormat, momentToLocal, momentToLocalString, PAGE_MODE_VIEW } from "../../lib/common";
+import { momentToLocalString, PAGE_MODE_ADD, PAGE_MODE_EDIT, PAGE_MODE_VIEW } from "../../lib/common";
+import { globalLocation } from "../../lib/globalHooks";
 
-export const InputDate = ({ pageMode, label, fieldName, currentVal, control }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+export const InputDate = ({ pageMode, label, fieldName, currentVal, control, errors, reset }) => {
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
-    if (currentVal) {
-      let local = momentToLocal(currentVal).toDate()
-      // let t = moment().toString()
-      setSelectedDate(local)
+    console.log("location changed")
+
+    let currentValOrNull = currentVal ? moment(currentVal).toDate() : null;
+
+    if (pageMode === PAGE_MODE_VIEW) {
+      setSelectedDate(currentValOrNull)
+    }
+    if (pageMode === PAGE_MODE_EDIT) {
+      setSelectedDate(currentValOrNull)
+    }
+    if (pageMode === PAGE_MODE_ADD) {
+      setSelectedDate(null)
+      reset()
     }
 
-  }, [currentVal])
+    console.log("currentVal=" + currentVal)
+    console.log("selectedDate=" + selectedDate)
+
+  }, [globalLocation, currentVal])
 
   const MyContainer = ({ className, children }) => {
     return (
@@ -29,14 +42,12 @@ export const InputDate = ({ pageMode, label, fieldName, currentVal, control }) =
 
   return (
     <>
-      <div></div>
-      <div className="row datepicker">
-        <div className="col c3 labesl">{label}</div>
+      <div className="row">
+        <div className="col c3 label">{label}:</div>
         {pageMode === PAGE_MODE_VIEW ?
-          (<><div className="col c3"><div> {momentToLocalString(currentVal)} ({moment(currentVal).fromNow()} time)</div></div></>)
+          (<><div className="col c4"><div>&nbsp;&nbsp;{momentToLocalString(currentVal)} ({moment(currentVal).fromNow()} time)</div></div></>)
           :
-          (<div className="col c3">
-
+          (<div className="col c4">
             <Controller
               control={control}
               name={fieldName}
@@ -49,23 +60,25 @@ export const InputDate = ({ pageMode, label, fieldName, currentVal, control }) =
                   useWeekdaysShort={true}
                   minDate={moment().toDate()}
                   maxDate={moment().add(365, 'day').toDate()}
-                  selected={moment(selectedDate).toDate()}
+                  selected={selectedDate}
+                  //isClearable
                   dateFormat={"EEEE d MMM yyyy hh:mm aa"}
-                  value={field.value ? momentToLocal(field.value).toDate() : new Date()}
-                  onChange={date => {
-                    if (moment(date).isValid()) {
-                      setSelectedDate(date) // controls the display
-                      field.onChange(moment(date).toISOString()) // puts the actual date in value
-                    }
+                  onChangeRaw={(e) => {
+                    //e.target.dispatchEvent("changed")
                   }}
-                  calendarContainer={MyContainer}
+                  onChange={date => {
+                    setSelectedDate(date)
+                    field.onChange(date)
+                    console.log("changed")
+
+                  }}
                   disabled={false}
                 />
 
               )}
             />
           </div>)}
-        <div className="col c4"></div>
+        <div className="col c3">{errors[fieldName] ? <div className='error'>{errors[fieldName].message}</div> : <></>}</div>
       </div>
     </>
   );

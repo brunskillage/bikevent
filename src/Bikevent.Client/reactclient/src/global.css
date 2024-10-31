@@ -250,110 +250,216 @@ input[type=text] {
 * {
   font-family: "mainFont2";
   font-weight: 100;
-  font-style: italic;
-  color: black;
+  text-transform: uppercase;
+  color: #fcf1df;
   letter-spacing: 2px;
 }
-.msg {
-  display: block;
-  padding: 0.5em;
-  margin: 1em;
-  margin-left: 0;
-  width: 25em;
-  background: #def;
-  border-left: 5px solid #44e;
+body {
+  margin: 0;
+  background-color: #29282b;
 }
-.warning {
-  border-color: #e44;
-  background: #fdd;
+form {
+  padding: 0.6em;
+  max-width: 64em;
 }
-.success {
-  border-color: #2d2;
-  background: #dfd;
-}
-.error {
-  width: 25em;
-  padding: 0.5em;
-  border-left: 5px solid #e44;
-  background: #fdd;
-  color: #e44;
-}
-.highlight {
-  background-color: #c6ffc9;
-  border: 2px solid #2d2;
-  border-radius: 0.5em;
-}
-h3 {
-  padding-left: 0.5em;
-  padding-bottom: 0.3em;
-  padding-top: 0.3em;
-  border-left: 3px solid black;
-  border-bottom: 3px solid black;
-  font-weight: 600;
-  background-color: whitesmoke;
-}
-form input {
-  border: 1px solid black;
-  width: 21em;
+form input,
+form select {
+  background-color: #424145;
+  color: #fcf1df;
+  font-weight: bold;
+  letter-spacing: 2px;
   border-radius: 3px;
+  border: 1px solid #fcf1df;
+  width: 19em;
+  padding: 6px;
 }
 form input[type=submit] {
   width: 9em;
 }
-.homePage .btn {
-  padding: 1em;
-  margin: 0.5em;
-  width: 6em;
+form .label {
+  font-weight: bold;
+}
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding-left: 0.5em;
+  padding-bottom: 0.3em;
+  padding-top: 0.3em;
+  font-weight: 600;
+  background-color: whitesmoke;
+  text-align: center;
+  background-color: #29282b;
+  color: #fcf1df;
+}
+.nav,
+.nav .current,
+.nav a:hover {
+  color: #fcf1df;
+}
+.btn {
+  background-color: #455053;
+  border: 1px solid #fcf1df;
+  border-radius: 0.5em;
+  color: #fcf1df;
+  padding: 0.4em;
+  min-width: 6em;
+  margin-right: 0.6em;
   text-align: center;
 }
-.linkButton {
-  margin-right: 0.5em;
+.btn:hover {
+  background-color: #ed7a79;
 }
 .react-datepicker__time-list-item {
   letter-spacing: normal;
+  color: #29282b;
 }
 .react-datepicker__input-container {
   font-family: mainFont2;
 }
 .react-datepicker-wrapper {
-  height: 2.3em !important;
+  height: 2em !important;
 }
 .react-datepicker-wrapper input {
-  height: 1.5em;
-  width: 19em;
+  width: 20em;
   font-family: "mainFont2";
 }
-input,
-select {
-  font-family: "mainFont2";
-  font-style: italic;
-  color: black;
-  letter-spacing: 2px;
-  border-radius: 3px;
-  border: 1px solid black;
-  padding: 6px;
+.react-datepicker__current-month {
+  background-color: #abb6b9;
+  color: #29282b !important;
 }
-select {
-  height: 2.2em;
-  padding-left: 0;
+.boxShadow {
+  box-shadow: 0 -8px 15px rgba(0, 0, 0, 0.85);
 }
-.clubs .clubData {
+.img400 {
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+}
+.error {
+  color: #e44;
+}
+.msgContainer {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  width: 100%;
+  box-shadow: 0 -8px 15px rgba(0, 0, 0, 0.85);
+}
+.msgContainer .baseMsg {
+  width: 20em;
+  padding-left: 0.5em;
+  margin: 1em;
+  padding: 1em;
+  text-align: center;
+}
+.msgContainer .info {
+  width: 20em;
+  padding-left: 0.5em;
+  margin: 1em;
+  padding: 1em;
+  text-align: center;
+  border: 1px solid blue;
+}
+.msgContainer .success {
+  width: 20em;
+  padding-left: 0.5em;
+  margin: 1em;
+  padding: 1em;
+  text-align: center;
+  border: 1px solid green;
+}
+.msgContainer .error {
+  width: 20em;
+  padding-left: 0.5em;
+  margin: 1em;
+  padding: 1em;
+  text-align: center;
+  color: red;
+}
+.pageTitle .subMenu {
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #363438;
+  padding: 0.2em;
+  display: flex;
+  text-align: center;
+  box-shadow: 0 -8px 15px rgba(0, 0, 0, 0.85);
+  padding: 0.6em;
+}
+.loginPage .pageTitle h3 {
+  text-align: left;
+}
+.loginPage .pageContainer form {
+  padding: 1em;
+}
+.homePage {
+  text-align: center;
+  padding: 0.5em;
+}
+.ridesPage .rides {
+  width: 100%;
+  justify-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+}
+.ridesPage .rides .rideListItem {
+  display: flex;
+  max-width: 20em;
+  background-color: #000000;
+  border-radius: 0.5em;
+  padding: 0.25em;
+  margin: 0.25em;
+}
+.ridesPage .rides .rideListItem .left {
+  display: flex;
+  flex-direction: column;
+  width: 10em;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5em;
+  margin: 0.25em;
+}
+.ridesPage .rides .rideListItem .left .timeBox {
+  flex-grow: 1;
+  width: 6em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #990000;
+  border-radius: 0.5em;
+  margin: 0px;
+}
+.ridesPage .rides .rideListItem .right .title {
+  text-align: center;
+  width: 100%;
+}
+.ridesPage .rides .rideListItem .right .title h3 {
+  border-radius: 0.5em;
+  margin-bottom: 0.5em;
+}
+.clubsPage .clubData {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.clubs .clubData .clubListItem {
+.clubsPage .clubData .clubListItem {
   background-color: black;
-  color: red;
   display: flex;
   flex-direction: column;
   align-content: center;
   align-items: center;
-  border-radius: 1em;
+  justify-content: center;
+  box-shadow: 0 -8px 15px rgba(0, 0, 0, 0.85);
   padding: 0.5em;
-  margin: 0.2em;
+  margin: 0.3em;
   width: 15em;
+  height: 5em;
+  border: 1px solid #fcf1df;
+  border-radius: 0.5em;
 }
-.clubs .clubData .clubListItem .nameOf {
+.clubsPage .clubData .clubListItem .nameOf {
   color: white;
 }

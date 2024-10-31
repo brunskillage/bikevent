@@ -38,7 +38,7 @@ export const setSelectedClub = (id) => async (dispatch, getState) => {
         dispatch(setIsNotLoading())
     }
     else {
-        dispatch(setClubState({ data: { club: {} } }));
+        dispatch(setClubState({ data: { club: null } }));
     }
 }
 
@@ -73,7 +73,7 @@ export const setSelectedRide = (id) => async (dispatch, getState) => {
         dispatch(setIsNotLoading())
     }
     else {
-        dispatch(setRideState({ data: { ride: {} } }));
+        dispatch(setRideState({ data: { ride: null } }));
     }
 }
 

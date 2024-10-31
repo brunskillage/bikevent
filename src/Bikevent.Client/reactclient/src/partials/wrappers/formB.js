@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axiosConfig from "../../lib/axiosConfig";
 import { areObjectsTheSame, PAGE_MODE_ADD, PAGE_MODE_EDIT } from "../../lib/common";
 
 export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
-    onSuccessFunc, selectorFunc, children, getValues, getValue,
-    setValue, user, onProcessFormData, editPath, addPath, deletePath }) => {
+    onSuccessFunc, selectorFunc, children, getValues, defaultValues,
+    setValue, user, onProcessFormData }) => {
 
     const [userHasInteracted, setUserHasInteracted] = useState(0)
     const [objectsTheSame, setObjectsTheSame] = useState(true)
@@ -44,7 +44,6 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
         }
     }
 
-
     const handleResponse = (resp) => {
         if (!resp?.data?.success) {
             resp?.data?.data?.errors?.forEach(err => {
@@ -58,14 +57,20 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
     }
 
     const handleOnKeyUp = () => {
-        if (pageMode === PAGE_MODE_EDIT || pageMode === PAGE_MODE_ADD) {
+        setUserHasInteracted(true)
+
+        if (pageMode === PAGE_MODE_ADD) {
             console.log("keypress")
-            setUserHasInteracted(true)
+            setObjectsTheSame(false)
+        }
+
+        if (pageMode === PAGE_MODE_EDIT) {
             let formData = getValues()
             let hasFormChanged = areObjectsTheSame(formData, selectorFunc)
             setObjectsTheSame(hasFormChanged)
         }
     }
+
 
     const shouldDisplay = () => {
         const shouldDisplay = !!userHasInteracted && !objectsTheSame && (pageMode === PAGE_MODE_EDIT || pageMode === PAGE_MODE_ADD)
@@ -77,13 +82,13 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
             <div className="row">
                 {children}
             </div>
-            {shouldDisplay() &&
-                <div className="row">
-                    <div className="col c3">&nbsp;</div>
-                    <div className="col c14">
-                        <input className="btn btn-a btn-sm" type="submit" value="Save" />
-                    </div>
-                </div>}
+            <div className="row">
+                <div className="col c3">&nbsp;</div>
+                <div className="col c4">
+                    <input className="btn btn-a btn-sm" type="submit" value="Save" />
+                </div>
+                <div className="col c3">&nbsp;</div>
+            </div>
         </form>
     </>
 }

@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { setUserState } from './../store/userSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeLocalStorageItemsByPrefix, setLocalStorageItem } from '../lib/localStorageClient';
-import { NavLink, useNavigate } from 'react-router-dom';
 import axiosConfig from '../lib/axiosConfig';
-import { FormA } from '../partials/wrappers/form';
 import { InputA } from '../partials/wrappers/input';
-import { MsgHighlight } from '../partials/wrappers/msg';
+import { MsgA } from '../partials/wrappers/msg';
+import { PageTitle } from '../partials/wrappers/pageTitle';
+import { LinkButton } from '../partials/wrappers/linkButton';
+import { InputB } from '../partials/wrappers/inputB';
+import { PageContainer } from '../partials/wrappers/pageContainer'
+import { FormB } from '../partials/wrappers/formB';
+import { FormA } from '../partials/wrappers/form';
 
 export const Login = (args) => {
     const appConfig = useSelector(state => state.appConfig)
     const user = useSelector(state => state.user)
-    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const {
@@ -47,39 +50,37 @@ export const Login = (args) => {
 
                 // save in user state
                 dispatch(setUserState(auth))
-
                 // clear exisiting 
                 removeLocalStorageItemsByPrefix()
-
                 // save in local storage
                 setLocalStorageItem('auth', JSON.stringify(auth, appConfig.tokenExpiry))
 
-                // navigate to the account page
-                document.location.href = "/";
-
+                //document.location.href = "/";
             })
     }
 
     return (<>
-        <div className='login'>
-
-            {!user.isLoggedIn ?
-                <>
-                    <h3>Login</h3>
-                    <FormA onSubmit={handleSubmit(onSubmit)}>
-                        <InputA label='Email *' fieldName='email' errors={errors} register={register}></InputA>
-                        <InputA label='Password *' fieldName='encPassword' errors={errors} register={register}></InputA>
-                    </FormA>
-
-                    <MsgHighlight>No account? <NavLink to='/account/create'>Create</NavLink> an account.</MsgHighlight>
-                </>
-                :
-                <>
-                    <h3>You are now logged in</h3>
-                    <p>Welcome {user?.email} select a memu item to continue</p>
-                </>}
-
-
+        <div className='loginPage'>
+            {
+                !user.isLoggedIn ?
+                    <>
+                        <PageTitle title="Login" hideSubmenu={true}></PageTitle>
+                        <PageContainer>
+                            <FormA onSubmit={handleSubmit(onSubmit)}>
+                                <InputB label='Email *' fieldName='email' errors={errors} register={register}></InputB>
+                                <InputB label='Password *' fieldName='encPassword' errors={errors} register={register}></InputB>
+                            </FormA>
+                            <p>No account?&nbsp;<LinkButton path="/account/create" text="Create"></LinkButton>an account.</p>
+                        </PageContainer>
+                    </>
+                    :
+                    <>
+                        <PageTitle title="Signed in Successfully" hideSubmenu={false}>
+                            <LinkButton text="Clubs" path={"/clubs"}></LinkButton>
+                        </PageTitle>
+                        <p>Welcome {user?.email} select a memu item to continue</p>
+                    </>
+            }
         </div>
 
     </>);

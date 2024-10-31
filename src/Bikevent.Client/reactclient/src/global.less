@@ -302,7 +302,18 @@ input[type=text] {
 
 // end min.css
 
+//////////////////////////////////////////////////////
+/////////////  START CUSTOME WEBSITE  ////////////////
+//////////////////////////////////////////////////////
 
+@darkGray: rgb(41, 40, 43);
+@panelGray: rgb(68, 72, 75);
+@lightGray: rgb(171, 182, 185);
+@sunsetWhite: rgb(252, 241, 223);
+@lightOrange: rgb(253, 199, 162);
+@redAct: rgb(237, 122, 121);
+
+//////////////// GLOBAL STYLES ////////////////////////
 @font-face {
   font-family: mainFont2;
   // src: url(/font/RacingSansOne-Regular.ttf);
@@ -313,87 +324,103 @@ input[type=text] {
   font-family: "mainFont2";
   font-weight: 100;
   // font-size: medium;
-  font-style: italic;
-  color: black;
+  //font-style: italic;
+  text-transform: uppercase;
+  color: @sunsetWhite;
   letter-spacing: 2px;
 }
 
-.msg {
-  display: block;
-  padding: 0.5em;
-  margin: 1em;
-  margin-left: 0;
-  width: 25em;
-  background: #def;
-  border-left: 5px solid #44e;
+// html {
+//   background-color: black;
+//   margin: 0;
+// }
+
+body {
+  margin: 0;
+  background-color: @darkGray;
 }
 
-.warning {
-  border-color: #e44;
-  background: #fdd;
-}
-
-.success {
-  border-color: #2d2;
-  background: #dfd;
-}
-
-.error {
-  width: 25em;
-  padding: 0.5em;
-  border-left: 5px solid #e44;
-  background: #fdd;
-  color: #e44;
-}
-
-.highlight {
-  background-color: #c6ffc9;
-  border: 2px solid #2d2;
-  border-radius: 0.5em;
-}
-
-h3 {
-  padding-left: 0.5em;
-  padding-bottom: 0.3em;
-  padding-top: 0.3em;
-  border-left: 3px solid black;
-  border-bottom: 3px solid black;
-  font-weight: 600;
-  background-color: whitesmoke;
-}
 
 form {
-  input {
-    border: 1px solid black;
-    width: 21em;
+  padding: 0.6em;
+  max-width: 64em;
+  // background-color: #09d;
+
+  input,
+  select {
+    background-color: lighten(@darkGray, 10%);
+    color: @sunsetWhite;
+    font-weight: bold;
+    letter-spacing: 2px;
     border-radius: 3px;
+    border: 1px solid @sunsetWhite;
+    width: 19em;
+    padding: 6px;
   }
 
   input[type=submit] {
     width: 9em;
   }
 
-  .label {}
+  .label {
+    font-weight: bold;
+  }
+
+
 }
 
-.homePage {
-  .btn {
-    padding: 1em;
-    margin: 0.5em;
-    width: 6em;
-    text-align: center;
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding-left: 0.5em;
+  padding-bottom: 0.3em;
+  padding-top: 0.3em;
+
+  font-weight: 600;
+  background-color: whitesmoke;
+  text-align: center;
+  background-color: @darkGray;
+  color: @sunsetWhite;
+}
+
+// /////////////END HTML GLOBAL///////////////////
+
+
+// //////////////MIN CSS OVERIDES//////////////////
+
+.nav,
+.nav .current,
+.nav a:hover {
+  color: @sunsetWhite;
+  //background-color: @lightGray;
+}
+
+// .container {
+//   width: 100%;
+// }
+
+.btn {
+  background-color: darken(@lightGray, 40%);
+  border: 1px solid @sunsetWhite;
+  border-radius: 0.5em;
+  color: @sunsetWhite;
+  padding: 0.4em;
+  min-width: 6em;
+  margin-right: 0.6em;
+  text-align: center;
+
+  &:hover {
+    background-color: @redAct;
   }
 }
 
-.linkButton {
-  margin-right: 0.5em;
 
-}
-
-// end react datepicker
+//////////////DATEPICKER OVERIDES CSS//////////////////
 
 .react-datepicker__time-list-item {
   letter-spacing: normal;
+  color: @darkGray;
 }
 
 .react-datepicker__input-container {
@@ -401,33 +428,175 @@ form {
 }
 
 .react-datepicker-wrapper {
-  height: 2.3em !important;
+  height: 2.0em !important;
 
   input {
-    height: 1.5em;
-    width: 19em;
+    //height: 1.5em;
+    width: 20em;
     font-family: "mainFont2";
   }
 }
 
-input,
-select {
-  font-family: "mainFont2";
-  font-style: italic;
-  color: black;
-  letter-spacing: 2px;
-  border-radius: 3px;
-  border: 1px solid black;
-  padding: 6px;
+.react-datepicker__current-month {
+  background-color: @lightGray;
+  //height: 1.2em;
+  color: @darkGray  !important; //?
+
+  h2 {}
 }
 
-select {
-  height: 2.2em;
-  padding-left: 0;
+
+////////////////////APP CSS////////////////////////////
+.boxShadow {
+  box-shadow: 0 -8px 15px rgba(0, 0, 0, .85);
 }
 
-// end react datepicker
-.clubs {
+.img400 {
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+}
+
+.error {
+  color: #e44;
+}
+
+.msgContainer {
+
+  display: flex;
+  // justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+  width: 100%;
+
+  .boxShadow;
+
+  .baseMsg {
+    width: 20em;
+    padding-left: 0.5em;
+    margin: 1em;
+    padding: 1em;
+    text-align: center
+  }
+
+  .info {
+    .baseMsg;
+    border: 1px solid blue;
+  }
+
+  .success {
+    .baseMsg;
+    border: 1px solid green;
+  }
+
+  .error {
+    .baseMsg;
+    color: red;
+  }
+}
+
+.pageTitle {
+  .subMenu {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: lighten(@darkGray, 5%);
+    padding: 0.2em;
+    display: flex;
+    text-align: center;
+    .boxShadow;
+    padding: 0.6em;
+    //background-color: #08b;
+  }
+}
+
+.loginPage {
+  .pageTitle {
+    h3 {
+      text-align: left;
+    }
+  }
+
+  .pageContainer {
+
+
+
+    form {
+      // width: 50em;
+      //background-color: #08b;
+      padding: 1em;
+    }
+  }
+}
+
+.homePage {
+  text-align: center;
+  padding: 0.5em;
+}
+
+.ridePage {
+  // background-color: #2a4;
+}
+
+.ridesPage {
+  .rides {
+    width: 100%;
+    justify-content: space-around;
+    display: flex;
+    flex-wrap: wrap;
+
+    .rideListItem {
+      display: flex;
+      max-width: 20em;
+      background-color: darken(@darkGray, 30%);
+      border-radius: 0.5em;
+      padding: 0.25em;
+      margin: 0.25em;
+      //.boxShadow;
+
+      .left {
+        display: flex;
+        flex-direction: column;
+        width: 10em;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.5em;
+        margin: 0.25em;
+
+        .timeBox {
+          flex-grow: 1;
+          width: 6em;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background-color: darken(red, 20%);
+          border-radius: 0.5em;
+          margin: 0px;
+        }
+      }
+
+      .right {
+        .title {
+          //background-color: red;
+          text-align: center;
+          width: 100%;
+
+          h3 {
+            border-radius: 0.5em;
+            margin-bottom: 0.5em;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.clubPage {}
+
+.clubsPage {
   .clubData {
 
     display: flex;
@@ -436,15 +605,19 @@ select {
 
     .clubListItem {
       background-color: black;
-      color: red;
       display: flex;
       flex-direction: column;
       align-content: center;
       align-items: center;
-      border-radius: 1em;
+      justify-content: center;
+      .boxShadow;
+
       padding: .5em;
-      margin: .2em;
+      margin: .3em;
       width: 15em;
+      height: 5em;
+      border: 1px solid @sunsetWhite;
+      border-radius: 0.5em;
 
       .nameOf {
         color: white;
@@ -452,3 +625,23 @@ select {
     }
   }
 }
+
+// .ridePage {
+//   display: flex;
+//   align-items: center;
+//   justify-items: center;
+//   justify-content: center;
+// }
+
+// .container {
+//   //.centeredFlex;
+//   background-color: black;
+//   min-height: 60vh;
+
+
+// }
+
+// .formContainer {
+//   background-color: red;
+//   //padding: 1em;
+// }

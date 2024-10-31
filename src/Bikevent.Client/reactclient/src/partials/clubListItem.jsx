@@ -5,8 +5,9 @@ import { LinkButton } from "./wrappers/linkButton";
 export const ClubListItem = ({ club }) => {
     return (<>
         <div className="clubListItem">
-            <div className="nameOf">{club.nameOf}XX</div>
-            <LinkButton path={VIEW_CLUB.replace(":clubId", club.id)} text="open" />
+            <NavLink to={VIEW_CLUB.replace(":clubId", club.id)}>
+                <div className="nameOf">{club.nameOf}XX</div>
+            </NavLink>
         </div>
 
     </>);

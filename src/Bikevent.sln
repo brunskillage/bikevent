@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikevent.Validation", "Bike
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikevent.Migrations", "Bikevent.Migrations\Bikevent.Migrations.csproj", "{C689FC3B-40B5-4569-8B88-8D4C1B915875}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bikevent.Database.TestData", "Bikevent.Database.TestData\Bikevent.Database.TestData.csproj", "{9F9C1A30-F25F-49CE-8136-18BD92FCFD2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bikevent.Database.TestData", "Bikevent.Database.TestData\Bikevent.Database.TestData.csproj", "{9F9C1A30-F25F-49CE-8136-18BD92FCFD2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bikevent.Core", "Bikevent.Core\Bikevent.Core.csproj", "{7EC81218-C057-4347-A639-562D911654D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{9F9C1A30-F25F-49CE-8136-18BD92FCFD2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F9C1A30-F25F-49CE-8136-18BD92FCFD2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F9C1A30-F25F-49CE-8136-18BD92FCFD2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EC81218-C057-4347-A639-562D911654D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EC81218-C057-4347-A639-562D911654D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EC81218-C057-4347-A639-562D911654D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EC81218-C057-4347-A639-562D911654D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

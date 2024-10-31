@@ -24,6 +24,7 @@
   <ItemGroup>
     <PackageReference Include="Humanizer" Version="2.14.1" />
     <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.426" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.8" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.1.2" />
@@ -36,6 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bikevent.Config\Bikevent.Config.csproj" />
+    <ProjectReference Include="..\Bikevent.Core\Bikevent.Core.csproj" />
     <ProjectReference Include="..\Bikevent.Database\Bikevent.Database.csproj" />
     <ProjectReference Include="..\Bikevent.DataObjects\Bikevent.DataObjects.csproj" />
     <ProjectReference Include="..\Bikevent.Migrations\Bikevent.Migrations.csproj" />

@@ -1,25 +1,45 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { PageTitle } from "../partials/wrappers/pageTitle";
+import { LinkButton } from "../partials/wrappers/linkButton";
+import mainLogo from "../assets/bike2.png"
+import { PageContainer } from "../partials/wrappers/pageContainer";
 
 export const Home = () => {
     const auth = useSelector(state => state.user)
     return (<>
+        <PageTitle title="Home Page" hideSubmenu={!auth.isLoggedIn}>
+            {auth.isLoggedIn && <>
+                <NavLink className='btn btn-a btn-sm' to="/clubs">CLUBS</NavLink>
+                <NavLink className='btn btn-a btn-sm' to="/account">ACCOUNT</NavLink></>
+            }
 
+        </PageTitle>
         <div className="homePage">
-            <h3>HomePage</h3>
-            <p>
-                Welcome to bikevent
-            </p>
-            {!auth?.isLoggedIn ? <><NavLink to="/login">Sign In</NavLink> or <NavLink to="/account/create">Create Account</NavLink></>
-                : (<>
-                    <div className="homeMenu">
-                        <NavLink className='btn btn-a btn-sm' to="/clubs">CLUBS</NavLink>
-                        <NavLink className='btn btn-a btn-sm' to="/account">ACCOUNT</NavLink>
-                    </div>
 
-                </>)}
+            <PageContainer>
+                <h2>Welcome to Bikevent</h2>
+
+
+
+                {!auth?.isLoggedIn ?
+                    <>
+                        <LinkButton path="/login" text="Sign In" /> or <LinkButton path="/account/create" text="Create" /> an account
+                    </>
+                    :
+                    <>
+
+                    </>}
+                <div>
+                    <img className="img400" src={mainLogo} alt="Bikevent main logo" />
+                </div>
+            </PageContainer>
+
+
 
 
         </div>
-    </>);
+    </>
+
+    );
 }

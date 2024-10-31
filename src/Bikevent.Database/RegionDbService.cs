@@ -38,7 +38,7 @@ public class RegionDbService
                 Island = parts[3],
                 Code = parts[4]
             };
-        } ).ToList();
+        } ).OrderBy(r=>r.NameOf).ToList();
     }
 
     private string RegionRaw = @"

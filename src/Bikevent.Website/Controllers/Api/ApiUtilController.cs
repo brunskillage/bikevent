@@ -1,6 +1,9 @@
 ﻿using System.Net.Mime;
+using System.Net.NetworkInformation;
 using Bikevent.Config;
+using Bikevent.Core.handlers;
 using Bikevent.Database;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bikevent.Website.Controllers.Api;
@@ -12,13 +15,24 @@ public class ApiUtilController : Controller
 {
     private readonly BvConfigurationService _configurationService;
     private readonly MiscDbService _miscDbService;
+    private readonly IMediator _mediator;
 
 
     public ApiUtilController(BvConfigurationService configurationService,
-        MiscDbService miscDbService)
+        MiscDbService miscDbService, IMediator mediator)
     {
         _configurationService = configurationService;
         _miscDbService = miscDbService;
+        _mediator = mediator;
+    }
+
+    // dev only endpoints
+    [Route("ping")]
+    [HttpGet]
+    public async Task<PingResponse> Ping()
+    {
+        var response = await _mediator.Send(new PingRequest{Id = "Test"});
+        return response;
     }
 
     // dev only endpoints

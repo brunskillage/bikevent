@@ -15,13 +15,13 @@ export const TimerA = () => {
         if (!auth) {
             removeLocalStorageItemsByPrefix()
             globaldispatch(setUserState({}))
-            globalNavigate('/logout')
+            globalNavigate('/login')
             delete window._timerId
         }
     }
 
     if (window._timerId === undefined) {
-        window._timerId = setInterval(() => checkUser(), 15000)
+        window._timerId = setInterval(() => checkUser(), 15 * 60 * 1000)
     }
 
     return (<></>);

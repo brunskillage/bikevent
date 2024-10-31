@@ -11,13 +11,17 @@ import { InputHidden } from '../partials/wrappers/inputHidden';
 import { LinkButton } from '../partials/wrappers/linkButton';
 import { globaldispatch, globalIsLoading, globalLocation, locationMatchesRoute } from '../lib/globalHooks';
 import { SelectList } from '../partials/wrappers/selectList';
+import moment from 'moment';
+import { PageTitle } from '../partials/wrappers/pageTitle';
 
 
 export const Club = () => {
 
     const dispatch = useDispatch()
     let { clubId } = useParams()
-    const { register, formState: { errors }, setError, setValue, handleSubmit, getValues } = useForm();
+    const { register, formState: { errors }, setError, setValue, handleSubmit, getValues, reset } = useForm({
+        defaultValues: { startsOn: moment().add(7, 'days').toDate() }
+    });
     const user = useSelector(state => state.user)
     const club = useSelector(state => state.club.selectedClub)
     const regions = useSelector(state => state.region.regions)
@@ -34,21 +38,27 @@ export const Club = () => {
 
     useEffect(() => {
         console.log("render")
-
     }, [])
 
     // page mode change
     useEffect(() => {
         console.log('pagemode changed')
         setIsCreated(false)
+
+        if (!regions.length) {
+            globaldispatch(setRegions())
+        }
+
         if (locationMatchesRoute(common.ADD_CLUB)) {
+            console.log('add Club')
             setPageMode(common.PAGE_MODE_ADD)
             dispatch(setSelectedClub())
+            reset()
         }
         else if (locationMatchesRoute(common.EDIT_CLUB)) {
             setPageMode(common.PAGE_MODE_EDIT)
             dispatch(setSelectedClub(clubId))
-            globaldispatch(setRegions())
+
         }
         else if (locationMatchesRoute(common.VIEW_CLUB)) {
             setPageMode(common.PAGE_MODE_VIEW)
@@ -73,24 +83,21 @@ export const Club = () => {
     }
 
     return (<>
-        <div className='club'>
-            <h3>Club {pageMode}: {club?.nameOf ?? "Add Club"}</h3>
-            <p>
+        <div className='clubPage'>
+            <PageTitle title={"Club " + pageMode + ":" + club?.nameOf}>
                 <LinkButton path={common.VIEW_CLUBS} text="Clubs" />
-                <LinkButton path={common.VIEW_RIDES_FOR_CLUB.replace(":clubId", club.id)} text="Rides" />
+                <LinkButton path={common.VIEW_RIDES_FOR_CLUB.replace(":clubId", clubId)} text="Rides" />
                 {pageMode === common.PAGE_MODE_ADD && <>
-                    {/* <LinkButton path={common.VIEW_CLUB.replace(":clubId", club.id)} text="View" />
-                    <LinkButton path={common.EDIT_CLUB.replace(":clubId", club.id)} text="Edit" /> */}
                 </>}
                 {pageMode === common.PAGE_MODE_EDIT && <>
-                    <LinkButton path={common.VIEW_CLUB.replace(":clubId", club.id)} text="View" />
+                    <LinkButton path={common.VIEW_CLUB.replace(":clubId", clubId)} text="View" />
                     <LinkButton path={common.ADD_CLUB} text="Add" />
                 </>}
                 {pageMode === common.PAGE_MODE_VIEW && <>
                     <LinkButton path={common.ADD_CLUB} text="Add" />
-                    <LinkButton path={common.EDIT_CLUB.replace(":clubId", club.id)} text="Edit" />
+                    <LinkButton path={common.EDIT_CLUB.replace(":clubId", clubId)} text="Edit" />
                 </>}
-            </p >
+            </PageTitle>
 
             {isCreated && <>
 
@@ -110,15 +117,19 @@ export const Club = () => {
                 !isCreated && !globalIsLoading &&
                 <FormB {...{
                     urlPath: "/api/v1/club", pageMode, setError, handleSubmit, onSuccessFunc,
-                    selectorFunc: club, getValues, setValue, user,
-                    editPath: common.EDIT_CLUB.replace(":clubId", club.id),
+                    selectorFunc: club, getValues, setValue, user, reset,
+                    editPath: common.EDIT_CLUB.replace(":clubId", club?.id),
                     addPath: common.ADD_CLUB,
-                    deletePath: common.DELETE_CLUB.replace(":clubId", club.id)
+                    deletePath: common.DELETE_CLUB.replace(":clubId", club?.id),
+                    defaultValues: {
+                        startsOn: moment().local().toDate(),
+                        endsOn: moment().local().toDate()
+                    }
                 }}>
                     <InputB label='Name *' fieldName='nameOf' currentVal={club?.nameOf} {...{ pageMode, errors, register }}></InputB>
                     <InputB label='President / Leader *' fieldName="president" currentVal={club?.president}  {...{ pageMode, errors, register }} ></InputB>
+                    <SelectList label="Region *" fieldName="regionId" keyValues={regionsKeyValue} currentVal={club?.regionId} {...{ errors, register, pageMode }}></SelectList>
                     <InputB label='Email *' fieldName='email' currentVal={club?.email}  {...{ errors, register, pageMode }}></InputB>
-                    <SelectList label="Region" fieldName="region" keyValues={regionsKeyValue} {...{ errors, register, pageMode }}></SelectList>
                     <InputHidden label='User Id' fieldName="createdById" currentVal={+(user?.userId)}  {...{ pageMode, errors, register }} ></InputHidden>
                 </FormB>
             }

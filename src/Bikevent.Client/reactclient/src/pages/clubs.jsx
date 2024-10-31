@@ -14,7 +14,7 @@ export const Clubs = (args) => {
     }, [])
 
     return (<>
-        <div className='clubs'>
+        <div className='clubsPage'>
             <h3>Clubs </h3>
 
             <LoadingA isLoading={loading}></LoadingA>

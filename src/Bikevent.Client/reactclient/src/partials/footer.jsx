@@ -33,6 +33,8 @@ export const Footer = () => {
                     <li>
                         <a className="link" href="https://react-hook-form.com/" target="_blank">React hook forms</a></li>
                     <li>
+                        <a className="link" href="https://github.com/brunskillage/bikevent/tree/main/src" target="_blank">Github Source</a></li>
+                    <li>
                         <NavLink className='link' to="/tester">Test Page</NavLink></li>
                 </ul>
 

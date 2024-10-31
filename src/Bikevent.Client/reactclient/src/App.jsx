@@ -21,7 +21,7 @@ import { TimerA } from "./partials/wrappers/timer";
 import { Club } from "./pages/club";
 import { Ride } from "./pages/ride";
 import { globaldispatch, GlobalNavigate } from "./lib/globalHooks";
-import { ADD_CLUB, ADD_RIDE_TO_CLUB, EDIT_CLUB, EDIT_RIDE_FOR_CLUB, VIEW_CLUB, VIEW_CLUBS, VIEW_RIDE_FOR_CLUB, VIEW_RIDES_FOR_CLUB } from "./lib/common";
+import { ADD_CLUB, ADD_RIDE_TO_CLUB, EDIT_CLUB, EDIT_RIDE_FOR_CLUB, USER_ACCOUNT, USER_LOGOUT, VIEW_CLUB, VIEW_CLUBS, VIEW_RIDE_FOR_CLUB, VIEW_RIDES_FOR_CLUB } from "./lib/common";
 
 // unprotected routes
 
@@ -30,11 +30,7 @@ const Layout = () => {
         <>
             <div className='app'>
                 <Header />
-                <div className="container">
-                    <div className="row">
-                        <Outlet />
-                    </div>
-                </div>
+                <Outlet />
                 <Footer />
             </div>
         </>
@@ -44,19 +40,13 @@ const Layout = () => {
 export const LayoutProtected = () => {
 
     // only show if logged in
-    var auth = useSelector(state => state.user)
+    var user = useSelector(state => state.user)
 
     return (
         <>
-            <div className='app'>
-                <Header />
-                <div className="container">
-                    <div className="row">
-                        {auth?.isLoggedIn ? <Outlet /> : <Login />}
-                    </div>
-                </div>
-                <Footer />
-            </div>
+            <Header />
+            {user?.isLoggedIn ? <Outlet /> : <Home />}
+            <Footer />
         </>
     );
 }
@@ -68,8 +58,7 @@ export const App = () => {
     // load intial app configuration
     dispatch(setAppConfig())
 
-    var valid = isAuthValid()
-    if (valid) {
+    if (isAuthValid()) {
         const auth = getLocalStorageItem('auth')
         dispatch(setUserState(auth))
     }
@@ -116,7 +105,7 @@ export const App = () => {
 
                 children: [
                     {
-                        path: "/account",
+                        path: USER_ACCOUNT,
                         element: <Account />,
                     },
                     {
@@ -150,9 +139,8 @@ export const App = () => {
                     {
                         path: VIEW_CLUBS,
                         element: <Clubs />,
-                    },
-                    {
-                        path: "/logout",
+                    }, {
+                        path: USER_LOGOUT,
                         element: <Logout />,
                     },
                     {

@@ -28,7 +28,7 @@ export const Header = () => {
             </div>
         </nav>
         {!!isOnline && <><nav className="nav" tabIndex="-1" onClick={onNavClick}>
-            <div className="container">
+            <div className="row">
                 <MsgErrorA>You are offLine</MsgErrorA>
             </div>
         </nav></>}

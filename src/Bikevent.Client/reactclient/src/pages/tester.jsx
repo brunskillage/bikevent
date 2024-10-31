@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { getTodos } from "../store/thunks";
 import { useDispatch } from "react-redux";
+import { PageTitle } from "../partials/wrappers/pageTitle";
 
 
 export const Tester = (args) => {
@@ -14,8 +15,25 @@ export const Tester = (args) => {
     //     "completed": false
     // },
     return (<>
-        <div className='tester'>
-            <h3>Test Page</h3>
+        <PageTitle title="testPage">
+            This is the submenu
+        </PageTitle>
+        <div className="container">
+            <div className="row">
+                <div className="col c12">
+
+                    This is the content                        <div className='row'>
+                        <div className='col c6 formContainer'>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div className='testPage'>
             <p>
                 <button onClick={() => dispatch(getTodos())}>Get Todos</button>
             </p>

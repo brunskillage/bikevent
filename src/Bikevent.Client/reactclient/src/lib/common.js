@@ -8,6 +8,9 @@ export const PAGE_MODE_VIEW = 'view'
 
 
 // user can
+export const USER_LOGOUT = "/logout"
+export const USER_LOGIN = "/login"
+export const USER_ACCOUNT = "/accout"
 export const DELETE_USER = "/user/:id/delete"
 export const EDIT_USER = "/user/:id/edit"
 export const VERIFY_USER = "user/:id/verify"
@@ -55,7 +58,7 @@ export const momentDisplayFormat = "dddd, DD MMM yyyy hh:mm A"
 
 export const momentToLocalString = (date) => {
     if (date) {
-        return moment(date + "Z").local().format(momentDisplayFormat)
+        return moment(date).local().format(momentDisplayFormat)
     }
     return ""
 }

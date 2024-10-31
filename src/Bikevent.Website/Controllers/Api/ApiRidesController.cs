@@ -56,7 +56,8 @@ public class ApiRidesController : Controller
     {
 
         var v = new RideValidator(_ridesDbService);
-        var res = await v.ValidateAsync(ride, options => options.IncludeRuleSets("Update").IncludeRulesNotInRuleSet());
+        //var res = await v.ValidateAsync(ride, options => options.IncludeRuleSets("Update").IncludeRulesNotInRuleSet());
+        var res = await v.ValidateAsync(ride);
         if (!res.IsValid)
             return Ok(res.ToBvResponse());
 

@@ -1,14 +1,12 @@
-using System.Reflection;
-using System.Text;
+using System.Net.NetworkInformation;
 using Bikevent.Config;
+using Bikevent.Core.handlers;
 using Bikevent.Database;
-using Bikevent.Migrations;
 using Bikevent.Validation;
 using Bikevent.Website.Controllers;
+using Bikevent.Website.Startup;
 using FluentMigrator.Runner;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Bikevent.Website;
 
@@ -56,19 +54,8 @@ public class Program
         //builder.Services.AddWebOptimizer();
 
         //JWT Authentication
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                ValidAudience = builder.Configuration["Jwt:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-            };
-        });
-        
+        builder.Services.AddAuth(configuration);
+
         // add CORS
 
         builder.Services.AddCors(options =>
@@ -76,11 +63,12 @@ public class Program
             options.AddDefaultPolicy(
                 policy =>
                 {
-                    policy.WithOrigins("http://localhost:3000", 
+                    policy.WithOrigins("http://localhost:3000",
                             "https://localhost:3000",
                             "https://www.bikevent.nz",
                             "https://api.brunskillage.org.uk",
-                            "https://auth.brunskillage.org.uk")
+                            "https://auth.brunskillage.org.uk",
+                            "http://192.168.1.74:3000")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
@@ -88,21 +76,7 @@ public class Program
 
 
         // add migrations
-        var ma = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bikevent.Migrations.dll");
-        Assembly.LoadFile(ma);
-        var migrations = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name!.Contains("Bike")).ToArray();
-        builder.Services.AddSingleton<FluentMigrator.Runner.Processors.ProcessorOptions>(); // bug not found if line missing
-
-        builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
-            .AddFluentMigratorCore()
-            .ConfigureRunner(config =>
-            {
-                config.AddMySql8()
-                    .ConfigureGlobalProcessorOptions(c=>c.Timeout = TimeSpan.FromMinutes(1))
-                    .WithGlobalConnectionString(configuration.GetConnectionString("BikeventMySqlConnection"))
-                    .ScanIn(migrations).For.Migrations();
-            });
-
+        builder.Services.AddMigrations(configuration);
         // end add migrations
 
         // ! stop automatic model validation for ApiControllers - When using it automatically caused
@@ -110,9 +84,12 @@ public class Program
         builder.Services.Configure<ApiBehaviorOptions>(options
             => options.SuppressModelStateInvalidFilter = true);
 
+        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(PingHandler).Assembly));
 
         var app = builder.Build();
-        
+
+        // End building
+
         var clubsDb = app.Services.GetService<ClubDbService>();
         var miscDb = app.Services.GetService<MiscDbService>();
         clubsDb!.TestAsync();
@@ -126,7 +103,7 @@ public class Program
             app.UseHsts();
         }
 
-        
+
         app.UseHttpsRedirection();
 
         // minify and optimise
@@ -152,15 +129,20 @@ public class Program
             app.UseSwaggerUI();
             app.UseSwagger(options => { options.SerializeAsV2 = true; });
         }
-        
+
         // run migrations
-        miscDb.ClearDbVersionInfo();
+
         using (var scope = app.Services.CreateScope())
         {
             var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
             migrator!.ListMigrations();
+            // TODO use runner - for now easier just to uncomment during rapid dev
+            // uncomment below to run migration
+            // miscDb.ClearDbVersionInfo();
             // migrator.MigrateUp(001);
-        };
+        }
+
+        ;
 
 
         app.Run();

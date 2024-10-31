@@ -7,6 +7,8 @@ import { NavLink, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { ADD_RIDE_TO_CLUB, EDIT_RIDE_FOR_CLUB, momentToLocal, VIEW_RIDE_FOR_CLUB } from '../lib/common';
 import { LinkButton } from '../partials/wrappers/linkButton';
+import { PageTitle } from '../partials/wrappers/pageTitle';
+import { RideListItem } from '../partials/rideListItem';
 
 export const Rides = (args) => {
 
@@ -23,35 +25,23 @@ export const Rides = (args) => {
 
     }, [])
 
-
     return (<>
-        <div className='rides'>
-            <h3>Rides for {club.nameOf}</h3>
-            <LinkButton path={ADD_RIDE_TO_CLUB.replace("clubId", club.id)} text="Add"></LinkButton>
+        <div className='ridesPage'>
+            <PageTitle title={("Rides for " + club?.nameOf)}>
+                <LinkButton path={ADD_RIDE_TO_CLUB.replace(":clubId", clubId)} text="Add"></LinkButton>
+            </PageTitle>
+
             <LoadingA isLoading={loading}></LoadingA>
             {rides && rides.length ? <>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Starts On</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rides.map(ride => {
-                            return <tr key={ride.id}>
-                                <td><LinkButton path={VIEW_RIDE_FOR_CLUB.replace(":rideId", ride.id).replace(":clubId", ride.clubId)} text={ride.title}></LinkButton></td>
-                                <td>   {momentToLocal(ride.startsOn).format("h:mma, ddd Do MMM")}  ({moment(ride.startsOn).fromNow()})</td>
-                                <td><LinkButton path={EDIT_RIDE_FOR_CLUB.replace(":rideId", ride.id).replace(":clubId", ride.clubId)} text="Edit"></LinkButton></td>
-                            </tr>
-                        })}
-                    </tbody>
-                </table>
+                <div className='rides'>
+                    {rides.map(ride => {
+                        return <RideListItem key={ride.id} {...ride}></RideListItem>
+                    })}
+                </div>
             </> : <>
                 <p>No rides found</p>
             </>}
 
-        </div>
+        </div >
     </>);
 }
