@@ -1,4 +1,5 @@
 /* Copyright 2014 Owen Versteeg; MIT licensed */
+html,
 body,
 textarea,
 input,
@@ -7,6 +8,10 @@ select {
   border-radius: 0;
   font: 16px sans-serif;
   margin: 0;
+}
+html {
+  touch-action: pan-x pan-y;
+  height: 100%;
 }
 .smooth {
   transition: all 0.2s;
@@ -255,7 +260,6 @@ input[type=text] {
   letter-spacing: 2px;
 }
 body {
-  margin: 0;
   background-color: #29282b;
 }
 form {
@@ -378,6 +382,14 @@ h3 {
   text-align: center;
   color: red;
 }
+.header {
+  background-color: #2a4;
+  display: flex;
+}
+.footer {
+  background-color: #2a4;
+  overflow-wrap: break-word;
+}
 .pageTitle .subMenu {
   justify-content: center;
   flex-wrap: wrap;
@@ -394,6 +406,9 @@ h3 {
 .loginPage .pageContainer form {
   padding: 1em;
 }
+.loginPage .pageContainer form input {
+  text-transform: none;
+}
 .homePage {
   text-align: center;
   padding: 0.5em;
@@ -406,7 +421,7 @@ h3 {
 }
 .ridesPage .rides .rideListItem {
   display: flex;
-  max-width: 20em;
+  max-width: 25em;
   background-color: #000000;
   border-radius: 0.5em;
   padding: 0.25em;
@@ -462,4 +477,34 @@ h3 {
 }
 .clubsPage .clubData .clubListItem .nameOf {
   color: white;
+}
+.eventsPage .events .eventListItem {
+  border-bottom: 1px solid #fcf1df;
+  display: flex;
+}
+.eventsPage .events .eventListItem .timeboxCol {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.eventsPage .events .eventListItem .timeboxCol .timeBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: black;
+  width: 4em;
+  height: 4em;
+}
+.eventsPage .events .eventListItem .summaryCol .title h3 {
+  text-align: left;
+}
+.eventsPage .events .eventListItem .summaryCol .date {
+  padding-left: 0.5em;
+}
+.eventsPage .events .eventListItem .actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4em;
 }

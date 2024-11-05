@@ -62,4 +62,11 @@ public class ClubDbService : BaseDbClientService
         var res = await conn.QueryAsync<BvRideRow>("select * from rides where clubId=@clubId", new {clubId = bvClubRow.Id});
         return res.ToList();
     }
+
+    public async Task<List<BvEventRow>> GetEventsForClub(BvEventRow bvEventRow)
+    {
+        await using var conn = await GetOpenConnectionAsync();
+        var res = await conn.QueryAsync<BvEventRow>("select * from events where clubId=@clubId", new { clubId = bvEventRow.Id });
+        return res.ToList();
+    }
 }

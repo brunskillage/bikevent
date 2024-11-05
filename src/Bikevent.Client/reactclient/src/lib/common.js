@@ -24,9 +24,14 @@ export const ADD_RIDE_TO_CLUB = "/club/:clubId/addride"
 export const DELETE_RIDE_FROM_CLUB = "/club/:clubId/ride/:rideId/delete"
 export const VIEW_RIDES_FOR_CLUB = "/club/:clubId/rides"
 export const VIEW_RIDE_FOR_CLUB = "/club/:clubId/ride/:rideId"
-
 export const ADD_RIDE = "/ride/add"
 export const EDIT_RIDE_FOR_CLUB = "/club/:clubId/ride/:rideId/edit"
+
+export const VIEW_EVENTS_FOR_CLUB = "/club/:clubId/events"
+export const VIEW_EVENT_FOR_CLUB = "/club/:clubId/event/:eventId"
+export const ADD_EVENT_TO_CLUB = "/club/:clubId/event/add"
+export const DELETE_EVENT_FROM_CLUB = "/club/:clubId/event/:eventId/delete"
+export const EDIT_EVENT_FOR_CLUB = "/club/:clubId/event/:eventId/edit"
 
 // TODO
 export const VIEW_CLUBS = "/clubs"

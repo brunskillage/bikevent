@@ -6,6 +6,7 @@ using Bikevent.Validation;
 using Bikevent.Website.Controllers;
 using Bikevent.Website.Startup;
 using FluentMigrator.Runner;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bikevent.Website;
@@ -57,18 +58,21 @@ public class Program
         builder.Services.AddAuth(configuration);
 
         // add CORS
-
         builder.Services.AddCors(options =>
         {
             options.AddDefaultPolicy(
                 policy =>
                 {
-                    policy.WithOrigins("http://localhost:3000",
-                            "https://localhost:3000",
-                            "https://www.bikevent.nz",
-                            "https://api.brunskillage.org.uk",
-                            "https://auth.brunskillage.org.uk",
-                            "http://192.168.1.74:3000")
+                    //policy.WithOrigins("http://localhost:3000",
+                    //        "https://localhost:3000",
+                    //        "https://www.bikevent.nz",
+                    //        "https://api.brunskillage.org.uk",
+                    //        "https://auth.brunskillage.org.uk",
+                    //        "http://192.168.1.240:3000",
+                    //        "http://192.168.1.74:3000")
+                    //    .AllowAnyHeader()
+                    //    .AllowAnyMethod();                    
+                    policy.WithOrigins("*")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
@@ -90,8 +94,12 @@ public class Program
 
         // End building
 
+        var hostUrl = configuration["hosturl"]; // add this line
+        if (string.IsNullOrEmpty(hostUrl)) // add this line
+            hostUrl = "http://0.0.0.0:5001"; // add this line
+
+
         var clubsDb = app.Services.GetService<ClubDbService>();
-        var miscDb = app.Services.GetService<MiscDbService>();
         clubsDb!.TestAsync();
 
 
@@ -102,7 +110,6 @@ public class Program
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
-
 
         app.UseHttpsRedirection();
 

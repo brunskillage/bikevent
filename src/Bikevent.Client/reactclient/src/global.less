@@ -1,4 +1,5 @@
 /* Copyright 2014 Owen Versteeg; MIT licensed */
+html,
 body,
 textarea,
 input,
@@ -7,6 +8,13 @@ select {
   border-radius: 0;
   font: 16px sans-serif;
   margin: 0
+}
+
+// WOW this stops zooming in mobile devices!!!!
+// upshot is that any overflow makes site unstable
+html {
+  touch-action: pan-x pan-y;
+  height: 100%
 }
 
 .smooth {
@@ -336,7 +344,6 @@ input[type=text] {
 // }
 
 body {
-  margin: 0;
   background-color: @darkGray;
 }
 
@@ -496,6 +503,17 @@ h3 {
   }
 }
 
+.header {
+  background-color: #2a4;
+  display: flex;
+}
+
+.footer {
+  background-color: #2a4;
+  // inline-size: 300px;
+  overflow-wrap: break-word;
+}
+
 .pageTitle {
   .subMenu {
     display: flex;
@@ -526,6 +544,10 @@ h3 {
       // width: 50em;
       //background-color: #08b;
       padding: 1em;
+
+      input {
+        text-transform: none;
+      }
     }
   }
 }
@@ -548,7 +570,7 @@ h3 {
 
     .rideListItem {
       display: flex;
-      max-width: 20em;
+      max-width: 25em;
       background-color: darken(@darkGray, 30%);
       border-radius: 0.5em;
       padding: 0.25em;
@@ -621,6 +643,56 @@ h3 {
 
       .nameOf {
         color: white;
+      }
+    }
+  }
+}
+
+.eventsPage {
+  .events {
+    .eventListItem {
+      border-bottom: 1px solid @sunsetWhite;
+      // background-color: #5ab;
+      //padding: 0.5em;
+      display: flex;
+
+      .timeboxCol {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+
+        .timeBox {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: center;
+          background-color: black;
+          width: 4em;
+          height: 4em;
+        }
+
+
+      }
+
+      .summaryCol {
+        .title {
+          h3 {
+            text-align: left;
+          }
+        }
+
+        .date {
+          padding-left: 0.5em;
+        }
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 4em;
+
       }
     }
   }

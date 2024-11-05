@@ -87,6 +87,7 @@ export const Club = () => {
             <PageTitle title={"Club " + pageMode + ":" + club?.nameOf}>
                 <LinkButton path={common.VIEW_CLUBS} text="Clubs" />
                 <LinkButton path={common.VIEW_RIDES_FOR_CLUB.replace(":clubId", clubId)} text="Rides" />
+                <LinkButton path={common.VIEW_EVENTS_FOR_CLUB.replace(":clubId", clubId)} text="Events" />
                 {pageMode === common.PAGE_MODE_ADD && <>
                 </>}
                 {pageMode === common.PAGE_MODE_EDIT && <>

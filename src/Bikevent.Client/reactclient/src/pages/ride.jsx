@@ -1,7 +1,7 @@
 import { MsgSuccessA } from '../partials/wrappers/msg'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { InputB } from '../partials/wrappers/inputB';
 import { get, useForm } from 'react-hook-form';
 import { FormB } from '../partials/wrappers/formB';
@@ -10,7 +10,7 @@ import { setSelectedClub, setSelectedRide } from '../store/thunks';
 import { InputDate } from '../partials/wrappers/inputDate';
 import { InputHidden } from '../partials/wrappers/inputHidden';
 import moment from 'moment';
-import { globalLocation, globalNavigate, locationMatchesRoute } from '../lib/globalHooks';
+import { locationMatchesRoute } from '../lib/globalHooks';
 import { LinkButton } from '../partials/wrappers/linkButton';
 import { PageTitle } from '../partials/wrappers/pageTitle';
 
@@ -23,7 +23,7 @@ export const Ride = (args) => {
     const club = useSelector(state => state.club.selectedClub)
     const {
         register,
-        formState: { errors, defaultValues },
+        formState: { errors },
         setError,
         setValue,
         handleSubmit,
@@ -44,7 +44,6 @@ export const Ride = (args) => {
         console.log("Ride data received")
         if (ride) {
             // populate react hook form from state
-
             Object.getOwnPropertyNames(ride).forEach(prop => {
                 setValue(prop, ride[prop])
             })

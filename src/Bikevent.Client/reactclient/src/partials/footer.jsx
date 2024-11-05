@@ -36,11 +36,20 @@ export const Footer = () => {
                         <a className="link" href="https://github.com/brunskillage/bikevent/tree/main/src" target="_blank">Github Source</a></li>
                     <li>
                         <NavLink className='link' to="/tester">Test Page</NavLink></li>
+                    <li>
+                        <NavLink className='link' to="https://flexbox.malven.co/">Flexbox</NavLink></li>
+                    <li>
+                        <NavLink className='link' to="https://192.168.1.74:7186/api/v1/config">Dev Setup - Trust cert</NavLink></li>
+                    <li>
+                        .env<br></br>
+                        REACT_APP_BASE_URL = {process.env.REACT_APP_BASE_URL}
+
+                    </li>
                 </ul>
 
-                {/* <pre>
+                <code>
                     {JSON.stringify(appConfig)}
-                </pre> */}
+                </code>
             </>
             }
         </div>

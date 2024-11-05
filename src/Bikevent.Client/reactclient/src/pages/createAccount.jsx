@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axiosConfig from '../lib/axiosConfig';
 import { InputB } from '../partials/wrappers/inputB';
-import { FormB } from '../partials/wrappers/formB';
+import { FormA } from '../partials/wrappers/form';
+import { MsgA, MsgSuccessA } from '../partials/wrappers/msg';
 
 
 export const CreateAccount = (args) => {
@@ -38,15 +39,14 @@ export const CreateAccount = (args) => {
     return (<>
         <div className='createAccount'>
             <h3>Create Account</h3>
-            <div className='msg success'>hello</div>
             {!isCreated ?
-                <FormB onSubmit={handleSubmit(onSubmit)}>
+                <FormA onSubmit={handleSubmit(onSubmit)}>
                     <InputB label='Email *' fieldName='email' errors={errors} register={register}></InputB>
                     <InputB label='Password *' fieldName='encPassword' errors={errors} register={register}></InputB>
                     <InputB label='Nick Name *' fieldName='nickName' errors={errors} register={register}></InputB>
-                </FormB>
+                </FormA>
                 :
-                <div className="msg">Account has been successfully created. Please confirm on your email. Unconfirmed accounts will be removed after 7 days.</div>
+                <MsgSuccessA>Account has been successfully created. Please confirm on your email. Unconfirmed accounts will be removed after 7 days.</MsgSuccessA>
             }
 
         </div >

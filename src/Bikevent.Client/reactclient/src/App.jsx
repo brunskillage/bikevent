@@ -5,7 +5,6 @@ import { Header } from "./partials/header";
 import { Footer } from "./partials/footer";
 import { Login } from "./pages/login";
 import { Rides } from "./pages/rides";
-import { Events } from "./pages/events";
 import { Account } from "./pages/account";
 import { Logout } from "./pages/logout";
 import { Tester } from "./pages/tester";
@@ -21,7 +20,9 @@ import { TimerA } from "./partials/wrappers/timer";
 import { Club } from "./pages/club";
 import { Ride } from "./pages/ride";
 import { globaldispatch, GlobalNavigate } from "./lib/globalHooks";
-import { ADD_CLUB, ADD_RIDE_TO_CLUB, EDIT_CLUB, EDIT_RIDE_FOR_CLUB, USER_ACCOUNT, USER_LOGOUT, VIEW_CLUB, VIEW_CLUBS, VIEW_RIDE_FOR_CLUB, VIEW_RIDES_FOR_CLUB } from "./lib/common";
+import { ADD_CLUB, ADD_RIDE_TO_CLUB, EDIT_CLUB, EDIT_EVENT_FOR_CLUB, EDIT_RIDE_FOR_CLUB, USER_ACCOUNT, USER_LOGOUT, VIEW_CLUB, VIEW_CLUBS, VIEW_EVENT_FOR_CLUB, VIEW_EVENTS_FOR_CLUB, VIEW_RIDE_FOR_CLUB, VIEW_RIDES_FOR_CLUB } from "./lib/common";
+import { Events } from "./pages/events";
+import { Event } from "./pages/event";
 
 // unprotected routes
 
@@ -125,6 +126,18 @@ export const App = () => {
                         element: <Rides />,
                     },
                     {
+                        path: VIEW_EVENT_FOR_CLUB,
+                        element: <Event />,
+                    },
+                    {
+                        path: EDIT_EVENT_FOR_CLUB,
+                        element: <Event />,
+                    },
+                    {
+                        path: VIEW_EVENTS_FOR_CLUB,
+                        element: <Events />,
+                    },
+                    {
                         path: ADD_CLUB,
                         element: <Club />,
                     },
@@ -139,7 +152,8 @@ export const App = () => {
                     {
                         path: VIEW_CLUBS,
                         element: <Clubs />,
-                    }, {
+                    },
+                    {
                         path: USER_LOGOUT,
                         element: <Logout />,
                     },

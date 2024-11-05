@@ -8,9 +8,11 @@ export const Error = () => {
     return (<>
         <div className='club'>
             <h3>Error Page</h3>
-            <MsgErrorA>{error}</MsgErrorA>
+            <MsgErrorA>{JSON.stringify(error)}</MsgErrorA>
         </div >
 
     </>);
 }
+
+
 

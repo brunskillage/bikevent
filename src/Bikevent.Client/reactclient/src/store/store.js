@@ -5,7 +5,8 @@ import { userSliceReducer } from "./userSlice";
 import { clubsReducer } from "./clubsSlice";
 import { utilReducer } from "./utilSlice";
 import { ridesReducer } from "./ridesSlice";
-import { regionsReducer, regionsSlice } from "./regionsSlice";
+import { regionsReducer } from "./regionsSlice";
+import { eventsReducer } from "./eventsSlice";
 
 // add reducers here
 export const store = configureStore({
@@ -16,7 +17,8 @@ export const store = configureStore({
         club: clubsReducer,
         util: utilReducer,
         ride: ridesReducer,
-        region: regionsReducer
+        region: regionsReducer,
+        event: eventsReducer
     }
 }
 )

@@ -3,8 +3,17 @@ import { getLocalStorageItem, removeLocalStorageItemsByPrefix } from "./localSto
 import { globaldispatch, globalNavigate } from "./globalHooks";
 import { setError } from "../store/utilSlice";
 
+//const https = require('https');
+
+// const agent = new https.Agent({
+//   rejectUnauthorized: false,
+//   requestCert: false,
+//   agent: false,
+// });
+
 const axiosConfig = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:3000",
+  baseURL: process.env.REACT_APP_BASE_URL || "http://192.168.1.74:3000",
+  //httpsAgent: agent
 });
 
 axiosConfig.interceptors.request.use((config) => {
@@ -42,7 +51,7 @@ axiosConfig.interceptors.response.use((response) => {
   // Any status codes that falls outside the range of 2xx cause this function to trigger
   // Do something with response error
   console.log("error")
-  globaldispatch(setError(error.message))
+  globaldispatch(setError(error))
   globalNavigate("/error")
   return Promise.resolve(false);
 });

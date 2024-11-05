@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Bikevent.Database.TableObjects;
 
-public class DateISOJsonConverter : JsonConverter<DateTime?>
+public class DateIsoJsonConverter : JsonConverter<DateTime?>
 {
     public override DateTime? Read(
         ref Utf8JsonReader reader,

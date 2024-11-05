@@ -68,7 +68,11 @@ export const Login = (args) => {
                         <PageContainer>
                             <FormA onSubmit={handleSubmit(onSubmit)}>
                                 <InputB label='Email *' fieldName='email' errors={errors} register={register}></InputB>
-                                <InputB label='Password *' fieldName='encPassword' errors={errors} register={register}></InputB>
+                                <div className="row">
+                                    <div className="col c3 label">Password *</div>
+                                    <div className="col c4"><input {...register("encPassword")}></input></div>
+                                    <div className="col c3"><div className='error'>{errors["encPassword"]?.message}</div></div>
+                                </div>
                             </FormA>
                             <p>No account?&nbsp;<LinkButton path="/account/create" text="Create"></LinkButton>an account.</p>
                         </PageContainer>

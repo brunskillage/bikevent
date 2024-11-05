@@ -38,12 +38,13 @@ public class BvEventRow
     public int CreatedById { get; set; }
     public DateTime? CreatedOn { get; set; }
     public string Description { get; set; }
+    public string Location { get; set; }
     public DateTime? EndsOn { get; set; }
     public decimal? Lat { get; set; }
     public string? LinklUrl { get; set; }
     public decimal? Lng { get; set; }
     public DateTime? ModifiedOn { get; set; }
-    public DateTime? StandsUp { get; set; }
+    public DateTime? StartsOn { get; set; }
     public string Title { get; set; }
 }
 
@@ -54,20 +55,20 @@ public class BvRideRow
     public int Id { get; set; }
     public int ClubId { get; set; }
     public int CreatedById { get; set; }
-    [JsonConverter(typeof(DateISOJsonConverter))]
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? CreatedOn { get; set; }
     public string? Description { get; set; }
     public string? EndLocation { get; set; }
-    [JsonConverter(typeof(DateISOJsonConverter))]
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? EndsOn { get; set; }
     public decimal? Lat { get; set; }
     public string? LinklUrl { get; set; }
     public decimal? Lng { get; set; }
     public string? MapLink { get; set; }
-    [JsonConverter(typeof(DateISOJsonConverter))]
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? ModifiedOn { get; set; }
     public string StartLocation { get; set; }
-    [JsonConverter(typeof(DateISOJsonConverter))]
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? StartsOn { get; set; }
     public string Title { get; set; }
 }
