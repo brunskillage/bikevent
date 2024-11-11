@@ -124,7 +124,7 @@ export const Ride = (args) => {
 
             }}>
                 <InputB label='Title *' fieldName='title' currentVal={ride?.title} {...{ pageMode, errors, register }}></InputB>
-                <InputB label='Description' fieldName="description" currentVal={ride?.description}  {...{ pageMode, errors, register }} ></InputB>
+                <InputB label='Description' fieldName="descriptionOf" currentVal={ride?.descriptionOf}  {...{ pageMode, errors, register }} ></InputB>
                 <InputB label='Leaving from *' fieldName="startLocation" currentVal={ride?.startLocation}  {...{ pageMode, errors, register }} ></InputB>
                 <InputDate label='Stands Up Time *' fieldName='startsOn' currentVal={ride?.startsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>
                 <InputDate label='End Time *' fieldName='endsOn' currentVal={ride?.endsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>

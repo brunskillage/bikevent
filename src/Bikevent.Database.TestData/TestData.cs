@@ -57,7 +57,7 @@ public class TestData
                 .RuleFor(r => r.CreatedById, r => r.Random.Number(1, 10))
                 .RuleFor(r => r.CreatedOn, r => DateTime.Now)
                 .RuleFor(r => r.Title, r => $"Ride to {r.Random.String2(5)}")
-                .RuleFor(r => r.Description, r => $"{r.Random.String(100)}")
+                .RuleFor(r => r.DescriptionOf, r => $"{r.Random.String(100)}")
                 .RuleFor(r => r.StartsOn, r => r.Date.Soon(90))
                 .RuleFor(r => r.EndsOn, r => r.Date.Future(refDate:DateTime.Now.AddDays(90)))
             ;

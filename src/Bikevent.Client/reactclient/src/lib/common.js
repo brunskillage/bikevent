@@ -39,6 +39,10 @@ export const ADD_CLUB = "/club/add"
 export const VIEW_CLUB = "/club/:clubId"
 export const EDIT_CLUB = "/club/:clubId/edit"
 export const DELETE_CLUB = "/club/:clubId/delete"
+
+
+
+export const WHATS_HAPPENING = "/whats-happening"
 //export const VIEW_RIDES_FOR_REGION = "rides/region/:id"
 //export const VIEW_RIDES_FOR_COUNTRY = "/rides/country/:id"
 //export const VIEW_RIDES_WITHIN_RANGE = "/rides/nearme"

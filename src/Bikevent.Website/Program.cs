@@ -2,6 +2,7 @@ using System.Net.NetworkInformation;
 using Bikevent.Config;
 using Bikevent.Core.handlers;
 using Bikevent.Database;
+using Bikevent.Database.TestData;
 using Bikevent.Validation;
 using Bikevent.Website.Controllers;
 using Bikevent.Website.Startup;
@@ -31,6 +32,7 @@ public class Program
         builder.Services.AddSingleton<RidesDbService>();
         builder.Services.AddSingleton<UserDbService>();
         builder.Services.AddSingleton<RegionDbService>();
+        builder.Services.AddSingleton<TestDataService>();
 
         builder.Services.AddSingleton<RideValidator>();
         builder.Services.AddSingleton<EventValidator>();
@@ -103,6 +105,9 @@ public class Program
         clubsDb!.TestAsync();
 
 
+
+
+
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
@@ -145,11 +150,15 @@ public class Program
             migrator!.ListMigrations();
             // TODO use runner - for now easier just to uncomment during rapid dev
             // uncomment below to run migration
-            // miscDb.ClearDbVersionInfo();
-            // migrator.MigrateUp(001);
+            var miscDb = app.Services.GetService<MiscDbService>();
+            miscDb.ClearDbVersionInfo();
+            migrator.MigrateUp(001);
+
+            // uncomment for test Data
+            var testDataService = app.Services.GetService<TestDataService>();
+            testDataService!.Insert();
         }
 
-        ;
 
 
         app.Run();

@@ -125,7 +125,7 @@ export const Event = (args) => {
 
             }}>
                 <InputB label='Title *' fieldName='title' currentVal={event?.title} {...{ pageMode, errors, register }}></InputB>
-                <InputB label='Description' fieldName="description" currentVal={event?.description}  {...{ pageMode, errors, register }} ></InputB>
+                <InputB label='Description' fieldName="descriptionOf" currentVal={event?.descriptionOf}  {...{ pageMode, errors, register }} ></InputB>
                 <InputB label='Location *' fieldName="location" currentVal={event?.location}  {...{ pageMode, errors, register }} ></InputB>
                 <InputDate label='Start Time *' fieldName='startsOn' currentVal={event?.startsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>
                 <InputDate label='End Time' fieldName='endsOn' currentVal={event?.endsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>

@@ -383,11 +383,9 @@ h3 {
   color: red;
 }
 .header {
-  background-color: #2a4;
   display: flex;
 }
 .footer {
-  background-color: #2a4;
   overflow-wrap: break-word;
 }
 .pageTitle .subMenu {

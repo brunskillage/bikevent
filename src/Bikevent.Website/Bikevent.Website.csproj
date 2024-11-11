@@ -38,6 +38,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Bikevent.Config\Bikevent.Config.csproj" />
     <ProjectReference Include="..\Bikevent.Core\Bikevent.Core.csproj" />
+    <ProjectReference Include="..\Bikevent.Database.TestData\Bikevent.Database.TestData.csproj" />
     <ProjectReference Include="..\Bikevent.Database\Bikevent.Database.csproj" />
     <ProjectReference Include="..\Bikevent.DataObjects\Bikevent.DataObjects.csproj" />
     <ProjectReference Include="..\Bikevent.Migrations\Bikevent.Migrations.csproj" />

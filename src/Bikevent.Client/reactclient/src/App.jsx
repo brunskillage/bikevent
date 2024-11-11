@@ -20,9 +20,10 @@ import { TimerA } from "./partials/wrappers/timer";
 import { Club } from "./pages/club";
 import { Ride } from "./pages/ride";
 import { globaldispatch, GlobalNavigate } from "./lib/globalHooks";
-import { ADD_CLUB, ADD_RIDE_TO_CLUB, EDIT_CLUB, EDIT_EVENT_FOR_CLUB, EDIT_RIDE_FOR_CLUB, USER_ACCOUNT, USER_LOGOUT, VIEW_CLUB, VIEW_CLUBS, VIEW_EVENT_FOR_CLUB, VIEW_EVENTS_FOR_CLUB, VIEW_RIDE_FOR_CLUB, VIEW_RIDES_FOR_CLUB } from "./lib/common";
+import { ADD_CLUB, ADD_RIDE_TO_CLUB, EDIT_CLUB, EDIT_EVENT_FOR_CLUB, EDIT_RIDE_FOR_CLUB, USER_ACCOUNT, USER_LOGOUT, VIEW_CLUB, VIEW_CLUBS, VIEW_EVENT_FOR_CLUB, VIEW_EVENTS_FOR_CLUB, VIEW_RIDE_FOR_CLUB, VIEW_RIDES_FOR_CLUB, WHATS_HAPPENING } from "./lib/common";
 import { Events } from "./pages/events";
 import { Event } from "./pages/event";
+import { WhatsHappening } from "./pages/whatsHappening";
 
 // unprotected routes
 
@@ -156,6 +157,10 @@ export const App = () => {
                     {
                         path: USER_LOGOUT,
                         element: <Logout />,
+                    },
+                    {
+                        path: WHATS_HAPPENING,
+                        element: <WhatsHappening />,
                     },
                     {
                         path: "*",

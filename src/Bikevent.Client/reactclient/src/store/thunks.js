@@ -58,11 +58,9 @@ export const setClubRides = (clubId) => async (dispatch, getState) => {
     dispatch(setRidesState({ data: { rides: [] } }));
     if (clubId) {
         dispatch(setIsLoading())
-        setTimeout(async () => {
-            var res = await axiosConfig.get(`/api/v1/club/${clubId}/rides`)
-            dispatch(setRidesState(res.data));
-            dispatch(setIsNotLoading())
-        }, 500)
+        var res = await axiosConfig.get(`/api/v1/club/${clubId}/rides`)
+        dispatch(setRidesState(res.data));
+        dispatch(setIsNotLoading())
     }
 }
 

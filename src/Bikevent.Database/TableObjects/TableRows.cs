@@ -37,7 +37,7 @@ public class BvEventRow
     public int ClubId { get; set; }
     public int CreatedById { get; set; }
     public DateTime? CreatedOn { get; set; }
-    public string Description { get; set; }
+    public string DescriptionOf { get; set; }
     public string Location { get; set; }
     public DateTime? EndsOn { get; set; }
     public decimal? Lat { get; set; }
@@ -57,7 +57,7 @@ public class BvRideRow
     public int CreatedById { get; set; }
     [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? CreatedOn { get; set; }
-    public string? Description { get; set; }
+    public string? DescriptionOf { get; set; }
     public string? EndLocation { get; set; }
     [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? EndsOn { get; set; }
