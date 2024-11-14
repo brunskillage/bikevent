@@ -18,12 +18,11 @@ export const Logout = () => {
     }
 
     return (<>
-        <div className="homePage">
-            <PageTitle title="Sign Out">
-                {user?.isLoggedIn && <LinkButton path="/logout" text="Log Out" onClick={e => onLogout(e)} />}
-                {!user?.isLoggedIn && <LinkButton path="/login" text="Sign In" />}
-            </PageTitle>
-            {/* 
+
+        <PageTitle title="Sign Out" />
+        {user?.isLoggedIn && <LinkButton path="/logout" text="Log Out" onClick={e => onLogout(e)} />}
+        {!user?.isLoggedIn && <LinkButton path="/login" text="Sign In" />}
+        {/* 
 
                 {user?.isLoggedIn ?
                     <>
@@ -37,7 +36,6 @@ export const Logout = () => {
                             Thanks for using bikevent! <NavLink to="/login">Sign In</NavLink> to use again.
                         </p>
                     </>}             */}
-        </div>
     </>
 
     );

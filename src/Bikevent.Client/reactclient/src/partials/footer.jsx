@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom';
 
 export const Footer = () => {
-
     const appConfig = useSelector(state => state.appConfig)
 
 
@@ -34,6 +33,8 @@ export const Footer = () => {
                         <a className="link" href="https://react-hook-form.com/" target="_blank">React hook forms</a></li>
                     <li>
                         <a className="link" href="https://github.com/brunskillage/bikevent/tree/main/src" target="_blank">Github Source</a></li>
+                    <li>
+                        <NavLink className='link' to="https://react-bootstrap.github.io/docs/layout/grid">Bootstrap REact</NavLink></li>
                     <li>
                         <NavLink className='link' to="/tester">Test Page</NavLink></li>
                     <li>

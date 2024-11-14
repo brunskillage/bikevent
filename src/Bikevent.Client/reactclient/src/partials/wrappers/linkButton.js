@@ -1,3 +1,4 @@
+import { Button } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 
 export const LinkButton = ({ path, text, onClick = null }) => {
@@ -7,6 +8,7 @@ export const LinkButton = ({ path, text, onClick = null }) => {
     // }
 
     return (<>
-        <NavLink className="btn btn-sm linkButton" to={path} onClick={onClick}>{text}</NavLink>
+        <Button as="a" variant="primary" onClick={onClick} href={path}>{text}</Button>
+        {/* <NavLink className="btn btn-sm linkButton" to={path} onClick={onClick}>{text}</NavLink> */}
     </>);
 }

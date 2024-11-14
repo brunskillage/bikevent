@@ -3,6 +3,9 @@ import { setClubs } from '../store/thunks';
 import { useEffect } from 'react';
 import { LoadingA } from '../partials/wrappers/loading';
 import { ClubListItem } from '../partials/clubListItem';
+import { PageTitle } from '../partials/wrappers/pageTitle';
+import { Container } from 'react-bootstrap';
+import { CenteredContent } from '../partials/wrappers/centeredContent';
 
 export const Clubs = (args) => {
     const dispatch = useDispatch()
@@ -14,20 +17,18 @@ export const Clubs = (args) => {
     }, [])
 
     return (<>
-        <div className='clubsPage'>
-            <h3>Clubs </h3>
 
-            <LoadingA isLoading={loading}></LoadingA>
-            <div className="clubData">
-                {clubs && clubs.length ? <>
-                    {clubs.map(club => {
-                        return <ClubListItem key={club.id} club={club}></ClubListItem>
-                    })}
+        <PageTitle title="Clubs"></PageTitle>
+        <LoadingA isLoading={loading}></LoadingA>
+        <CenteredContent>
+            {clubs && clubs.length ? <>
+                {clubs.map(club => {
+                    return <ClubListItem key={club.id} club={club}></ClubListItem>
+                })}
 
-                </> : <>
-                    <p>No clubs found</p>
-                </>}
-            </div>
-        </div>
+            </> : <>
+                <p>No clubs found</p>
+            </>}
+        </CenteredContent>
     </>);
 }

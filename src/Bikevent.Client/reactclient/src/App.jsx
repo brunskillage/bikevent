@@ -24,17 +24,18 @@ import { ADD_CLUB, ADD_RIDE_TO_CLUB, EDIT_CLUB, EDIT_EVENT_FOR_CLUB, EDIT_RIDE_F
 import { Events } from "./pages/events";
 import { Event } from "./pages/event";
 import { WhatsHappening } from "./pages/whatsHappening";
+import { Container } from "react-bootstrap";
 
 // unprotected routes
 
 const Layout = () => {
     return (
         <>
-            <div className='app'>
+            <Container>
                 <Header />
                 <Outlet />
                 <Footer />
-            </div>
+            </Container>
         </>
     );
 }
@@ -46,9 +47,11 @@ export const LayoutProtected = () => {
 
     return (
         <>
-            <Header />
-            {user?.isLoggedIn ? <Outlet /> : <Home />}
-            <Footer />
+            <Container>
+                <Header />
+                {user?.isLoggedIn ? <Outlet /> : <Home />}
+                <Footer />
+            </Container>
         </>
     );
 }

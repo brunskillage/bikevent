@@ -19,9 +19,16 @@ export const Club = () => {
 
     const dispatch = useDispatch()
     let { clubId } = useParams()
-    const { register, formState: { errors }, setError, setValue, handleSubmit, getValues, reset } = useForm({
-        defaultValues: { startsOn: moment().add(7, 'days').toDate() }
-    });
+    const { register,
+        formState: { errors },
+        setError,
+        setValue,
+        handleSubmit,
+        getValues,
+        reset,
+        control } = useForm({
+            defaultValues: { startsOn: moment().add(7, 'days').toDate() }
+        });
     const user = useSelector(state => state.user)
     const club = useSelector(state => state.club.selectedClub)
     const regions = useSelector(state => state.region.regions)
@@ -127,12 +134,12 @@ export const Club = () => {
                         endsOn: moment().local().toDate()
                     }
                 }}>
-                    <InputB label='Name *' fieldName='nameOf' currentVal={club?.nameOf} {...{ pageMode, errors, register }}></InputB>
-                    <InputB label='President / Leader *' fieldName="president" currentVal={club?.president}  {...{ pageMode, errors, register }} ></InputB>
-                    <SelectList label="Region *" fieldName="regionId" keyValues={regionsKeyValue} currentVal={club?.regionId} {...{ errors, register, pageMode }}></SelectList>
+                    <InputB label='Name *' fieldName='nameOf' currentVal={club?.nameOf} {...{ pageMode, errors, register, control }}></InputB>
+                    <InputB label='President / Leader *' fieldName="president" currentVal={club?.president}  {...{ pageMode, errors, register, control }} ></InputB>
+                    {/* <SelectList label="Region *" fieldName="regionId" keyValues={regionsKeyValue} currentVal={club?.regionId} {...{ errors, register, pageMode }}></SelectList>
                     <InputB label='Email *' fieldName='email' currentVal={club?.email}  {...{ errors, register, pageMode }}></InputB>
                     <InputHidden label='User Id' fieldName="createdById" currentVal={+(user?.userId)}  {...{ pageMode, errors, register }} ></InputHidden>
-                </FormB>
+                */}</FormB>
             }
         </div >
     </>);

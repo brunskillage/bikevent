@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { setUserState } from './../store/userSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeLocalStorageItemsByPrefix, setLocalStorageItem } from '../lib/localStorageClient';
@@ -12,6 +12,9 @@ import { InputB } from '../partials/wrappers/inputB';
 import { PageContainer } from '../partials/wrappers/pageContainer'
 import { FormB } from '../partials/wrappers/formB';
 import { FormA } from '../partials/wrappers/form';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { Col, Row } from 'react-bootstrap';
 
 export const Login = (args) => {
     const appConfig = useSelector(state => state.appConfig)
@@ -19,6 +22,7 @@ export const Login = (args) => {
     const dispatch = useDispatch()
 
     const {
+        control,
         register,
         handleSubmit,
         setError,
@@ -54,39 +58,77 @@ export const Login = (args) => {
                 removeLocalStorageItemsByPrefix()
                 // save in local storage
                 setLocalStorageItem('auth', JSON.stringify(auth, appConfig.tokenExpiry))
-
-                //document.location.href = "/";
+                // return to the home page
+                setTimeout(() => document.location.href = "/", 1000);
             })
     }
 
     return (<>
-        <div className='loginPage'>
-            {
-                !user.isLoggedIn ?
-                    <>
-                        <PageTitle title="Login" hideSubmenu={true}></PageTitle>
-                        <PageContainer>
-                            <FormA onSubmit={handleSubmit(onSubmit)}>
-                                <InputB label='Email *' fieldName='email' errors={errors} register={register}></InputB>
-                                <div className="row">
-                                    <div className="col c3 label">Password *</div>
-                                    <div className="col c4"><input {...register("encPassword")}></input></div>
-                                    <div className="col c3"><div className='error'>{errors["encPassword"]?.message}</div></div>
-                                </div>
-                            </FormA>
-                            <p>No account?&nbsp;<LinkButton path="/account/create" text="Create"></LinkButton>an account.</p>
-                        </PageContainer>
-                    </>
-                    :
-                    <>
-                        <PageTitle title="Signed in Successfully" hideSubmenu={false}>
-                            <LinkButton text="Clubs" path={"/clubs"}></LinkButton>
-                        </PageTitle>
-                        <p>Welcome {user?.email} select a memu item to continue</p>
-                    </>
-            }
-        </div>
+        {
+            !user.isLoggedIn ?
+                <>
 
+
+                    <Row className="justify-content-md-center">
+
+                        <Col xs lg="4">
+
+                            <PageTitle title="Login" />
+
+                            <Form onSubmit={handleSubmit(onSubmit)}>
+                                <Controller
+                                    name='email'
+                                    control={control}
+                                    render={({ field }) =>
+                                        <Form.Group className="mb-3" controlId="formEmail">
+                                            <Form.Label>Email *</Form.Label>
+                                            <Form.Control
+                                                isInvalid={!!errors.email}
+                                                {...register("email")} errors={errors} placeholder="email" />
+
+                                            {errors["email"] && <Form.Control.Feedback type="invalid">
+                                                {errors["email"].message}
+                                            </Form.Control.Feedback>}
+                                        </Form.Group>}
+                                ></Controller>
+
+                                <Controller
+                                    name='encPassword'
+                                    control={control}
+                                    render={({ field }) =>
+                                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                                            <Form.Label>Password * </Form.Label>
+                                            <Form.Control
+                                                type="encPassword"
+                                                placeholder="Password"
+                                                isInvalid={!!errors["encPassword"]}
+                                                {...register("encPassword")} />
+                                            {errors["encPassword"] && <Form.Control.Feedback type="invalid">
+                                                Password is invalid
+                                            </Form.Control.Feedback>}
+                                        </Form.Group>}
+                                ></Controller>
+
+                                <Button type="submit">Submit form</Button>
+
+                            </Form>
+                        </Col>
+
+                    </Row>
+                    <Row>
+                        &nbsp;
+                    </Row>
+                    <Row className="justify-content-md-center">
+                        <Col xs lg="4">
+                            <p>No account?&nbsp;<LinkButton path="/account/create" text="Create"></LinkButton> an account.</p>
+                        </Col>
+                    </Row>
+                </>
+                :
+                <>
+                    <PageTitle title="Signed in Successfully" />
+                </>
+        }
     </>);
 }
 
