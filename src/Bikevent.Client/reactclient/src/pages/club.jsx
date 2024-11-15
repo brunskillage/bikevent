@@ -13,6 +13,8 @@ import { globaldispatch, globalIsLoading, globalLocation, locationMatchesRoute }
 import { SelectList } from '../partials/wrappers/selectList';
 import moment from 'moment';
 import { PageTitle } from '../partials/wrappers/pageTitle';
+import { SelectList2 } from '../partials/wrappers/selectList2';
+import { SubMenu } from '../partials/wrappers/subMenu';
 
 
 export const Club = () => {
@@ -92,6 +94,9 @@ export const Club = () => {
     return (<>
         <div className='clubPage'>
             <PageTitle title={"Club " + pageMode + ":" + club?.nameOf}>
+
+            </PageTitle>
+            <SubMenu>
                 <LinkButton path={common.VIEW_CLUBS} text="Clubs" />
                 <LinkButton path={common.VIEW_RIDES_FOR_CLUB.replace(":clubId", clubId)} text="Rides" />
                 <LinkButton path={common.VIEW_EVENTS_FOR_CLUB.replace(":clubId", clubId)} text="Events" />
@@ -105,8 +110,8 @@ export const Club = () => {
                     <LinkButton path={common.ADD_CLUB} text="Add" />
                     <LinkButton path={common.EDIT_CLUB.replace(":clubId", clubId)} text="Edit" />
                 </>}
-            </PageTitle>
 
+            </SubMenu>
             {isCreated && <>
 
                 {pageMode === common.PAGE_MODE_ADD && <>
@@ -136,10 +141,12 @@ export const Club = () => {
                 }}>
                     <InputB label='Name *' fieldName='nameOf' currentVal={club?.nameOf} {...{ pageMode, errors, register, control }}></InputB>
                     <InputB label='President / Leader *' fieldName="president" currentVal={club?.president}  {...{ pageMode, errors, register, control }} ></InputB>
-                    {/* <SelectList label="Region *" fieldName="regionId" keyValues={regionsKeyValue} currentVal={club?.regionId} {...{ errors, register, pageMode }}></SelectList>
-                    <InputB label='Email *' fieldName='email' currentVal={club?.email}  {...{ errors, register, pageMode }}></InputB>
-                    <InputHidden label='User Id' fieldName="createdById" currentVal={+(user?.userId)}  {...{ pageMode, errors, register }} ></InputHidden>
-                */}</FormB>
+                    <SelectList2 label="Region *" fieldName="regionId" keyValues={regionsKeyValue} currentVal={club?.regionId} {...{ errors, register, pageMode, control }}></SelectList2>
+
+                    <InputB label='Email *' fieldName='email' currentVal={club?.email}  {...{ errors, register, pageMode, control }}></InputB>
+                    <InputHidden label='User Id' fieldName="createdById" currentVal={+(user?.userId)}  {...{ pageMode, errors, register, control }} ></InputHidden>
+
+                </FormB>
             }
         </div >
     </>);

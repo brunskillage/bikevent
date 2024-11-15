@@ -31,7 +31,7 @@ import { Container } from "react-bootstrap";
 const Layout = () => {
     return (
         <>
-            <Container>
+            <Container fluid>
                 <Header />
                 <Outlet />
                 <Footer />
@@ -47,7 +47,7 @@ export const LayoutProtected = () => {
 
     return (
         <>
-            <Container>
+            <Container fluid>
                 <Header />
                 {user?.isLoggedIn ? <Outlet /> : <Home />}
                 <Footer />

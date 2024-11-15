@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import axiosConfig from "../../lib/axiosConfig";
-import { areObjectsTheSame, PAGE_MODE_ADD, PAGE_MODE_EDIT } from "../../lib/common";
+import { areObjectsTheSame, PAGE_MODE_ADD, PAGE_MODE_EDIT, PAGE_MODE_VIEW } from "../../lib/common";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import { LinkButton } from "./linkButton";
+import { NavLink } from "react-router-dom";
 
 export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
     onSuccessFunc, selectorFunc, children, getValues, defaultValues,
-    setValue, user, onProcessFormData }) => {
+    setValue, user, onProcessFormData, editPath }) => {
 
     const [userHasInteracted, setUserHasInteracted] = useState(0)
     const [objectsTheSame, setObjectsTheSame] = useState(true)
@@ -78,7 +81,7 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
     }
 
     return <>
-        <form onSubmit={handleSubmit(onSubmit)} onChange={handleOnKeyUp}>
+        {/* <form onSubmit={handleSubmit(onSubmit)} onChange={handleOnKeyUp}>
             <div className="row">
                 {children}
             </div>
@@ -89,6 +92,49 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
                 </div>
                 <div className="col c3">&nbsp;</div>
             </div>
-        </form>
+        </form> */}
+        {/* <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+                <Form.Label column sm="2">
+                Email
+                </Form.Label>
+                <Col sm="10">
+                <Form.Control plaintext readOnly defaultValue="email@example.com" />
+                </Col>
+                </Form.Group>
+                
+                <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                <Form.Label column sm="2">
+                Password
+                </Form.Label>
+                <Col sm="10">
+                <Form.Control type="password" placeholder="Password" />
+                </Col>
+                </Form.Group> */}
+        <Form onSubmit={handleSubmit(onSubmit)} >
+            {children}
+
+            {pageMode === PAGE_MODE_VIEW ? <>
+                <Form.Group as={Row} className="mb-3" controlId="">
+                    <Form.Label column sm="2">
+
+                    </Form.Label>
+                    <Col sm="10">
+                        <LinkButton text={"Edit"} path={editPath}></LinkButton>
+                    </Col>
+                </Form.Group>
+
+            </> :
+                <>
+                    <Form.Group as={Row} className="mb-3" controlId="">
+                        <Form.Label column sm="2">
+
+                        </Form.Label>
+                        <Col sm="10">
+                            <Button type="submit">Save</Button>
+                        </Col>
+                    </Form.Group>
+                </>
+            }
+        </Form>
     </>
 }

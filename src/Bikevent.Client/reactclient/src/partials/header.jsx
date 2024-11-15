@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { NavLink } from 'react-router-dom';
 
 
 export const Header = () => {
@@ -7,16 +8,16 @@ export const Header = () => {
 
     return (<>
         <Navbar expand="lg" className="bg-body-tertiary">
-            <Container>
+            <Container fluid>
                 <Navbar.Brand href="#home">Bikevent</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
+                        <NavLink className="nav-link" to={"/"}>Home</NavLink>
                         {user?.isLoggedIn ?
-                            <Nav.Link href="/logout">LOGOUT {user.nickName}</Nav.Link>
+                            <NavLink className="nav-link" to={"/logout"}>logout {user.nickName}</NavLink>
                             :
-                            <Nav.Link href="/login">LOGIN</Nav.Link>
+                            <NavLink className="nav-link" to={"/login"}>login</NavLink>
                         }
                     </Nav>
                 </Navbar.Collapse>

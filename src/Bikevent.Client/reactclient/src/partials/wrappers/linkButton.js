@@ -8,7 +8,6 @@ export const LinkButton = ({ path, text, onClick = null }) => {
     // }
 
     return (<>
-        <Button as="a" variant="primary" onClick={onClick} href={path}>{text}</Button>
-        {/* <NavLink className="btn btn-sm linkButton" to={path} onClick={onClick}>{text}</NavLink> */}
+        <NavLink className="btn btn-primary m-1" to={path} onClick={onClick}>{text}</NavLink>
     </>);
 }
