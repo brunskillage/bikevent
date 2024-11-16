@@ -6,9 +6,9 @@ namespace Bikevent.Database.TestData;
 public class TestDataService
 {
     private const int testUserCount = 10;
-    private const int testRideCOunt = 50;
-    private const int testClubCount = 10;
-    private const int testEventCount = 50;
+    private const int testRideCOunt = 100;
+    private const int testClubCount = 20;
+    private const int testEventCount = 100;
     private readonly ClubDbService _clubDbService;
     private readonly RidesDbService _ridesDbService;
     private readonly UserDbService _userDbService;
@@ -47,7 +47,7 @@ public class TestDataService
 
         /////// CLUBS ///////
         var testClub = new Faker<BvClubRow>()
-                .RuleFor(c => c.NameOf, c => c.Company.CompanyName() + "Club")
+                .RuleFor(c => c.NameOf, c => c.Company.CompanyName() + " Club")
                 .RuleFor(c => c.Email, c => c.Internet.Email())
                 .RuleFor(c => c.President, c => c.Name.FullName())
                 .RuleFor(c => c.WebsiteUrl, c => c.Internet.Url())

@@ -1,4 +1,3 @@
-import { MsgSuccessA } from '../partials/wrappers/msg'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
@@ -13,6 +12,7 @@ import moment from 'moment';
 import { locationMatchesRoute } from '../lib/globalHooks';
 import { LinkButton } from '../partials/wrappers/linkButton';
 import { PageTitle } from '../partials/wrappers/pageTitle';
+import { MsgA } from '../partials/wrappers/msg';
 
 
 export const Ride = (args) => {
@@ -113,7 +113,7 @@ export const Ride = (args) => {
                         </>}
                     </div></>}</PageTitle>
             {isCreated && <>
-                <MsgSuccessA>Ride {ride?.title} Updated</MsgSuccessA>
+                <MsgA variant={"success"}>Ride {ride?.title} Updated</MsgA>
             </>}
             <FormB {...{
                 urlPath: "/api/v1/ride", pageMode, setError, handleSubmit, onSuccessFunc,

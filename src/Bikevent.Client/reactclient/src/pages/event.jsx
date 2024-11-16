@@ -1,4 +1,3 @@
-import { MsgSuccessA } from '../partials/wrappers/msg'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
@@ -13,6 +12,9 @@ import moment from 'moment';
 import { locationMatchesRoute } from '../lib/globalHooks';
 import { LinkButton } from '../partials/wrappers/linkButton';
 import { PageTitle } from '../partials/wrappers/pageTitle';
+import { MsgA } from '../partials/wrappers/msg';
+import { CenteredContent } from '../partials/wrappers/centeredContent';
+import { PageContainer } from '../partials/wrappers/pageContainer';
 
 
 export const Event = (args) => {
@@ -99,7 +101,7 @@ export const Event = (args) => {
     }
 
     return (<>
-        <div className='eventPage'>
+        <PageContainer>
             <PageTitle title={getTitle()}>
                 {club && <>
                     <div>
@@ -113,26 +115,30 @@ export const Event = (args) => {
                             <LinkButton path={common.ADD_EVENT_TO_CLUB.replace(":clubId", clubId).replace(":eventId", eventId)} text="Add" />
                         </>}
                     </div></>}</PageTitle>
-            {isCreated && <>
-                <MsgSuccessA>Event {event?.title} Updated</MsgSuccessA>
-            </>}
-            <FormB {...{
-                urlPath: "/api/v1/event", pageMode, setError, handleSubmit, onSuccessFunc,
-                selectorFunc: event, getValues, get, setValue, user, onProcessFormData,
-                editPath: common.EDIT_EVENT_FOR_CLUB.replace(":clubId", clubId).replace(":eventId", eventId),
-                addPath: common.ADD_EVENT_TO_CLUB.replace(":clubId", clubId),
-                deletePath: common.DELETE_EVENT_FROM_CLUB.replace(":clubId", clubId).replace(":eventId", eventId)
 
-            }}>
-                <InputB label='Title *' fieldName='title' currentVal={event?.title} {...{ pageMode, errors, register }}></InputB>
-                <InputB label='Description' fieldName="descriptionOf" currentVal={event?.descriptionOf}  {...{ pageMode, errors, register }} ></InputB>
-                <InputB label='Location *' fieldName="location" currentVal={event?.location}  {...{ pageMode, errors, register }} ></InputB>
-                <InputDate label='Start Time *' fieldName='startsOn' currentVal={event?.startsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>
-                <InputDate label='End Time' fieldName='endsOn' currentVal={event?.endsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>
-                <InputB label='Link Url' fieldName='linkUrl' currentVal={event?.linkUrl}  {...{ errors, register, pageMode, control, reset }}></InputB>
-                <InputHidden label='User Id' fieldName="createdById" currentVal={+(user?.userId)}  {...{ pageMode, errors, register }} ></InputHidden>
-                <InputHidden label='Club Id' fieldName="clubId" currentVal={+(clubId ?? 0)}  {...{ pageMode, errors, register }} ></InputHidden>
-            </FormB>
-        </div >
+            <CenteredContent>
+                {isCreated && <>
+                    <MsgA variant={"success"}>Event {event?.title} Updated</MsgA>
+                </>}
+                <FormB {...{
+                    urlPath: "/api/v1/event", pageMode, setError, handleSubmit, onSuccessFunc,
+                    selectorFunc: event, getValues, get, setValue, user, onProcessFormData,
+                    editPath: common.EDIT_EVENT_FOR_CLUB.replace(":clubId", clubId).replace(":eventId", eventId),
+                    addPath: common.ADD_EVENT_TO_CLUB.replace(":clubId", clubId),
+                    deletePath: common.DELETE_EVENT_FROM_CLUB.replace(":clubId", clubId).replace(":eventId", eventId)
+
+                }}>
+                    <InputB label='Title *' fieldName='title' currentVal={event?.title} {...{ pageMode, errors, register }}></InputB>
+                    <InputB label='Description' fieldName="descriptionOf" currentVal={event?.descriptionOf}  {...{ pageMode, errors, register }} ></InputB>
+                    <InputB label='Location *' fieldName="location" currentVal={event?.location}  {...{ pageMode, errors, register }} ></InputB>
+                    <InputDate label='Start Time *' fieldName='startsOn' currentVal={event?.startsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>
+                    <InputDate label='End Time' fieldName='endsOn' currentVal={event?.endsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>
+                    <InputB label='Link Url' fieldName='linkUrl' currentVal={event?.linkUrl}  {...{ errors, register, pageMode, control, reset }}></InputB>
+                    <InputHidden label='User Id' fieldName="createdById" currentVal={+(user?.userId)}  {...{ pageMode, errors, register }} ></InputHidden>
+                    <InputHidden label='Club Id' fieldName="clubId" currentVal={+(clubId ?? 0)}  {...{ pageMode, errors, register }} ></InputHidden>
+                </FormB>
+            </CenteredContent>
+        </PageContainer>
+
     </>);
 }

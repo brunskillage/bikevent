@@ -30,7 +30,7 @@ export const SelectList2 = ({ label, fieldName, keyValues, defaultVal, currentVa
             <Form.Label column sm="2">
                 {label}
             </Form.Label>
-            <Col sm="10">
+            <Col sm="8">
                 {pageMode === PAGE_MODE_VIEW ?
                     <>
                         <Form.Control plaintext readOnly defaultValue={getSelected()} />

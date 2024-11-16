@@ -6,7 +6,6 @@ import { NavLink } from 'react-router-dom';
 export const Footer = () => {
     const appConfig = useSelector(state => state.appConfig)
 
-
     return (<>
         <div className="footer">
             <hr />&copy; 2025 bikevent.com/nz
@@ -34,13 +33,13 @@ export const Footer = () => {
                     <li>
                         <a className="link" href="https://github.com/brunskillage/bikevent/tree/main/src" target="_blank">Github Source</a></li>
                     <li>
-                        <NavLink className='link' to="https://react-bootstrap.github.io/docs/layout/grid">Bootstrap REact</NavLink></li>
+                        <a className='link' href="https://react-bootstrap.github.io/docs/layout/grid">React Bootstrap</a></li>
                     <li>
-                        <NavLink className='link' to="/tester">Test Page</NavLink></li>
+                        <a className='link' href="/tester">Test Page</a></li>
                     <li>
-                        <NavLink className='link' to="https://flexbox.malven.co/">Flexbox</NavLink></li>
+                        <a className='link' href="https://flexbox.malven.co/">Flexbox</a></li>
                     <li>
-                        <NavLink className='link' to="https://192.168.1.74:7186/api/v1/config">Dev Setup - Trust cert</NavLink></li>
+                        <a className='link' href="https://192.168.1.74:7186/api/v1/config">Dev Setup - Trust cert</a></li>
                     <li>
                         .env<br></br>
                         REACT_APP_BASE_URL = {process.env.REACT_APP_BASE_URL}

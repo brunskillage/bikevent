@@ -1,6 +1,6 @@
-export const PageTitle = ({ title, hideSubmenu, children }) => {
+export const PageTitle = ({ children }) => {
     return (<>
-        <h4 className="p-3 text-center">{title}</h4>
+        <h4 className="p-3 text-center">{children}</h4>
     </>);
 }
 

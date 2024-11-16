@@ -4,10 +4,11 @@ import { areObjectsTheSame, PAGE_MODE_ADD, PAGE_MODE_EDIT, PAGE_MODE_VIEW } from
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { LinkButton } from "./linkButton";
 import { NavLink } from "react-router-dom";
+import { globalNavigate } from "../../lib/globalHooks";
 
 export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
     onSuccessFunc, selectorFunc, children, getValues, defaultValues,
-    setValue, user, onProcessFormData, editPath }) => {
+    setValue, user, onProcessFormData, editPath, viewPath }) => {
 
     const [userHasInteracted, setUserHasInteracted] = useState(0)
     const [objectsTheSame, setObjectsTheSame] = useState(true)
@@ -35,13 +36,11 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
         setObjectsTheSame(false)
 
         if (pageMode === PAGE_MODE_ADD) {
-            // serverside check values and save new
-
             axiosConfig.post(urlPath, formData)
                 .then(handleResponse)
         }
+
         if (pageMode === PAGE_MODE_EDIT) {
-            // serverside check values and save new
             axiosConfig.patch(urlPath, formData)
                 .then(handleResponse)
         }
@@ -59,71 +58,21 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
         return true;
     }
 
-    const handleOnKeyUp = () => {
-        setUserHasInteracted(true)
-
-        if (pageMode === PAGE_MODE_ADD) {
-            console.log("keypress")
-            setObjectsTheSame(false)
-        }
-
-        if (pageMode === PAGE_MODE_EDIT) {
-            let formData = getValues()
-            let hasFormChanged = areObjectsTheSame(formData, selectorFunc)
-            setObjectsTheSame(hasFormChanged)
-        }
-    }
-
-
-    const shouldDisplay = () => {
-        const shouldDisplay = !!userHasInteracted && !objectsTheSame && (pageMode === PAGE_MODE_EDIT || pageMode === PAGE_MODE_ADD)
-        return shouldDisplay
-    }
-
     return <>
-        {/* <form onSubmit={handleSubmit(onSubmit)} onChange={handleOnKeyUp}>
-            <div className="row">
-                {children}
-            </div>
-            <div className="row">
-                <div className="col c3">&nbsp;</div>
-                <div className="col c4">
-                    <input className="btn btn-a btn-sm" type="submit" value="Save" />
-                </div>
-                <div className="col c3">&nbsp;</div>
-            </div>
-        </form> */}
-        {/* <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-                <Form.Label column sm="2">
-                Email
-                </Form.Label>
-                <Col sm="10">
-                <Form.Control plaintext readOnly defaultValue="email@example.com" />
-                </Col>
-                </Form.Group>
-                
-                <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                <Form.Label column sm="2">
-                Password
-                </Form.Label>
-                <Col sm="10">
-                <Form.Control type="password" placeholder="Password" />
-                </Col>
-                </Form.Group> */}
-        <Form onSubmit={handleSubmit(onSubmit)} >
+        <Form className="p-4 rounded-4 shadow " onSubmit={handleSubmit(onSubmit)} >
             {children}
+            {pageMode === PAGE_MODE_VIEW ?
+                <>
+                    <Form.Group as={Row} className="mb-3" controlId="">
+                        <Form.Label column sm="2">
 
-            {pageMode === PAGE_MODE_VIEW ? <>
-                <Form.Group as={Row} className="mb-3" controlId="">
-                    <Form.Label column sm="2">
+                        </Form.Label>
+                        <Col sm="10">
+                            <LinkButton text={"Edit"} path={editPath}></LinkButton>
+                        </Col>
+                    </Form.Group>
 
-                    </Form.Label>
-                    <Col sm="10">
-                        <LinkButton text={"Edit"} path={editPath}></LinkButton>
-                    </Col>
-                </Form.Group>
-
-            </> :
+                </> :
                 <>
                     <Form.Group as={Row} className="mb-3" controlId="">
                         <Form.Label column sm="2">
@@ -131,6 +80,7 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
                         </Form.Label>
                         <Col sm="10">
                             <Button type="submit">Save</Button>
+                            <LinkButton text="Cancel" onClick={() => globalNavigate(-1)}></LinkButton>
                         </Col>
                     </Form.Group>
                 </>

@@ -28,7 +28,7 @@ export const setClubs = () => async (dispatch, getState) => {
         var res = await axiosConfig.get("/api/v1/clubs")
         dispatch(setClubsState(res.data));
         dispatch(setIsNotLoading())
-    }, 10)
+    }, 20)
 }
 
 export const setSelectedClub = (id) => async (dispatch, getState) => {

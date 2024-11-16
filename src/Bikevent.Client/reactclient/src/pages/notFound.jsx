@@ -5,7 +5,7 @@ export const NotFound = (args) => {
     return (<>
         <div className='rides'>
             <PageTitle title="Page not found"></PageTitle>
-            <MsgErrorA>The page you requested does not exist</MsgErrorA>
+            <MsgA variant={"info"}>The page you requested does not exist</MsgA>
         </div>
     </>);
 }

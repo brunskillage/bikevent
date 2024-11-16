@@ -99,7 +99,7 @@ export const Login = (args) => {
                                         <Form.Group className="mb-3" controlId="formBasicPassword">
                                             <Form.Label>Password * </Form.Label>
                                             <Form.Control
-                                                type="encPassword"
+                                                type="password"
                                                 placeholder="Password"
                                                 isInvalid={!!errors["encPassword"]}
                                                 {...register("encPassword")} />
@@ -109,7 +109,7 @@ export const Login = (args) => {
                                         </Form.Group>}
                                 ></Controller>
 
-                                <Button type="submit">Submit form</Button>
+                                <Button type="submit">Login</Button>
 
                             </Form>
                         </Col>

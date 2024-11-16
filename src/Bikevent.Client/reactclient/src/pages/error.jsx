@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { MsgErrorA } from "../partials/wrappers/msg";
+import { MsgA, MsgErrorA } from "../partials/wrappers/msg";
 
 export const Error = () => {
 
@@ -8,7 +8,7 @@ export const Error = () => {
     return (<>
         <div className='club'>
             <h3>Error Page</h3>
-            <MsgErrorA>{JSON.stringify(error)}</MsgErrorA>
+            <MsgA variant={"error"}>{JSON.stringify(error)}</MsgA>
         </div >
 
     </>);

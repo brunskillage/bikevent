@@ -6,7 +6,7 @@ import { Card } from "react-bootstrap";
 export const ClubListItem = ({ club }) => {
     return (<>
 
-        <Card style={{ width: '18rem', margin: '0.2rem' }} >
+        <Card className="shadow" style={{ width: '18rem', margin: '0.2rem' }} >
             <Card.Body>
                 <Card.Title>{club.nameOf}</Card.Title>
                 <Card.Text>

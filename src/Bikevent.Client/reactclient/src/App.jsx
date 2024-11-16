@@ -25,8 +25,13 @@ import { Events } from "./pages/events";
 import { Event } from "./pages/event";
 import { WhatsHappening } from "./pages/whatsHappening";
 import { Container } from "react-bootstrap";
+import { Suspense } from "react";
 
 // unprotected routes
+
+function Loader() {
+    return <><Container fluid></Container></>
+}
 
 const Layout = () => {
     return (
