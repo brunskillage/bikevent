@@ -155,8 +155,8 @@ public class Program
             migrator.MigrateUp(001);
 
             // uncomment for test Data
-            var testDataService = app.Services.GetService<TestDataService>();
-            testDataService!.Insert();
+            // var testDataService = app.Services.GetService<TestDataService>();
+            // testDataService!.Insert();
         }
 
 

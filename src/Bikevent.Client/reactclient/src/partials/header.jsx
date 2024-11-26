@@ -14,8 +14,9 @@ export const Header = () => {
                 <Navbar.Collapse id="basic-navbar-nav mx-auto">
                     <Nav className="me-auto">
                         <NavLink className="nav-link" to={"/"}>Home</NavLink>
-                        {user?.isLoggedIn ?
+                        {user?.isLoggedIn ? <>
                             <NavLink className="nav-link" to={"/logout"}>logout {user.nickName}</NavLink>
+                            <NavLink className="nav-link text-right" to="/account">Account</NavLink></>
                             :
                             <NavLink className="nav-link" to={"/login"}>login</NavLink>
                         }

@@ -117,7 +117,7 @@ export const Club = () => {
                     <LinkButton path={common.VIEW_CLUB.replace(":clubId", clubId)} text="View" />
                 </>}
                 {pageMode === common.PAGE_MODE_VIEW && <>
-                    <LinkButton path={common.ADD_CLUB} text="Add" />
+                    <LinkButton path={common.ADD_CLUB} text="+Add" />
                 </>}
                 <LinkButton path={common.VIEW_RIDES_FOR_CLUB.replace(":clubId", clubId)} text="Rides" />
                 <LinkButton path={common.VIEW_EVENTS_FOR_CLUB.replace(":clubId", clubId)} text="Events" />

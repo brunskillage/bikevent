@@ -63,22 +63,22 @@ export const FormB = ({ urlPath, pageMode, setError, handleSubmit,
             {children}
             {pageMode === PAGE_MODE_VIEW ?
                 <>
-                    <Form.Group as={Row} className="mb-3" controlId="">
-                        <Form.Label column sm="2">
+                    <Form.Group as={Row} className="mb-4" controlId="">
+                        <Form.Label column sm="3">
 
                         </Form.Label>
-                        <Col sm="10">
+                        <Col sm="8">
                             <LinkButton text={"Edit"} path={editPath}></LinkButton>
                         </Col>
                     </Form.Group>
 
                 </> :
                 <>
-                    <Form.Group as={Row} className="mb-3" controlId="">
-                        <Form.Label column sm="2">
+                    <Form.Group as={Row} className="mb-4" controlId="">
+                        <Form.Label column sm="3">
 
                         </Form.Label>
-                        <Col sm="10">
+                        <Col sm="8">
                             <Button type="submit">Save</Button>
                             <LinkButton text="Cancel" onClick={() => globalNavigate(-1)}></LinkButton>
                         </Col>

@@ -64,6 +64,7 @@ export const momentToLocal = (date) => {
 }
 
 export const momentDisplayFormat = "dddd, DD MMM yyyy hh:mm A"
+export const momentDisplayDayFormat = "DD/MM/yyyy"
 
 export const momentToLocalString = (date) => {
     if (date) {

@@ -18,10 +18,12 @@ public class BvClubRow
     [Key]
     public int Id { get; set; }
     public int CreatedById { get; set; }
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? CreatedOn { get; set; }
     public string Email { get; set; }
     public string? GoogleMapUrl { get; set; }
     public string? MainImageUrl { get; set; }
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? ModifiedOn { get; set; }
     public string NameOf { get; set; }
     public string? President { get; set; }
@@ -36,14 +38,18 @@ public class BvEventRow
     public int Id { get; set; }
     public int ClubId { get; set; }
     public int CreatedById { get; set; }
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? CreatedOn { get; set; }
     public string DescriptionOf { get; set; }
     public string Location { get; set; }
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? EndsOn { get; set; }
     public decimal? Lat { get; set; }
     public string? LinklUrl { get; set; }
     public decimal? Lng { get; set; }
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? ModifiedOn { get; set; }
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? StartsOn { get; set; }
     public string Title { get; set; }
 }
@@ -68,6 +74,7 @@ public class BvRideRow
     [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? ModifiedOn { get; set; }
     public string StartLocation { get; set; }
+
     [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? StartsOn { get; set; }
     public string Title { get; set; }
@@ -79,7 +86,9 @@ public class BvUserclubRow
     [Key]
     public int Id { get; set; }
     public int ClubId { get; set; }
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? CreatedOn { get; set; }
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? ModifiedOn { get; set; }
 }
 
@@ -88,9 +97,11 @@ public class BvUserRow
 {
     [Key]
     public int Id { get; set; }
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? CreatedOn { get; set; }
     public string Email { get; set; }
     public string? EncPassword { get; set; }
+    [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? ModifiedOn { get; set; }
     public string NickName { get; set; }
     public DateTime? VerifiedOn { get; set; }

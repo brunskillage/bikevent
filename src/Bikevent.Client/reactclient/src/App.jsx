@@ -26,6 +26,7 @@ import { Event } from "./pages/event";
 import { WhatsHappening } from "./pages/whatsHappening";
 import { Container } from "react-bootstrap";
 import { Suspense } from "react";
+import { Template } from "./pages/template";
 
 // unprotected routes
 
@@ -97,9 +98,14 @@ export const App = () => {
                     {
                         path: "/tester",
                         element: <Tester />,
-                    }, {
+                    },
+                    {
                         path: "/account/create",
                         element: <CreateAccount />,
+                    },
+                    {
+                        path: "/template",
+                        element: <Template />,
                     },
                     {
                         path: "*",

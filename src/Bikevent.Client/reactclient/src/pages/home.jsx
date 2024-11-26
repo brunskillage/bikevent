@@ -22,8 +22,6 @@ export const Home = () => {
                 {auth.isLoggedIn && <>
 
                     <LinkButton path="/clubs" text="Clubs"></LinkButton>
-                    <LinkButton path="/events" text="Events"></LinkButton>
-                    <LinkButton path="/account" text="Account"></LinkButton>
                     <LinkButton path={WHATS_HAPPENING} text="Whats Happening"></LinkButton>
 
                 </>

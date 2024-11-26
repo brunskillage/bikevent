@@ -10,7 +10,7 @@ export const InputB = ({ pageMode, label, fieldName, errors, register, currentVa
                 control={control}
                 render={({ field }) =>
                     <Form.Group as={Row} className="mb-3" controlId={"form" + { fieldName }}>
-                        <Form.Label column sm="2">
+                        <Form.Label column sm="3">
                             {label}
                         </Form.Label>
                         <Col sm="8">

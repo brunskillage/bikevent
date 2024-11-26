@@ -3,10 +3,11 @@ import { VIEW_CLUB } from "../lib/common";
 import { LinkButton } from "./wrappers/linkButton";
 import { Card } from "react-bootstrap";
 
+
 export const ClubListItem = ({ club }) => {
     return (<>
 
-        <Card className="shadow" style={{ width: '18rem', margin: '0.2rem' }} >
+        <Card className="shadow clubListItem"   >
             <Card.Body>
                 <Card.Title>{club.nameOf}</Card.Title>
                 <Card.Text>
@@ -14,6 +15,7 @@ export const ClubListItem = ({ club }) => {
                 </Card.Text>
             </Card.Body>
 
-        </Card>
+        </Card >
     </>);
 }
+

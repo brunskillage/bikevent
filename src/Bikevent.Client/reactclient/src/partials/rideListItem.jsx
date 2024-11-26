@@ -5,19 +5,18 @@ import bikeLogo from "../assets/Bike3.png"
 
 export const RideListItem = (props) => {
     return <>
-        <div className="row">
-            <div className="rideListItem">
-                <div className="left">
-                    <div className="timeBox">{moment(props.startsOn).fromNow(true)}</div>
+        <tr>
+            <td><div className="timeBox">{moment(props.startsOn).fromNow(true)}</div></td>
+            <td>                    <div className="title"><h3>{props.title}</h3></div>
+                <div className="date">
+                    {moment(props.startsOn).format("h:mma, ddd Do MMM, YYYY")}
                 </div>
-                <div className="right">
-                    <div className="title"><h3>{props.title}</h3></div>
-                    {moment(props.startsOn).format("h:mma, ddd Do MMM")}
-                    <div><LinkButton path={VIEW_RIDE_FOR_CLUB.replace(":rideId", props.id).replace(":clubId", props.clubId)} text={"Details"} /></div>
-
+            </td>
+            <td>
+                <div className="actions">
+                    <LinkButton path={VIEW_RIDE_FOR_CLUB.replace(":rideId", props.id).replace(":clubId", props.clubId)} text={"Details"} />
                 </div>
-
-            </div>
-        </div>
+            </td>
+        </tr>
     </>
 }

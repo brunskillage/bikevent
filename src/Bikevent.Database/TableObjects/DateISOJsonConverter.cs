@@ -15,12 +15,8 @@ public class DateIsoJsonConverter : JsonConverter<DateTime?>
         var value = reader.GetString();
         if (!string.IsNullOrWhiteSpace(value))
         {
-            if (!value.EndsWith("Z"))
-            {
-                value += "Z";
-            }        
-            var result = DateTime.Parse(value);
-            return result;
+            var result = DateTime.Parse(value).ToLocalTime();
+            return result.ToUniversalTime();
         }
 
         return null;

@@ -7,3 +7,4 @@ export const MsgA = ({ children, variant = 'info' }) => {
         </div>
     </>
 }
+

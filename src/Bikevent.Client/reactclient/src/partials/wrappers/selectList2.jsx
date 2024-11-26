@@ -27,7 +27,7 @@ export const SelectList2 = ({ label, fieldName, keyValues, defaultVal, currentVa
     return (<>
 
         <Form.Group as={Row} className="mb-3" controlId={"form" + { fieldName }}>
-            <Form.Label column sm="2">
+            <Form.Label column sm="3">
                 {label}
             </Form.Label>
             <Col sm="8">

@@ -7,13 +7,15 @@ import { ADD_RIDE_TO_CLUB, VIEW_CLUB } from '../lib/common';
 import { LinkButton } from '../partials/wrappers/linkButton';
 import { PageTitle } from '../partials/wrappers/pageTitle';
 import { RideListItem } from '../partials/rideListItem';
+import { SubMenu } from '../partials/wrappers/subMenu';
+import { PageContainer } from '../partials/wrappers/pageContainer';
 
 export const Rides = (args) => {
 
     const dispatch = useDispatch()
     const rides = useSelector(state => state.ride.rides)
     const club = useSelector(state => state.club.selectedClub)
-    const loading = useSelector(state => state.util.isLoading)
+    const util = useSelector(state => state.util)
     const { clubId } = useParams()
 
     useEffect(() => {
@@ -24,23 +26,37 @@ export const Rides = (args) => {
     }, [])
 
     return (<>
-        <div className='ridesPage'>
-            <PageTitle title={("Rides for " + club?.nameOf)}>
+        <div className='eventsPage'>
+            <PageTitle >{("Rides for " + club?.nameOf)}</PageTitle>
+            <SubMenu>
                 <LinkButton path={VIEW_CLUB.replace(":clubId", clubId)} text="Club Page"></LinkButton>
                 <LinkButton path={ADD_RIDE_TO_CLUB.replace(":clubId", clubId)} text="Add"></LinkButton>
-            </PageTitle>
+            </SubMenu>
 
-            <LoadingA isLoading={loading}></LoadingA>
-            {rides && rides.length ? <>
-                <div className='rides'>
-                    {rides.map(ride => {
-                        return <RideListItem key={ride.id} {...ride}></RideListItem>
-                    })}
-                </div>
-            </> : <>
-                <p>No rides found</p>
-            </>}
+            <PageContainer>
+                <LoadingA isLoading={util?.loading}></LoadingA>
+                {!util?.loading && rides && rides.length ? <>
+                    <div className='rides'>
 
-        </div >
+                        <table className="table table-responsive align-middle">
+                            <thead>
+                                <th>When</th>
+                                <th>More</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                {rides.map(ride => {
+                                    return <RideListItem key={ride.id} {...ride}></RideListItem>
+                                })}
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </> : <>
+                    <p>No ridea found</p>
+                </>}
+            </PageContainer>
+        </div>
     </>);
 }

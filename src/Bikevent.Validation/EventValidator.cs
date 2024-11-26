@@ -8,7 +8,7 @@ public class EventValidator : AbstractValidator<BvEventRow>
 {
     private readonly EventsDbService _eventsDbService;
 
-    public EventValidator(EventsDbService eventsDbService)
+    public EventValidator(EventsDbService eventsDbService )
     {
         _eventsDbService = eventsDbService;
 

@@ -9,12 +9,12 @@ import { setSelectedClub, setSelectedEvent } from '../store/thunks';
 import { InputDate } from '../partials/wrappers/inputDate';
 import { InputHidden } from '../partials/wrappers/inputHidden';
 import moment from 'moment';
-import { locationMatchesRoute } from '../lib/globalHooks';
+import { globalLocation, locationMatchesRoute } from '../lib/globalHooks';
 import { LinkButton } from '../partials/wrappers/linkButton';
 import { PageTitle } from '../partials/wrappers/pageTitle';
 import { MsgA } from '../partials/wrappers/msg';
-import { CenteredContent } from '../partials/wrappers/centeredContent';
 import { PageContainer } from '../partials/wrappers/pageContainer';
+import { SubMenu } from '../partials/wrappers/subMenu';
 
 
 export const Event = (args) => {
@@ -40,24 +40,17 @@ export const Event = (args) => {
 
     // // data
     useEffect(() => {
-        // set the react hook values if in edit mode
-        console.log(club)
-        console.log(event)
-        console.log("Event data received")
-        if (event) {
-            // populate react hook form from state
+        if (pageMode === common.PAGE_MODE_EDIT)
+            if (event) {
+                // populate react hook form from state
+                Object.getOwnPropertyNames(event).forEach(prop => {
+                    setValue(prop, event[prop])
+                })
+            }
 
-            Object.getOwnPropertyNames(event).forEach(prop => {
-                setValue(prop, event[prop])
-            })
-        }
-
-    }, [event])
-
-
+    }, [pageMode, event])
 
     useEffect(() => {
-
         setIsCreated(false)
         if (locationMatchesRoute(common.ADD_EVENT_TO_CLUB)) {
             setPageMode(common.PAGE_MODE_ADD)
@@ -76,9 +69,7 @@ export const Event = (args) => {
             dispatch(setSelectedClub(clubId))
         }
         console.log('pagemode changed to ' + pageMode)
-    }, [location])
-
-
+    }, [globalLocation])
 
     // this
     const onSuccessFunc = (data) => {
@@ -97,48 +88,54 @@ export const Event = (args) => {
     }
 
     const getTitle = () => {
-        return `${club.nameOf} : ${pageMode === common.PAGE_MODE_EDIT ? event?.title : "New Event"}`
+        return `${club.nameOf} : ${pageMode === common.PAGE_MODE_EDIT ? "Edit " + event?.title : "New Event"}`
     }
 
     return (<>
-        <PageContainer>
-            <PageTitle title={getTitle()}>
+
+        <div className='eventPage'>
+
+            <PageTitle >{getTitle()}</PageTitle>
+            <SubMenu>
+                <LinkButton path={common.VIEW_EVENTS_FOR_CLUB.replace(":clubId", clubId)} text="Events" />
+                {pageMode === common.PAGE_MODE_VIEW && <>
+                    <LinkButton path={common.EDIT_EVENT_FOR_CLUB.replace(":clubId", clubId).replace(":eventId", eventId)} text="Edit" />
+                    <LinkButton path={common.ADD_EVENT_TO_CLUB.replace(":clubId", clubId).replace(":eventId", eventId)} text="Add" />
+                </>}
+                {pageMode === common.PAGE_MODE_EDIT && <>
+                    <LinkButton path={common.VIEW_EVENT_FOR_CLUB.replace(":clubId", clubId).replace(":eventId", eventId)} text="View" />
+                </>}
+            </SubMenu>
+
+            <PageContainer>
                 {club && <>
                     <div>
-                        <LinkButton path={common.VIEW_EVENTS_FOR_CLUB.replace(":clubId", clubId)} text="Events" />
-                        {pageMode === common.PAGE_MODE_VIEW && <>
-                            <LinkButton path={common.EDIT_EVENT_FOR_CLUB.replace(":clubId", clubId).replace(":eventId", eventId)} text="Edit" />
-                            <LinkButton path={common.ADD_EVENT_TO_CLUB.replace(":clubId", clubId).replace(":eventId", eventId)} text="Add" />
-                        </>}
-                        {pageMode === common.PAGE_MODE_EDIT && <>
-                            <LinkButton path={common.VIEW_EVENT_FOR_CLUB.replace(":clubId", clubId).replace(":eventId", eventId)} text="View" />
-                            <LinkButton path={common.ADD_EVENT_TO_CLUB.replace(":clubId", clubId).replace(":eventId", eventId)} text="Add" />
-                        </>}
-                    </div></>}</PageTitle>
 
-            <CenteredContent>
+                    </div></>}
                 {isCreated && <>
-                    <MsgA variant={"success"}>Event {event?.title} Updated</MsgA>
+                    <MsgA variant={"success"}>Ride {event?.title} Updated</MsgA>
                 </>}
+
                 <FormB {...{
                     urlPath: "/api/v1/event", pageMode, setError, handleSubmit, onSuccessFunc,
                     selectorFunc: event, getValues, get, setValue, user, onProcessFormData,
                     editPath: common.EDIT_EVENT_FOR_CLUB.replace(":clubId", clubId).replace(":eventId", eventId),
                     addPath: common.ADD_EVENT_TO_CLUB.replace(":clubId", clubId),
-                    deletePath: common.DELETE_EVENT_FROM_CLUB.replace(":clubId", clubId).replace(":eventId", eventId)
-
+                    deletePath: common.DELETE_EVENT_FROM_CLUB.replace(":clubId", clubId).replace(":eventId", eventId),
+                    viewPath: common.VIEW_EVENT_FOR_CLUB.replace(":eventId", eventId)
                 }}>
-                    <InputB label='Title *' fieldName='title' currentVal={event?.title} {...{ pageMode, errors, register }}></InputB>
-                    <InputB label='Description' fieldName="descriptionOf" currentVal={event?.descriptionOf}  {...{ pageMode, errors, register }} ></InputB>
-                    <InputB label='Location *' fieldName="location" currentVal={event?.location}  {...{ pageMode, errors, register }} ></InputB>
-                    <InputDate label='Start Time *' fieldName='startsOn' currentVal={event?.startsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>
-                    <InputDate label='End Time' fieldName='endsOn' currentVal={event?.endsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>
+                    <InputB label='Title *' fieldName='title' currentVal={event?.title} {...{ pageMode, errors, register, control }}></InputB>
+                    <InputB label='Description' fieldName="descriptionOf" currentVal={event?.descriptionOf}  {...{ pageMode, errors, register, control }} ></InputB>
+                    <InputB label='Location *' fieldName="location" currentVal={event?.location}  {...{ pageMode, errors, register, control }} ></InputB>
+                    <InputDate label='Start Time *' fieldName='startsOn' currentVal={event?.startsOn}  {...{ errors, register, pageMode, control, reset, setValue }}></InputDate>
+                    <InputDate label='End Time' fieldName='endsOn' currentVal={event?.endsOn}  {...{ errors, register, pageMode, control, reset, setValue }}></InputDate>
                     <InputB label='Link Url' fieldName='linkUrl' currentVal={event?.linkUrl}  {...{ errors, register, pageMode, control, reset }}></InputB>
-                    <InputHidden label='User Id' fieldName="createdById" currentVal={+(user?.userId)}  {...{ pageMode, errors, register }} ></InputHidden>
-                    <InputHidden label='Club Id' fieldName="clubId" currentVal={+(clubId ?? 0)}  {...{ pageMode, errors, register }} ></InputHidden>
+                    <InputHidden label='User Id' fieldName="createdById" currentVal={+(user?.userId)}  {...{ pageMode, errors, register, control }} ></InputHidden>
+                    <InputHidden label='Club Id' fieldName="clubId" currentVal={+(clubId ?? 0)}  {...{ pageMode, errors, register, control }} ></InputHidden>   {/* */}
                 </FormB>
-            </CenteredContent>
-        </PageContainer>
+            </PageContainer>
+
+        </div >
 
     </>);
 }

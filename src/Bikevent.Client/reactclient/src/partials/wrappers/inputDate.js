@@ -1,85 +1,82 @@
-import DatePicker, { CalendarContainer } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { Controller } from "react-hook-form";
 import moment from 'moment';
-import { momentToLocalString, PAGE_MODE_ADD, PAGE_MODE_EDIT, PAGE_MODE_VIEW } from "../../lib/common";
-import { globalLocation } from "../../lib/globalHooks";
+import { momentDisplayDayFormat, momentToLocalString, PAGE_MODE_ADD, PAGE_MODE_EDIT, PAGE_MODE_VIEW } from "../../lib/common";
+import { globalLocation, globalNavigate } from "../../lib/globalHooks";
+import { Col, Form, Row } from "react-bootstrap";
 
-export const InputDate = ({ pageMode, label, fieldName, currentVal, control, errors, reset }) => {
-  const [selectedDate, setSelectedDate] = useState(null);
+export const InputDate = ({ pageMode, label, fieldName, currentVal, control, errors, register, setValue }) => {
+  //const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDateHidden, setSelectedDateHidden] = useState(null);
+
+  //moment(selectedDate).isValid() ? moment(selectedDate).format('YYYY-MM-DDTHH:mm') : null }
 
   useEffect(() => {
     console.log("location changed")
 
-    let currentValOrNull = currentVal ? moment(currentVal).toDate() : null;
-
     if (pageMode === PAGE_MODE_VIEW) {
-      setSelectedDate(currentValOrNull)
+      setSelectedDateHidden(moment(currentVal))
     }
+
     if (pageMode === PAGE_MODE_EDIT) {
-      setSelectedDate(currentValOrNull)
+      setSelectedDateHidden(moment(currentVal).utc().format())
+      setSelectedDay(moment(currentVal).format('YYYY-MM-DD'))
+      setSelectedTime(moment(currentVal).format('HH:mm'))
     }
+
     if (pageMode === PAGE_MODE_ADD) {
-      setSelectedDate(null)
-      reset()
+      setSelectedDateHidden(null)
+      setValue(fieldName, null)
     }
 
     console.log("currentVal=" + currentVal)
-    console.log("selectedDate=" + selectedDate)
+    console.log("setSelectedDateHidden=" + setSelectedDateHidden)
 
-  }, [globalLocation, currentVal])
+  }, [currentVal, pageMode])
 
-  const MyContainer = ({ className, children }) => {
-    return (
-      <div style={{ padding: "0.5em", background: "#216ba5", color: "#fff", width: "20.7em" }}>
-        <CalendarContainer className={className}>
-          <div >{children}</div>
-        </CalendarContainer>
-      </div>
-    );
-  };
+  useEffect(() => {
+    if (selectedDay && selectedTime) {
+      let selectedDate = selectedDay + " " + selectedTime
+      setSelectedDateHidden(selectedDate)
+      setValue(fieldName, selectedDate)
+    }
+  }, [selectedDay, selectedTime])
 
   return (
     <>
-      <div className="row">
-        <div className="col c3 label">{label}:</div>
-        {pageMode === PAGE_MODE_VIEW ?
-          (<><div className="col c4"><div>&nbsp;&nbsp;{momentToLocalString(currentVal)} ({moment(currentVal).fromNow()} time)</div></div></>)
-          :
-          (<div className="col c4">
-            <Controller
-              control={control}
-              name={fieldName}
-              render={({ field }) => (
-                <DatePicker
-                  // //using moment for consistent formatting
-                  showIcon
-                  name={fieldName}
-                  showTimeSelect
-                  useWeekdaysShort={true}
-                  minDate={moment().toDate()}
-                  maxDate={moment().add(365, 'day').toDate()}
-                  selected={selectedDate}
-                  //isClearable
-                  dateFormat={"EEEE d MMM yyyy hh:mm aa"}
-                  onChangeRaw={(e) => {
-                    //e.target.dispatchEvent("changed")
-                  }}
-                  onChange={date => {
-                    setSelectedDate(date)
-                    field.onChange(date)
-                    console.log("changed")
+      <Form.Group as={Row} className="mb-3" controlId={"form" + { fieldName }}>
+        <Form.Label column sm="3">
+          {label}
+        </Form.Label>
 
-                  }}
-                  disabled={false}
-                />
+        <Col sm="8">
 
-              )}
-            />
-          </div>)}
-        <div className="col c3">{errors[fieldName] ? <div className='error'>{errors[fieldName].message}</div> : <></>}</div>
-      </div>
+          {pageMode === PAGE_MODE_VIEW &&
+            <Form.Control plaintext readOnly value={moment(currentVal).local().format('hh:mm a, dddd, DD MMMM YYYY')} />}
+
+          {pageMode === PAGE_MODE_ADD &&
+            <>
+              <Form.Control isInvalid={!!errors[fieldName]} type="date" onChange={e => setSelectedDay(e.target.value)} />
+              <Form.Control isInvalid={!!errors[fieldName]} disabled={!selectedDay} type="time" onChange={e => setSelectedTime(e.target.value)} />
+              <Form.Control isInvalid={!!errors[fieldName]} type="hidden"  {...register(fieldName)} value={selectedDateHidden} />
+            </>
+          }
+
+          {pageMode === PAGE_MODE_EDIT &&
+            <>
+              <Form.Control isInvalid={!!errors[fieldName]} value={selectedDay} type="date" onChange={e => setSelectedDay(e.target.value)} />
+              <Form.Control isInvalid={!!errors[fieldName]} disabled={!selectedDay} value={selectedTime} type="time" onChange={e => setSelectedTime(e.target.value)} />
+              <Form.Control isInvalid={!!errors[fieldName]} type="hidden" {...register(fieldName)} value={selectedDateHidden} />
+            </>
+          }
+
+          {errors[fieldName] && <Form.Control.Feedback type="invalid">
+            {errors[fieldName].message}
+          </Form.Control.Feedback>}
+        </Col>
+      </Form.Group >
     </>
   );
 }

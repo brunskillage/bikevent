@@ -31,6 +31,7 @@ export const Ride = (args) => {
         reset,
         control
     } = useForm();
+    const form = useForm();
     const location = useLocation()
     const { clubId, rideId } = useParams()
     const [pageMode, setPageMode] = useState(common.VIEW_CLUB)
@@ -123,12 +124,13 @@ export const Ride = (args) => {
                 deletePath: common.DELETE_RIDE_FROM_CLUB.replace(":clubId", clubId).replace(":rideId", rideId)
 
             }}>
-                <InputB label='Title *' fieldName='title' currentVal={ride?.title} {...{ pageMode, errors, register }}></InputB>
-                <InputB label='Description' fieldName="descriptionOf" currentVal={ride?.descriptionOf}  {...{ pageMode, errors, register }} ></InputB>
-                <InputB label='Leaving from *' fieldName="startLocation" currentVal={ride?.startLocation}  {...{ pageMode, errors, register }} ></InputB>
-                <InputDate label='Stands Up Time *' fieldName='startsOn' currentVal={ride?.startsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>
-                <InputDate label='End Time *' fieldName='endsOn' currentVal={ride?.endsOn}  {...{ errors, register, pageMode, control, reset }}></InputDate>
-                <InputB label='End Location *' fieldName="endLocation" currentVal={ride?.endLocation}  {...{ pageMode, errors, register }} ></InputB>
+                {/*<InputB label='Title *' fieldName='title' currentVal={ride?.title} form={form}></InputB>*/}
+                <InputB label='Title *' fieldName='title' currentVal={ride?.title} {...{ pageMode, errors, register, control }}></InputB>
+                <InputB label='Description' fieldName="descriptionOf" currentVal={ride?.descriptionOf}  {...{ pageMode, errors, control, register }} ></InputB>
+                <InputB label='Leaving from *' fieldName="startLocation" currentVal={ride?.startLocation}  {...{ pageMode, errors, control, register }} ></InputB>
+                <InputDate label='Stands Up Time *' fieldName='startsOn' currentVal={ride?.startsOn}  {...{ errors, register, pageMode, control, setValue }}></InputDate>
+                <InputDate label='End Time *' fieldName='endsOn' currentVal={ride?.endsOn}  {...{ errors, register, pageMode, control, setValue }}></InputDate>
+                <InputB label='End Location *' fieldName="endLocation" currentVal={ride?.endLocation}  {...{ pageMode, errors, register, control, }} ></InputB>
                 <InputHidden label='User Id' fieldName="createdById" currentVal={+(user?.userId)}  {...{ pageMode, errors, register }} ></InputHidden>
                 <InputHidden label='Club Id' fieldName="clubId" currentVal={+(clubId ?? 0)}  {...{ pageMode, errors, register }} ></InputHidden>
             </FormB>
