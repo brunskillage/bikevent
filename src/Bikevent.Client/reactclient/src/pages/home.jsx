@@ -27,7 +27,8 @@ export const Home = () => {
                 </>
                 }
 
-            </Stack >   </CenteredContent>
+            </Stack >
+        </CenteredContent>
         </Row>
         <Row>
             <CenteredContent>

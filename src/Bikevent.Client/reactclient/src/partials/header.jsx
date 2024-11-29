@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux'
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { NavLink } from 'react-router-dom';
-import { FaMotorcycle } from "react-icons/fa6";
+import { FaMotorcycle, FaRegCircleUser, FaArrowRightFromBracket } from "react-icons/fa6";
+
 
 export const Header = () => {
     const user = useSelector(state => state.user)
@@ -9,14 +10,14 @@ export const Header = () => {
     return (<>
         <Navbar expand="lg ps-4" className="bg-body-tertiary shadow ">
             <Container fluid >
-                <FaMotorcycle style={{ height: '3rem', width: '3rem' }} /><Navbar.Brand className='ps-2' href="#home">Bikevent</Navbar.Brand>
+                <NavLink className="nav-link" to={"/"}><FaMotorcycle style={{ height: '1.5rem', width: '2rem', marginBottom: 3 }} /></NavLink>
+                <Navbar.Brand className='ps-2' href="/">Bikevent</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav mx-auto">
-                    <Nav className="me-auto">
-                        <NavLink className="nav-link" to={"/"}>Home</NavLink>
+                <Navbar.Collapse id="basic-navbar-nav mx-auto" className='justify-content-end'>
+                    <Nav>
                         {user?.isLoggedIn ? <>
-                            <NavLink className="nav-link" to={"/logout"}>logout {user.nickName}</NavLink>
-                            <NavLink className="nav-link text-right" to="/account">Account</NavLink></>
+                            <NavLink className="nav-link" to={"/logout"}> <FaArrowRightFromBracket></FaArrowRightFromBracket> Sign Out</NavLink>
+                            <NavLink className="nav-link text-right" to="/account"><FaRegCircleUser className='text-end' ></FaRegCircleUser > {user.nickName}</NavLink></>
                             :
                             <NavLink className="nav-link" to={"/login"}>login</NavLink>
                         }

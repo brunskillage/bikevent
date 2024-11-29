@@ -1,7 +1,6 @@
-import { ADD_CLUB } from '../lib/common';
 import { PageTitle } from '../partials/wrappers/pageTitle';
 import { LinkButton } from '../partials/wrappers/linkButton';
-import { MsgA, MsgHighlight, MsgSuccessA } from './../partials/wrappers/msg'
+import { MsgA } from './../partials/wrappers/msg'
 
 export const Account = () => {
    return (<>

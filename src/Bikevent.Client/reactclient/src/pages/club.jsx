@@ -16,6 +16,9 @@ import { ModalB } from '../partials/wrappers/modalB';
 import { PageContainer } from '../partials/wrappers/pageContainer'
 import { toTitleCase } from '../lib/localStorageClient';
 import { CheckMark, Edit } from '../partials/wrappers/icons';
+import { Col, Container, Row } from 'react-bootstrap';
+import { ClubLogo } from '../partials/wrappers/clubLogo';
+import { ClubHeader } from '../partials/wrappers/clubHeader';
 
 
 export const Club = () => {
@@ -106,9 +109,14 @@ export const Club = () => {
         }
     }
 
+
+
     return (<>
         <PageContainer>
-            <PageTitle><Edit></Edit> {toTitleCase(pageMode) + " Club" + (!club ? "" : " - " + club.nameOf)}</PageTitle>
+            <PageTitle>
+                <ClubHeader club={club}></ClubHeader>
+            </PageTitle>
+
             <SubMenu>
                 <LinkButton path={common.VIEW_CLUBS} text="All Clubs" />
                 {pageMode === common.PAGE_MODE_ADD && <>

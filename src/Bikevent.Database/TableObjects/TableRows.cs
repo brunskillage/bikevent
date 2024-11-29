@@ -26,6 +26,7 @@ public class BvClubRow
     [JsonConverter(typeof(DateIsoJsonConverter))]
     public DateTime? ModifiedOn { get; set; }
     public string NameOf { get; set; }
+    public string LogoImagePath { get; set; }
     public string? President { get; set; }
     public string? WebsiteUrl { get; set; }
     public int RegionId { get; set; }

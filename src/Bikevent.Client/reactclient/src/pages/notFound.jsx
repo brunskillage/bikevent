@@ -1,5 +1,5 @@
 import { PageTitle } from "../partials/wrappers/pageTitle";
-import { MsgA, MsgErrorA } from "../partials/wrappers/msg";
+import { MsgA } from "../partials/wrappers/msg";
 
 export const NotFound = (args) => {
     return (<>

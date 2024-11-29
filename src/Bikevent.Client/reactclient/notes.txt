@@ -1,0 +1,16 @@
+Design queues
+https://motocoursesonline.com/
+    --e-global-color-primary: #F4B43E;
+    --e-global-color-secondary: #54595F;
+    --e-global-color-text: #000000;
+    --e-global-color-accent: #48E7A5;
+    --e-global-color-48d4b0d: #D80000;
+    --e-global-typography-primary-font-family: "Work Sans";
+    --e-global-typography-primary-font-weight: 600;
+    --e-global-typography-secondary-font-family: "Work Sans";
+    --e-global-typography-secondary-font-weight: 400;
+    --e-global-typography-text-font-family: "Work Sans";
+    --e-global-typography-text-font-size: 18px;
+    --e-global-typography-text-font-weight: 400;
+    --e-global-typography-accent-font-family: "Work Sans";
+    --e-global-typography-accent-font-weight: 500;

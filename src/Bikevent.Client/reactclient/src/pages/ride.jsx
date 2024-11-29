@@ -13,6 +13,8 @@ import { locationMatchesRoute } from '../lib/globalHooks';
 import { LinkButton } from '../partials/wrappers/linkButton';
 import { PageTitle } from '../partials/wrappers/pageTitle';
 import { MsgA } from '../partials/wrappers/msg';
+import { SubMenu } from '../partials/wrappers/subMenu';
+import { ClubLogo } from '../partials/wrappers/clubLogo';
 
 
 export const Ride = (args) => {
@@ -31,7 +33,6 @@ export const Ride = (args) => {
         reset,
         control
     } = useForm();
-    const form = useForm();
     const location = useLocation()
     const { clubId, rideId } = useParams()
     const [pageMode, setPageMode] = useState(common.VIEW_CLUB)
@@ -100,19 +101,21 @@ export const Ride = (args) => {
 
     return (<>
         <div className='ridePage'>
-            <PageTitle title={getTitle()}>
-                {club && <>
-                    <div>
-                        <LinkButton path={common.VIEW_RIDES_FOR_CLUB.replace(":clubId", clubId)} text="Rides" />
-                        {pageMode === common.PAGE_MODE_VIEW && <>
-                            <LinkButton path={common.EDIT_RIDE_FOR_CLUB.replace(":clubId", clubId).replace(":rideId", rideId)} text="Edit" />
-                            <LinkButton path={common.ADD_RIDE_TO_CLUB.replace(":clubId", clubId).replace(":rideId", rideId)} text="Add" />
-                        </>}
-                        {pageMode === common.PAGE_MODE_EDIT && <>
-                            <LinkButton path={common.VIEW_RIDE_FOR_CLUB.replace(":clubId", clubId).replace(":rideId", rideId)} text="View" />
-                            <LinkButton path={common.ADD_RIDE_TO_CLUB.replace(":clubId", clubId).replace(":rideId", rideId)} text="Add" />
-                        </>}
-                    </div></>}</PageTitle>
+            <PageTitle><ClubLogo club={club}></ClubLogo> {getTitle()}
+            </PageTitle>
+            <SubMenu>
+                <LinkButton path={common.VIEW_RIDES_FOR_CLUB.replace(":clubId", clubId)} text="Rides" />
+                {pageMode === common.PAGE_MODE_VIEW && <>
+                    <LinkButton path={common.EDIT_RIDE_FOR_CLUB.replace(":clubId", clubId).replace(":rideId", rideId)} text="Edit" />
+                    <LinkButton path={common.ADD_RIDE_TO_CLUB.replace(":clubId", clubId).replace(":rideId", rideId)} text="Add" />
+                </>}
+                {pageMode === common.PAGE_MODE_EDIT && <>
+                    <LinkButton path={common.VIEW_RIDE_FOR_CLUB.replace(":clubId", clubId).replace(":rideId", rideId)} text="View" />
+                    <LinkButton path={common.ADD_RIDE_TO_CLUB.replace(":clubId", clubId).replace(":rideId", rideId)} text="Add" />
+                </>}
+            </SubMenu>
+
+
             {isCreated && <>
                 <MsgA variant={"success"}>Ride {ride?.title} Updated</MsgA>
             </>}
@@ -137,3 +140,4 @@ export const Ride = (args) => {
         </div >
     </>);
 }
+

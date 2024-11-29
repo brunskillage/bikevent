@@ -13,7 +13,7 @@ export const Footer = () => {
                 <h4>Dev only links</h4>
                 <ul>
                     <li>
-                        <a className='link' href="https://react-bootstrap.github.io/docs/layout/grid">React Bootstrap</a></li>
+                        <a className='link' href="https://react-bootstrap.github.io/docs/layout/grid" target="_blank">React Bootstrap</a></li>
                     <li><a className="link" href="/swagger/index.html" target="_blank">API Browser</a>
                     </li>
                     <li>
@@ -21,9 +21,10 @@ export const Footer = () => {
                     <li>
                         <a className="link" href="http://192.168.1.140/phpMyAdmin/db_structure.php?server=1&db=bikeventdb" target="_blank">DB Browser</a></li>
                     <li>
-                        <a className="link" href="https://mincss.com/" target="_blank">Min CSS</a></li>
+                        <a className="link" href="https://react-icons.github.io/react-icons/" target="_blank">Min CSS</a></li>
+
                     <li>
-                        <a className="link" href="https://mincss.com/" target="_blank">React</a></li>
+                        <a className="link" href="https://mincss.com/" target="_blank">Min CSS</a></li>
                     <li>
                         <a className="link" href="https://reactrouter.com/en/main/start/overview/" target="_blank">React Router</a></li>
                     <li>
@@ -35,13 +36,13 @@ export const Footer = () => {
                     <li>
                         <a className="link" href="https://github.com/brunskillage/bikevent/tree/main/src" target="_blank">Github Source</a></li>
                     <li>
-                        <a className='link' href="/tester">Test Page</a></li>
+                        <a className='link' href="/tester" target="_blank">Test Page</a></li>
                     <li>
-                        <a className='link' href="/template">Template Page</a></li>
+                        <a className='link' href="/template" target="_blank">Template Page</a></li>
                     <li>
-                        <a className='link' href="https://flexbox.malven.co/">Flexbox</a></li>
+                        <a className='link' href="https://flexbox.malven.co/" target="_blank">Flexbox</a></li>
                     <li>
-                        <a className='link' href="https://192.168.1.74:7186/api/v1/config">Dev Setup - Trust cert</a></li>
+                        <a className='link' href="https://192.168.1.74:7186/api/v1/config" target="_blank">Dev Setup - Trust cert</a></li>
                     <li>
                         .env<br></br>
                         REACT_APP_BASE_URL = {process.env.REACT_APP_BASE_URL}

@@ -143,24 +143,24 @@ public class Program
         }
 
         // run migrations
-
-        using (var scope = app.Services.CreateScope())
+        if (app.Environment.IsDevelopment())
         {
-            var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
-            migrator!.ListMigrations();
-            // TODO use runner - for now easier just to uncomment during rapid dev
-            // uncomment below to run migration
-            var miscDb = app.Services.GetService<MiscDbService>();
-            miscDb.ClearDbVersionInfo();
-            migrator.MigrateUp(001);
+            using (var scope = app.Services.CreateScope())
+            {
+                var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
+                migrator!.ListMigrations();
+                // TODO use runner - for now easier just to uncomment during rapid dev
+                // uncomment below to run migration
+                var miscDb = app.Services.GetService<MiscDbService>();
+                miscDb!.ClearDbVersionInfo();
+                migrator.MigrateUp(001);
 
-            // uncomment for test Data
-            // var testDataService = app.Services.GetService<TestDataService>();
-            // testDataService!.Insert();
+                // uncomment for test Data
+                var testDataService = app.Services.GetService<TestDataService>();
+                testDataService!.Insert();
+            }
         }
-
-
-
+        
         app.Run();
     }
 }

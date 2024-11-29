@@ -10,17 +10,22 @@ export const InputB = ({ pageMode, label, fieldName, errors, register, currentVa
                 control={control}
                 render={({ field }) =>
                     <Form.Group as={Row} className="mb-3" controlId={"form" + { fieldName }}>
+
                         <Form.Label column sm="3">
-                            {label}
+                            <b>{label}</b>
                         </Form.Label>
+
                         <Col sm="8">
+
                             {pageMode === PAGE_MODE_VIEW && <Form.Control plaintext readOnly defaultValue={currentVal} />}
+
                             {pageMode === PAGE_MODE_ADD &&
                                 <>
                                     <Form.Control isInvalid={!!errors[fieldName]}
                                         {...register(fieldName)} errors={errors} />
                                 </>
                             }
+
                             {pageMode === PAGE_MODE_EDIT &&
                                 <>
                                     <Form.Control isInvalid={!!errors[fieldName]}
@@ -30,7 +35,9 @@ export const InputB = ({ pageMode, label, fieldName, errors, register, currentVa
 
                             {errors[fieldName] && <Form.Control.Feedback type="invalid">
                                 {errors[fieldName].message}
+
                             </Form.Control.Feedback>}
+
                         </Col>
                     </Form.Group >}
             ></Controller >

@@ -31,6 +31,7 @@ public class Migration_001 : Migration
         Create.Table("clubs")
             .WithColumn("id").AsInt32().NotNullable().PrimaryKey().Identity()
             .WithColumn("createdById").AsInt32().NotNullable()
+            .WithColumn("logoImagePath").AsString(255).Nullable()
             .WithColumn("nameOf").AsString(255).NotNullable()
             .WithColumn("president").AsString(255).Nullable()
             .WithColumn("email").AsString(255).NotNullable()

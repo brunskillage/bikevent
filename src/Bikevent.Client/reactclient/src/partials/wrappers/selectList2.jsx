@@ -28,7 +28,7 @@ export const SelectList2 = ({ label, fieldName, keyValues, defaultVal, currentVa
 
         <Form.Group as={Row} className="mb-3" controlId={"form" + { fieldName }}>
             <Form.Label column sm="3">
-                {label}
+                <b>{label}</b>
             </Form.Label>
             <Col sm="8">
                 {pageMode === PAGE_MODE_VIEW ?

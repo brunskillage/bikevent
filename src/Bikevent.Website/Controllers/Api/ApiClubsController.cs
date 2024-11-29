@@ -77,7 +77,7 @@ public class ApiClubsController : Controller
     public async Task<ActionResult<BvClubRow>> GetClub([FromRoute] int clubId)
     {
         var club = await _clubDbService.GetClubById(new BvClubRow { Id = clubId });
-        var regions = _regionDbService.GetRegions();
+        _regionDbService.GetRegions();
         return Ok(new BvResponse
         {
             Data = new { club }
@@ -93,8 +93,8 @@ public class ApiClubsController : Controller
         {
             Data = new { rides }
         });
-    }    
-    
+    }
+
     [Route("club/{clubId}/events")]
     [HttpGet]
     public async Task<ActionResult<BvClubRow>> GetClubEvents([FromRoute] int clubId)

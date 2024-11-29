@@ -70,7 +70,7 @@ public class ApiEventsController : Controller
         return Ok(new BvResponse { Data = new { id } });
     }
 
-    [Route("event/{eventId}")]
+    [Route("event/{id}")]
     [HttpDelete]
     public async Task<ActionResult<BvEventRow>> DeleteEvent([FromRoute] int id, bool confirmed = false)
     {

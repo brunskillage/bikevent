@@ -9,6 +9,7 @@ import { PageTitle } from '../partials/wrappers/pageTitle';
 import { RideListItem } from '../partials/rideListItem';
 import { SubMenu } from '../partials/wrappers/subMenu';
 import { PageContainer } from '../partials/wrappers/pageContainer';
+import { Table } from 'react-bootstrap';
 
 export const Rides = (args) => {
 
@@ -37,8 +38,8 @@ export const Rides = (args) => {
                 <LoadingA isLoading={util?.loading}></LoadingA>
                 {!util?.loading && rides && rides.length ? <>
                     <div className='rides'>
-
-                        <table className="table table-responsive align-middle">
+                        <Table className='table-responsive align-middle' size="sm">
+                            {/* <table className="table table-responsive align-middle"> */}
                             <thead>
                                 <th>When</th>
                                 <th>More</th>
@@ -49,8 +50,9 @@ export const Rides = (args) => {
                                     return <RideListItem key={ride.id} {...ride}></RideListItem>
                                 })}
                             </tbody>
-                        </table>
 
+
+                        </Table>
 
                     </div>
                 </> : <>

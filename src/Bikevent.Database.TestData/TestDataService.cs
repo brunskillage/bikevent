@@ -14,6 +14,7 @@ public class TestDataService
     private readonly UserDbService _userDbService;
     private readonly EventsDbService _eventsDbService;
 
+
     public TestDataService(ClubDbService clubDbService, 
         RidesDbService ridesDbService, 
         UserDbService userDbService, 
@@ -28,6 +29,14 @@ public class TestDataService
     public void Insert()
     {
         Randomizer.Seed = new Random(3897234);
+
+
+        //// IMAGES ////
+        ///..\\..\\..\\..\\Bikevent.Client\\reactclient\\public\\club_logo\\Untitledad.jpg
+        var clubLogosPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\..\\Bikevent.Client\\reactclient\\public\\club_logo\\");
+        // var LogoFiles = Directory.GetFiles(clubLogosPath).Select(f => new FileInfo(f).Name).ToList();
+        // var LogoFiles = Directory.GetFiles(clubLogosPath).Select(f => new FileInfo(f).Name).ToList();
+        Stack<string> logoFiles = new Stack<string>(Directory.GetFiles(clubLogosPath).Select(f => new FileInfo(f).Name));
 
         /////// USERS ///////
         var tesUser = new Faker<BvUserRow>()
@@ -47,16 +56,18 @@ public class TestDataService
 
         /////// CLUBS ///////
         var testClub = new Faker<BvClubRow>()
-                .RuleFor(c => c.NameOf, c => c.Company.CompanyName() + " Club")
-                .RuleFor(c => c.Email, c => c.Internet.Email())
-                .RuleFor(c => c.President, c => c.Name.FullName())
-                .RuleFor(c => c.WebsiteUrl, c => c.Internet.Url())
-                .RuleFor(c => c.CreatedById, c => c.Random.Number(10))
-                .RuleFor(c => c.RegionId, c => c.Random.Number(1, 16))
-                .RuleFor(c => c.CreatedOn, c => DateTime.Now)
+            .RuleFor(c => c.NameOf, c => c.Company.CompanyName() + " Club")
+            .RuleFor(c => c.Email, c => c.Internet.Email())
+            .RuleFor(c => c.President, c => c.Name.FullName())
+            .RuleFor(c => c.LogoImagePath, c => logoFiles.Pop())
+            .RuleFor(c => c.WebsiteUrl, c => c.Internet.Url())
+            .RuleFor(c => c.CreatedById, c => c.Random.Number(10))
+            .RuleFor(c => c.RegionId, c => c.Random.Number(1, 16))
+            .RuleFor(c => c.CreatedOn, c => DateTime.Now);
             ;
 
         var testClubs = testClub.Generate(testClubCount);
+        // add the image
 
 
         /////// RIDES ///////
@@ -71,6 +82,7 @@ public class TestDataService
                 .RuleFor(r => r.EndsOn, (f,current) => current.StartsOn.Value.AddHours(3))
             ;
         var testRides = testRide.Generate(testRideCOunt);
+
 
 
         /////// EVENTS ///////

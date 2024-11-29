@@ -48,7 +48,7 @@ export const InputDate = ({ pageMode, label, fieldName, currentVal, control, err
     <>
       <Form.Group as={Row} className="mb-3" controlId={"form" + { fieldName }}>
         <Form.Label column sm="3">
-          {label}
+          <b>{label}</b>
         </Form.Label>
 
         <Col sm="8">
