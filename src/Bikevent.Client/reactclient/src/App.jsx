@@ -19,14 +19,19 @@ import { NotFound } from "./pages/notFound";
 import { TimerA } from "./partials/wrappers/timer";
 import { Club } from "./pages/club";
 import { Ride } from "./pages/ride";
-import { globaldispatch, GlobalNavigate } from "./lib/globalHooks";
-import { ADD_CLUB, ADD_RIDE_TO_CLUB, EDIT_CLUB, EDIT_EVENT_FOR_CLUB, EDIT_RIDE_FOR_CLUB, USER_ACCOUNT, USER_LOGOUT, VIEW_CLUB, VIEW_CLUBS, VIEW_EVENT_FOR_CLUB, VIEW_EVENTS_FOR_CLUB, VIEW_RIDE_FOR_CLUB, VIEW_RIDES_FOR_CLUB, WHATS_HAPPENING } from "./lib/common";
+import { GlobalNavigate } from "./lib/globalHooks";
+import {
+    ADD_CLUB, ADD_RIDE_TO_CLUB, EDIT_CLUB, EDIT_EVENT_FOR_CLUB,
+    EDIT_RIDE_FOR_CLUB, USER_ACCOUNT, USER_LOGOUT, VIEW_CLUB, VIEW_CLUBS,
+    VIEW_EVENT_FOR_CLUB, VIEW_EVENTS_FOR_CLUB, VIEW_RIDE_FOR_CLUB,
+    VIEW_RIDES_FOR_CLUB, WHATS_HAPPENING
+} from "./lib/common";
 import { Events } from "./pages/events";
 import { Event } from "./pages/event";
 import { WhatsHappening } from "./pages/whatsHappening";
-import { Container } from "react-bootstrap";
-import { Suspense } from "react";
+import { Container, Offcanvas } from "react-bootstrap";
 import { Template } from "./pages/template";
+import { SideMenu } from "./partials/sideMenu";
 
 // unprotected routes
 
@@ -54,6 +59,7 @@ export const LayoutProtected = () => {
     return (
         <>
             <Container fluid>
+                <SideMenu></SideMenu>
                 <Header />
                 {user?.isLoggedIn ? <Outlet /> : <Home />}
                 <Footer />

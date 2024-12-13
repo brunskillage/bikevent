@@ -1,18 +1,26 @@
-import { useSelector } from 'react-redux'
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { useDispatch } from 'react-redux'
+import { Container, Navbar } from "react-bootstrap";
 import { NavLink } from 'react-router-dom';
-import { FaMotorcycle, FaRegCircleUser, FaArrowRightFromBracket } from "react-icons/fa6";
+import { FaMotorcycle, FaBurger } from "react-icons/fa6";
+import { toggleSideBar } from '../store/utilSlice';
 
 
 export const Header = () => {
-    const user = useSelector(state => state.user)
+
+    const dispatch = useDispatch()
+
+    const handleMenuClick = (e) => {
+        dispatch(toggleSideBar())
+    }
 
     return (<>
         <Navbar expand="lg ps-4" className="bg-body-tertiary shadow ">
             <Container fluid >
+                <FaBurger onClick={handleMenuClick} style={{ height: '1.5rem', width: '2rem', marginBottom: 3 }} />
+
                 <NavLink className="nav-link" to={"/"}><FaMotorcycle style={{ height: '1.5rem', width: '2rem', marginBottom: 3 }} /></NavLink>
                 <Navbar.Brand className='ps-2' href="/">Bikevent</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                {/* <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleMenuClick} />
                 <Navbar.Collapse id="basic-navbar-nav mx-auto" className='justify-content-end'>
                     <Nav>
                         {user?.isLoggedIn ? <>
@@ -22,7 +30,7 @@ export const Header = () => {
                             <NavLink className="nav-link" to={"/login"}>login</NavLink>
                         }
                     </Nav>
-                </Navbar.Collapse>
+                </Navbar.Collapse> */}
             </Container>
         </Navbar>
     </>);

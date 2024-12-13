@@ -1,4 +1,3 @@
-using System.Net.NetworkInformation;
 using Bikevent.Config;
 using Bikevent.Core.handlers;
 using Bikevent.Database;
@@ -7,7 +6,6 @@ using Bikevent.Validation;
 using Bikevent.Website.Controllers;
 using Bikevent.Website.Startup;
 using FluentMigrator.Runner;
-using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bikevent.Website;
@@ -105,9 +103,6 @@ public class Program
         clubsDb!.TestAsync();
 
 
-
-
-
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
@@ -144,7 +139,6 @@ public class Program
 
         // run migrations
         if (app.Environment.IsDevelopment())
-        {
             using (var scope = app.Services.CreateScope())
             {
                 var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
@@ -159,8 +153,7 @@ public class Program
                 var testDataService = app.Services.GetService<TestDataService>();
                 testDataService!.Insert();
             }
-        }
-        
+
         app.Run();
     }
 }

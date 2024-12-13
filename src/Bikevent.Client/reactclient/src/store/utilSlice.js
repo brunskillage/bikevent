@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const utilSlice = createSlice({
   name: 'util',
-  initialState: { isLoading: false }
+  initialState: { isLoading: false, isSideBarOpen: false }
   ,
   reducers: {
     setIsLoading: (state, action) => {
@@ -18,10 +18,13 @@ export const utilSlice = createSlice({
     clearError: (state, action) => {
       const error = null
       return { ...state, error }
+    },
+    toggleSideBar: (state, action) => {
+      return { ...state, isSideBarOpen: !state.isSideBarOpen }
     }
   }
 })
 
 // add new functions here
-export const { setIsLoading, setIsNotLoading, setError, clearError } = utilSlice.actions
+export const { setIsLoading, setIsNotLoading, setError, clearError, toggleSideBar } = utilSlice.actions
 export const utilReducer = utilSlice.reducer
