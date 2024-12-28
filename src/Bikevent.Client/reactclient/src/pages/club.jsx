@@ -142,7 +142,7 @@ export const Club = () => {
                     deletePath: common.DELETE_CLUB.replace(":clubId", club?.id),
                     viewPath: common.VIEW_CLUB.replace(":clubId", club?.id),
                 }}>
-                    <InputB label='Name *' fieldName='nameOf' currentVal={club?.nameOf} {...{ pageMode, errors, register, control }}></InputB>
+                    {/* <InputB label='Name *' fieldName='nameOf' currentVal={club?.nameOf} {...{ pageMode, errors, register, control }}></InputB> */}
                     <InputB label='President / Leader *' fieldName="president" currentVal={club?.president}  {...{ pageMode, errors, register, control }} ></InputB>
                     <SelectList2 label="Region *" fieldName="regionId" keyValues={regionsKeyValue} currentVal={club?.regionId} {...{ errors, register, pageMode, control }}></SelectList2>
                     <InputB label='Email *' fieldName='email' currentVal={club?.email}  {...{ errors, register, pageMode, control }}></InputB>

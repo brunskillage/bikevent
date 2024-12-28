@@ -1,5 +1,7 @@
-﻿using System.Net;
+﻿using System.Collections.Concurrent;
+using System.Net;
 using System.Net.Mime;
+using System.Reflection;
 using Bikevent.DataObjects;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -17,6 +19,8 @@ namespace Bikevent.Website.Controllers.Api;
 public class ApiDynamicController : Controller
 {
     private readonly DoHandler _doHandler;
+    private static readonly Type HandlerType = typeof(DoHandler);
+    private static readonly ConcurrentDictionary<string, MethodInfo?> Methods = new();
 
     public ApiDynamicController(DoHandler doHandler)
     {
@@ -43,14 +47,18 @@ public class ApiDynamicController : Controller
         // only Json.net does what I want here to 
         var payload = JsonConvert.DeserializeObject<ClientPayload>(json);
 
-        var methodInfo = _doHandler.GetType().GetMethod(payload.action);
+        if (string.IsNullOrWhiteSpace(payload?.action))
+            return StatusCode((int)HttpStatusCode.BadRequest);
+
+        // var methodInfo = _handlerType.GetMethod(payload.action);
+        var methodInfo =  Methods.GetOrAdd(payload.action,HandlerType.GetMethod);
 
         if (methodInfo == null) 
             return StatusCode((int)HttpStatusCode.BadRequest);
 
         // var result1 = await (dynamic)methodInfo.Invoke(_doHandler, new object[1] { payload.data });
-        var result1 = await (Task<BvResponse>)methodInfo.Invoke(_doHandler, [payload.data!]);
+        var result1 = await (Task<BvResponse>)methodInfo.Invoke(_doHandler, [payload.data]);
 
-        return Ok(new BvResponse { Data = result1 });
+        return Ok(result1);
     }
 }

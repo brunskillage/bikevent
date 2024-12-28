@@ -10,7 +10,7 @@ public class ClientPayload
         this.data = data;
     }
 
-    public string action { get; set; }
+    public string? action { get; set; }
 
     // public Dictionary<string, object> data { get; set; }
     public ExpandoObject data { get; set; }

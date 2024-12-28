@@ -40,6 +40,18 @@ public class QueryDbService : BaseDbClientService
                         group by clubName";
         var res = await BvQueryAsync<RideCountByClubRow>(sql);
         return res.ToList();
+    }    
+    
+    public async Task<List<dynamic>> GetLatestRides()
+    {
+        var sql = @"select r.*, c.logoImagePath, c.nameOf, c.regionId
+            from rides r
+            inner join clubs c on 
+            r.clubId = c.id
+            order by r.startsOn Desc
+            LIMIT 10;";
+        var res = await BvQueryAsync<dynamic>(sql);
+        return res.ToList();
     }
 }
 

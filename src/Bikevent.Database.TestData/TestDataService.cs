@@ -26,7 +26,7 @@ public class TestDataService
         _eventsDbService = eventsDbService;
     }
 
-    public void Insert()
+    public async Task Insert()
     {
         Randomizer.Seed = new Random(3897234);
 
@@ -99,10 +99,38 @@ public class TestDataService
                 ;
         var testEvents = testEvent.Generate(testEventCount);
 
+        await AddData(testUsers, testClubs, testRides,testEvents);
 
-        testUsers.ForEach(async u => { await _userDbService.AddUser(u); });
-        testClubs.ForEach(async c => { await _clubDbService.AddClub(c); });
-        testRides.ForEach(async r => { await _ridesDbService.AddRide(r); });
-        testEvents.ForEach(async r => { await _eventsDbService.AddEvent(r);});
+    }
+
+    private async Task AddData(List<BvUserRow> testUsers, 
+        List<BvClubRow> testClubs, 
+        List<BvRideRow> testRides, 
+        List<BvEventRow> testEvents)
+    {
+        //testUsers.ForEach(async u => await _userDbService.AddUser(u));
+        foreach (var bvUserRow in testUsers)
+        {
+            await _userDbService.AddUser(bvUserRow);
+        }
+        Console.WriteLine("Added Test Users");
+
+        foreach (var testClub in testClubs)
+        {
+            await _clubDbService.AddClub(testClub);
+        }
+        Console.WriteLine("Added Test Clubs");        
+        
+        foreach (var testRide in testRides)
+        {
+            await _ridesDbService.AddRide(testRide);
+        }
+        Console.WriteLine("Added Test Rides");        
+        
+        foreach (var testEvent in testEvents)
+        {
+            await _eventsDbService.AddEvent(testEvent);
+        }
+        Console.WriteLine("Added Test Events");
     }
 }

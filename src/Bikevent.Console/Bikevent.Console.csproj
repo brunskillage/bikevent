@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+	  <UserSecretsId>aspnet-Bikevent.Console-8cd597a9-7164-459d-af81-c133e328122d</UserSecretsId>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>d57ac9d5-dffc-4102-b67b-ef063dfe6950</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bikevent.Config\Bikevent.Config.csproj" />
+    <ProjectReference Include="..\Bikevent.Core\Bikevent.Core.csproj" />
+    <ProjectReference Include="..\Bikevent.Database.TestData\Bikevent.Database.TestData.csproj" />
+    <ProjectReference Include="..\Bikevent.Database\Bikevent.Database.csproj" />
+    <ProjectReference Include="..\Bikevent.DataObjects\Bikevent.DataObjects.csproj" />
+    <ProjectReference Include="..\Bikevent.Migrations\Bikevent.Migrations.csproj" />
+    <ProjectReference Include="..\Bikevent.Services\Bikevent.Services.csproj" />
+  </ItemGroup>
+
+</Project>

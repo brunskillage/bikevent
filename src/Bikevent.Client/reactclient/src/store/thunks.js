@@ -7,6 +7,7 @@ import { setIsLoading, setIsNotLoading } from "./utilSlice"
 import { setRidesState, setRideState } from "./ridesSlice"
 import { setRegionsState } from "./regionsSlice"
 import { setEventsState, setEventState } from "./eventsSlice"
+import { setLatestRidesState } from "./querySlice"
 
 export const getTodos = () => async (dispatch, getState) => {
     axios.get('https://jsonplaceholder.typicode.com/todos')
@@ -103,6 +104,14 @@ export const setClubEvents = (clubId) => async (dispatch, getState) => {
         dispatch(setEventsState(res.data));
         dispatch(setIsNotLoading())
     }
+}
+
+export const setLatestRides = () => async (dispatch, getState) => {
+    dispatch(setIsLoading())
+    var res = await axiosConfig.post(`/api/v1/do`,
+        { action: "GetLatestRides", payload: null })
+    dispatch(setLatestRidesState(res.data.data.rides));
+    dispatch(setIsNotLoading())
 }
 
 

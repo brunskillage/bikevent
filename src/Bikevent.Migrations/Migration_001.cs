@@ -50,6 +50,7 @@ public class Migration_001 : Migration
             .WithColumn("descriptionOf").AsString(255).Nullable()
             .WithColumn("startsOn").AsDateTime().NotNullable()
             .WithColumn("endsOn").AsDateTime().Nullable()
+            .WithColumn("difficulty").AsInt16().Nullable()
             .WithColumn("linklUrl").AsString(255).Nullable()
             .WithColumn("startLocation").AsString(255).NotNullable()
             .WithColumn("endLocation").AsString(255).Nullable()

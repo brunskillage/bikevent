@@ -7,6 +7,7 @@ import { utilReducer } from "./utilSlice";
 import { ridesReducer } from "./ridesSlice";
 import { regionsReducer } from "./regionsSlice";
 import { eventsReducer } from "./eventsSlice";
+import { queriesReducer } from "./querySlice";
 
 // add reducers here
 export const store = configureStore({
@@ -18,7 +19,8 @@ export const store = configureStore({
         util: utilReducer,
         ride: ridesReducer,
         region: regionsReducer,
-        event: eventsReducer
+        event: eventsReducer,
+        queries: queriesReducer
     }
 }
 )

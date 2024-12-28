@@ -5,7 +5,6 @@ using Bikevent.Database.TestData;
 using Bikevent.Validation;
 using Bikevent.Website.Controllers;
 using Bikevent.Website.Startup;
-using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bikevent.Website;
@@ -26,6 +25,7 @@ public class Program
         builder.Services.AddSingleton<BvConfigurationService>();
         builder.Services.AddSingleton<ClubDbService>();
         builder.Services.AddSingleton<MiscDbService>();
+        builder.Services.AddSingleton<QueryDbService>();
         builder.Services.AddSingleton<EventsDbService>();
         builder.Services.AddSingleton<RidesDbService>();
         builder.Services.AddSingleton<UserDbService>();
@@ -45,7 +45,7 @@ public class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews(options =>
         {
-            // used becuase empty dates were not being allowed
+            // used because empty dates were not being allowed
             options.AllowEmptyInputInBodyModelBinding = true;
         });
 
@@ -78,17 +78,12 @@ public class Program
                 });
         });
 
-
-        // add migrations
-        builder.Services.AddMigrations(configuration);
-        // end add migrations
-
         // ! stop automatic model validation for ApiControllers - When using it automatically caused
-        // validation errors depite nothing I was aware of being enforced
+        // validation errors despite nothing I was aware of being enforced
         builder.Services.Configure<ApiBehaviorOptions>(options
             => options.SuppressModelStateInvalidFilter = true);
 
-        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(PingHandler).Assembly));
+        // builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(PingHandler).Assembly));
 
         var app = builder.Build();
 
@@ -136,23 +131,6 @@ public class Program
             app.UseSwaggerUI();
             app.UseSwagger(options => { options.SerializeAsV2 = true; });
         }
-
-        // run migrations
-        if (app.Environment.IsDevelopment())
-            using (var scope = app.Services.CreateScope())
-            {
-                var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
-                migrator!.ListMigrations();
-                // TODO use runner - for now easier just to uncomment during rapid dev
-                // uncomment below to run migration
-                var miscDb = app.Services.GetService<MiscDbService>();
-                miscDb!.ClearDbVersionInfo();
-                migrator.MigrateUp(001);
-
-                // uncomment for test Data
-                var testDataService = app.Services.GetService<TestDataService>();
-                testDataService!.Insert();
-            }
 
         app.Run();
     }

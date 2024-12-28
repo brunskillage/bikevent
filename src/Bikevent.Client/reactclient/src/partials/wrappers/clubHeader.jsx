@@ -9,7 +9,7 @@ export const ClubHeader = ({ club }) => {
                 <Col><ClubLogo club={club}></ClubLogo></Col>
             </Row>
             <Row className='pt-3'>
-                <Col>{club.nameOf}</Col>
+                <Col>{club?.nameOf}</Col>
             </Row>
         </Container>
     </>
